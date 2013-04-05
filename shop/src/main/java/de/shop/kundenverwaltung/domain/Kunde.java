@@ -66,6 +66,7 @@ public class Kunde implements Serializable {
 	public void setNachname(String nachname) {
 		this.nachname = nachname;
 	}
+	//JsonProperty() seite24
 	public Date getGeburtsdatum() {
 		return geburtsdatum;
 	}
@@ -192,6 +193,15 @@ public class Kunde implements Serializable {
 				+ ", nachname=" + nachname + ", geburtsdatum=" + geburtsdatum
 				+ ", geschlecht=" + geschlecht + ", email=" + email
 				+  ", bestellungenUri=" + bestellungenUri + "]";
+	}
+// nicht sicher
+	public void setAdresse(Adresse adresse) {
+		// TODO Auto-generated method stub
+		
+	}
+	public Adresse getAdresse() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

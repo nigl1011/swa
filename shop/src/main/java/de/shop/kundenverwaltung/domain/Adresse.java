@@ -22,9 +22,8 @@ public class Adresse implements Serializable{
 		this.kunde = kunde;
 	}
 
-	/**
-	 * 
-	 */
+
+	
 	private static final long serialVersionUID = 6529660287873100894L;
 	private Long id;
 	private String strasse;
@@ -161,8 +160,7 @@ public class Adresse implements Serializable{
 	@Override
 	public String toString() {
 		return "Adresse [id=" + id + ", strasse=" + strasse + ", hausnr="
-				+ hausnr + ", plz=" + plz + ", ort=" + ort + ", aktualisiert="
-				+ aktualisiert + ", kunde=" + kunde + "]";
+				+ hausnr + ", plz=" + plz + ", ort=" + ort + ", kunde=" + kunde + "]";
 	}
 	
 	
