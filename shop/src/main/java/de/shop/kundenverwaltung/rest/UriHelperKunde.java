@@ -6,7 +6,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
-import de.shop.kundenverwaltung.domain.Kunde;
+import de.shop.kundenverwaltung.domain.AbstractKunde;
+
 
 @ApplicationScoped
 public class UriHelperKunde {
@@ -27,6 +28,3 @@ public class UriHelperKunde {
 		kunde.setBestellungenUri(bestellungenUri);
 	}
 }
-
-
-

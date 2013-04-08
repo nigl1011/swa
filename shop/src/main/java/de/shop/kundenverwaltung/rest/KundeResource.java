@@ -3,9 +3,9 @@ package de.shop.kundenverwaltung.rest;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
-
 import java.net.URI;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 
 import javax.enterprise.context.RequestScoped;
@@ -22,13 +22,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import com.jayway.restassured.response.Response;
-
 import de.shop.bestellverwaltung.domain.Bestellung;
-//import de.shop.bestellverwaltung.rest.UriHelperBestellung;
-import de.shop.kundenverwaltung.domain.Kunde;
+import de.shop.bestellverwaltung.rest.UriHelperBestellung;
+import de.shop.kundenverwaltung.domain.AbstractKunde;
+import de.shop.kundenverwaltung.domain.Privatkunde;
 import de.shop.util.LocaleHelper;
 import de.shop.util.Mock;
 import de.shop.util.NotFoundException;
@@ -38,8 +38,7 @@ import de.shop.util.NotFoundException;
 @Consumes
 @RequestScoped
 public class KundeResource {
-	
-	@Context
+	@Contex
 	private UriInfo uriInfo;
 	
 	@Context
@@ -63,7 +62,7 @@ public class KundeResource {
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
-	public Kunde findKundeById(@PathParam("id") Long id) {
+	public AbstractKunde findKundeById(@PathParam("id") Long id) {
 		final Locale locale = localeHelper.getLocale(headers);
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
@@ -157,7 +156,3 @@ public class KundeResource {
 		return Response.noContent().build();
 	}
 }
-
-	
-
-

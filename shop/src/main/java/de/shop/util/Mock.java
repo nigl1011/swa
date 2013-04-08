@@ -5,9 +5,11 @@ import java.util.Collection;
 import java.util.List;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
-import de.shop.kundenverwaltung.domain.Kunde;
+import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.kundenverwaltung.domain.Adresse;
-
+import de.shop.kundenverwaltung.domain.Firmenkunde;
+import de.shop.kundenverwaltung.domain.HobbyType;
+import de.shop.kundenverwaltung.domain.Privatkunde;
 
 /**
  * Emulation des Anwendungskerns
@@ -17,12 +19,12 @@ public final class Mock {
 	private static final int MAX_KUNDEN = 8;
 	private static final int MAX_BESTELLUNGEN = 4;
 
-	public static Kunde findKundeById(Long id) {
+	public static AbstractKunde findKundeById(Long id) {
 		if (id > MAX_ID) {
 			return null;
 		}
-		//id % 2 == 1 ? new Privatkunde() : new Firmenkunde();
-		final Kunde kunde = new Kunde();
+		
+		final AbstractKunde kunde = id % 2 == 1 ? new Privatkunde() : new Firmenkunde();
 		kunde.setId(id);
 		kunde.setNachname("Nachname" + id);
 		kunde.setEmail("" + id + "@hska.de");
@@ -34,27 +36,32 @@ public final class Mock {
 		adresse.setKunde(kunde);
 		kunde.setAdresse(adresse);
 		
-		
-		
+		if (kunde.getClass().equals(Privatkunde.class)) {
+			final Privatkunde privatkunde = (Privatkunde) kunde;
+			final List<HobbyType> hobbies = new ArrayList<>();
+			hobbies.add(HobbyType.LESEN);
+			hobbies.add(HobbyType.REISEN);
+			privatkunde.setHobbies(hobbies);
+		}
 		
 		return kunde;
 	}
 
-	public static Collection<Kunde> findAllKunden() {
+	public static Collection<AbstractKunde> findAllKunden() {
 		final int anzahl = MAX_KUNDEN;
-		final Collection<Kunde> kunden = new ArrayList<>(anzahl);
+		final Collection<AbstractKunde> kunden = new ArrayList<>(anzahl);
 		for (int i = 1; i <= anzahl; i++) {
-			final Kunde kunde = findKundeById(Long.valueOf(i));
+			final AbstractKunde kunde = findKundeById(Long.valueOf(i));
 			kunden.add(kunde);			
 		}
 		return kunden;
 	}
 
-	public static Collection<Kunde> findKundenByNachname(String nachname) {
+	public static Collection<AbstractKunde> findKundenByNachname(String nachname) {
 		final int anzahl = nachname.length();
-		final Collection<Kunde> kunden = new ArrayList<>(anzahl);
+		final Collection<AbstractKunde> kunden = new ArrayList<>(anzahl);
 		for (int i = 1; i <= anzahl; i++) {
-			final Kunde kunde = findKundeById(Long.valueOf(i));
+			final AbstractKunde kunde = findKundeById(Long.valueOf(i));
 			kunde.setNachname(nachname);
 			kunden.add(kunde);			
 		}
@@ -63,7 +70,7 @@ public final class Mock {
 	
 
 	public static Collection<Bestellung> findBestellungenByKundeId(Long kundeId) {
-		final Kunde kunde = findKundeById(kundeId);
+		final AbstractKunde kunde = findKundeById(kundeId);
 		
 		// Beziehungsgeflecht zwischen Kunde und Bestellungen aufbauen
 		final int anzahl = kundeId.intValue() % MAX_BESTELLUNGEN + 1;  // 1, 2, 3 oder 4 Bestellungen
@@ -87,13 +94,13 @@ public final class Mock {
 
 		final Bestellung bestellung = new Bestellung();
 		bestellung.setId(id);
-		//bestellung.setAusgeliefert(false);
+		bestellung.setAusgeliefert(false);
 		bestellung.setKunde(kunde);
 		
 		return bestellung;
 	}
 
-	public static Kunde createKunde(Kunde kunde) {
+	public static AbstractKunde createKunde(Kunde kunde) {
 		// Neue IDs fuer Kunde und zugehoerige Adresse
 		// Ein neuer Kunde hat auch keine Bestellungen
 		final String nachname = kunde.getNachname();
@@ -107,7 +114,7 @@ public final class Mock {
 		return kunde;
 	}
 
-	public static void updateKunde(Kunde kunde) {
+	public static void updateKunde(AbstractKunde kunde) {
 		System.out.println("Aktualisierter Kunde: " + kunde);
 	}
 
