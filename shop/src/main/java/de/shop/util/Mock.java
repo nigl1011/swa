@@ -90,7 +90,7 @@ public final class Mock {
 			return null;
 		}
 
-		final Kunde kunde = findKundeById(id + 1);  // andere ID fuer den Kunden
+		final AbstractKunde kunde = findKundeById(id + 1);  // andere ID fuer den Kunden
 
 		final Bestellung bestellung = new Bestellung();
 		bestellung.setId(id);
@@ -100,7 +100,7 @@ public final class Mock {
 		return bestellung;
 	}
 
-	public static AbstractKunde createKunde(Kunde kunde) {
+	public static AbstractKunde createKunde(AbstractKunde kunde) {
 		// Neue IDs fuer Kunde und zugehoerige Adresse
 		// Ein neuer Kunde hat auch keine Bestellungen
 		final String nachname = kunde.getNachname();

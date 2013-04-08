@@ -6,7 +6,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 public class Adresse implements Serializable {
 	private static final long serialVersionUID = -3029272617931844501L;
-	
 	private Long id;
 	private String plz;
 	private String ort;

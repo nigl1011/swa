@@ -38,7 +38,7 @@ import de.shop.util.NotFoundException;
 @Consumes
 @RequestScoped
 public class KundeResource {
-	@Contex
+	@Context
 	private UriInfo uriInfo;
 	
 	@Context
@@ -66,7 +66,7 @@ public class KundeResource {
 		final Locale locale = localeHelper.getLocale(headers);
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
-		final Kunde kunde = Mock.findKundeById(id);
+		final AbstractKunde kunde = Mock.findKundeById(id);
 		if (kunde == null) {
 			throw new NotFoundException("Kein Kunde mit der ID " + id + " gefunden.");
 		}
@@ -77,10 +77,10 @@ public class KundeResource {
 	}
 	
 	@GET
-	public Collection<Kunde> findKundenByNachname(@QueryParam("nachname") @DefaultValue("") String nachname) {
+	public Collection<AbstractKunde> findKundenByNachname(@QueryParam("nachname") @DefaultValue("") String nachname) {
 		final Locale locale = localeHelper.getLocale(headers);
 		
-		Collection<Kunde> kunden = null;
+		Collection<AbstractKunde> kunden = null;
 		if ("".equals(nachname)) {
 			// TODO Anwendungskern statt Mock, Verwendung von Locale
 			kunden = Mock.findAllKunden();
@@ -96,7 +96,7 @@ public class KundeResource {
 			}
 		}
 		
-		for (Kunde kunde : kunden) {
+		for (AbstractKunde kunde : kunden) {
 			uriHelperKunde.updateUriKunde(kunde, uriInfo);
 		}
 		
@@ -125,7 +125,7 @@ public class KundeResource {
 	@POST
 	@Consumes(APPLICATION_JSON)
 	@Produces
-	public Response createKunde(Kunde kunde) {
+	public Response createKunde(AbstractKunde kunde) {
 		final Locale locale = localeHelper.getLocale(headers);
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
@@ -137,7 +137,7 @@ public class KundeResource {
 	@PUT
 	@Consumes(APPLICATION_JSON)
 	@Produces
-	public Response updateKunde(Kunde kunde) {
+	public Response updateKunde(AbstractKunde kunde) {
 		final Locale locale = localeHelper.getLocale(headers);
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
