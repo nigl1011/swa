@@ -2,7 +2,9 @@ package de.shop.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.kundenverwaltung.domain.AbstractKunde;
@@ -38,7 +40,7 @@ public final class Mock {
 		
 		if (kunde.getClass().equals(Privatkunde.class)) {
 			final Privatkunde privatkunde = (Privatkunde) kunde;
-			final List<HobbyType> hobbies = new ArrayList<>();
+			final Set<HobbyType> hobbies = new HashSet<>();
 			hobbies.add(HobbyType.LESEN);
 			hobbies.add(HobbyType.REISEN);
 			privatkunde.setHobbies(hobbies);

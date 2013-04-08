@@ -5,9 +5,16 @@ import java.net.URI;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonSubTypes;
+import org.codehaus.jackson.annotate.JsonSubTypes.Type;
+import org.codehaus.jackson.annotate.JsonTypeInfo;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+	@Type(value = Privatkunde.class, name = AbstractKunde.PRIVATKUNDE),
+	@Type(value = Firmenkunde.class, name = AbstractKunde.FIRMENKUNDE) })
 public abstract class AbstractKunde implements Serializable {
 	private static final long serialVersionUID = 7401524595142572933L;
 	
@@ -22,10 +29,6 @@ public abstract class AbstractKunde implements Serializable {
 	private List<Bestellung> bestellungen;
 	private URI bestellungenUri;
 
-	public abstract String getArt();
-	public void setArt(String unused) {
-	}
-	
 	public Long getId() {
 		return id;
 	}

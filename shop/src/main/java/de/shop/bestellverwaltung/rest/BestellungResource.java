@@ -2,7 +2,6 @@ package de.shop.bestellverwaltung.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -39,6 +38,7 @@ public class BestellungResource {
 	@GET
 	@Path("{id:[1-9][0-9]*}")
 	public Bestellung findBestellungById(@PathParam("id") Long id) {
+		@SuppressWarnings("unused")
 		final Locale locale = localeHelper.getLocale(headers);
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale

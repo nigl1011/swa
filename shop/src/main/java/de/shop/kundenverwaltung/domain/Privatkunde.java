@@ -17,5 +17,4 @@ public class Privatkunde extends AbstractKunde {
 	public String toString() {
 		return "Privatkunde [" + super.toString() + ", hobbies=" + hobbies + "]";
 	}
-	
 }
