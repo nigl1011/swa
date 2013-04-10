@@ -1,73 +1,92 @@
 package de.shop.bestellverwaltung.domain;
 
-import java.io.Serializable;
-import java.net.URI;
+import java.security.Timestamp;
+import java.util.Date;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+public class Bestellung {
+	
 
-import de.shop.kundenverwaltung.domain.AbstractKunde;
 
-public class Bestellung implements Serializable {
-	private static final long serialVersionUID = 1618359234119003714L;
-	
-	private Long id;
-	private boolean ausgeliefert;
-	@JsonIgnore
-	private AbstractKunde kunde;
-	private URI kundeUri;
-	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public boolean isAusgeliefert() {
-		return ausgeliefert;
-	}
-	public void setAusgeliefert(boolean ausgeliefert) {
-		this.ausgeliefert = ausgeliefert;
-	}
-	public AbstractKunde getKunde() {
-		return kunde;
-	}
-	public void setKunde(AbstractKunde kunde) {
-		this.kunde = kunde;
-	}
-	
-	public URI getKundeUri() {
-		return kundeUri;
-	}
-	public void setKundeUri(URI kundeUri) {
-		this.kundeUri = kundeUri;
-	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		final Bestellung other = (Bestellung) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
+		private Long Bestellungs_ID;
+		//private Kunde Kunde_ID;
+		private Date Bestelldatum;
+		private boolean Status;
+		private Long Version;
+		private double Gesamtpreis;
+		private Timestamp aktualisiert;
+		
+		
+		public Long getBestellungs_ID() {
+			return Bestellungs_ID;
 		}
-		else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-	
-	@Override
-	public String toString() {
-		return "Bestellung [id=" + id + ", ausgeliefert=" + ausgeliefert + ", kundeUri=" + kundeUri + "]";
-	}
+		public void setBestellungs_ID(Long bestellungs_ID) {
+			Bestellungs_ID = bestellungs_ID;
+		}
+		public Date getBestelldatum() {
+			return Bestelldatum;
+		}
+		public void setBestelldatum(Date bestelldatum) {
+			Bestelldatum = bestelldatum;
+		}
+		public boolean isStatus() {
+			return Status;
+		}
+		public void setStatus(boolean status) {
+			Status = status;
+		}
+		public Long getVersion() {
+			return Version;
+		}
+		public void setVersion(Long version) {
+			Version = version;
+		}
+		public double getGesamtpreis() {
+			return Gesamtpreis;
+		}
+		public void setGesamtpreis(double gesamtpreis) {
+			Gesamtpreis = gesamtpreis;
+		}
+		public Timestamp getAktualisiert() {
+			return aktualisiert;
+		}
+		public void setAktualisiert(Timestamp aktualisiert) {
+			this.aktualisiert = aktualisiert;
+		}
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime
+					* result
+					+ ((Bestellungs_ID == null) ? 0 : Bestellungs_ID.hashCode());
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Bestellung other = (Bestellung) obj;
+			if (Bestellungs_ID == null) {
+				if (other.Bestellungs_ID != null)
+					return false;
+			} else if (!Bestellungs_ID.equals(other.Bestellungs_ID))
+				return false;
+			return true;
+		}
+		@Override
+		public String toString() {
+			return "Bestellung [Bestellungs_ID=" + Bestellungs_ID
+					+ ", Bestelldatum=" + Bestelldatum + ", Status=" + Status
+					+ ", Version=" + Version + ", Gesamtpreis=" + Gesamtpreis
+					+ ", aktualisiert=" + aktualisiert + "]";
+		}
+		
+		
+		
+		
+		
 }
