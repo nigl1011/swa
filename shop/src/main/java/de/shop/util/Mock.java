@@ -79,7 +79,7 @@ public final class Mock {
 		final List<Bestellung> bestellungen = new ArrayList<>(anzahl);
 		for (int i = 1; i <= anzahl; i++) {
 			final Bestellung bestellung = findBestellungById(Long.valueOf(i));
-			bestellung.setKunde(kunde);
+			bestellung.setKunde_ID(kunde);
 			bestellungen.add(bestellung);			
 		}
 		kunde.setBestellungen(bestellungen);
@@ -95,9 +95,9 @@ public final class Mock {
 		final AbstractKunde kunde = findKundeById(id + 1);  // andere ID fuer den Kunden
 
 		final Bestellung bestellung = new Bestellung();
-		bestellung.setId(id);
-		bestellung.setAusgeliefert(false);
-		bestellung.setKunde(kunde);
+		bestellung.setBestellungs_ID(id);
+		
+		bestellung.setKunde_ID(kunde);
 		
 		return bestellung;
 	}

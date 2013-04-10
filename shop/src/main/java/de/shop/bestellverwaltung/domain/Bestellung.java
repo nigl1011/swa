@@ -3,12 +3,14 @@ package de.shop.bestellverwaltung.domain;
 import java.security.Timestamp;
 import java.util.Date;
 
+import de.shop.kundenverwaltung.domain.AbstractKunde;
+
 public class Bestellung {
 	
 
 
 		private Long Bestellungs_ID;
-		//private Kunde Kunde_ID;
+		private AbstractKunde Kunde_ID;
 		private Date Bestelldatum;
 		private boolean Status;
 		private Long Version;
@@ -52,6 +54,14 @@ public class Bestellung {
 		public void setAktualisiert(Timestamp aktualisiert) {
 			this.aktualisiert = aktualisiert;
 		}
+		public AbstractKunde getKunde_ID() {
+			return Kunde_ID;
+		}
+		public void setKunde_ID(AbstractKunde kunde_ID) {
+			Kunde_ID = kunde_ID;
+		}
+		
+		
 		@Override
 		public int hashCode() {
 			final int prime = 31;
@@ -80,8 +90,9 @@ public class Bestellung {
 		@Override
 		public String toString() {
 			return "Bestellung [Bestellungs_ID=" + Bestellungs_ID
-					+ ", Bestelldatum=" + Bestelldatum + ", Status=" + Status
-					+ ", Version=" + Version + ", Gesamtpreis=" + Gesamtpreis
+					+ ", Kunde_ID=" + Kunde_ID + ", Bestelldatum="
+					+ Bestelldatum + ", Status=" + Status + ", Version="
+					+ Version + ", Gesamtpreis=" + Gesamtpreis
 					+ ", aktualisiert=" + aktualisiert + "]";
 		}
 		

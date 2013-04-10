@@ -19,9 +19,9 @@ public class UriHelperBestellung {
 	
 	public void updateUriBestellung(Bestellung bestellung, UriInfo uriInfo) {
 		// URL fuer Kunde setzen
-		final AbstractKunde kunde = bestellung.getKunde();
+		final AbstractKunde kunde = bestellung.getKunde_ID();
 		if (kunde != null) {
-			final URI kundeUri = uriHelperKunde.getUriKunde(bestellung.getKunde(), uriInfo);
+			final URI kundeUri = uriHelperKunde.getUriKunde(bestellung.getKunde_ID(), uriInfo);
 			bestellung.setKundeUri(kundeUri);
 		}
 		
@@ -31,7 +31,7 @@ public class UriHelperBestellung {
 		final UriBuilder ub = uriInfo.getBaseUriBuilder()
 		                             .path(BestellungResource.class)
 		                             .path(BestellungResource.class, "findBestellungById");
-		final URI uri = ub.build(bestellung.getId());
+		final URI uri = ub.build(bestellung.getBestellungs_ID());
 		return uri;
 	}
 }
