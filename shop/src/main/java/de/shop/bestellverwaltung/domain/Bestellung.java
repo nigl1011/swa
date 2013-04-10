@@ -17,6 +17,7 @@ public class Bestellung {
 		private double Gesamtpreis;
 		private Timestamp aktualisiert;
 		
+		//JsonIgnore
 		
 		public Long getBestellungs_ID() {
 			return Bestellungs_ID;
