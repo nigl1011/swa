@@ -96,9 +96,5 @@ public class Bestellung {
 					+ Version + ", Gesamtpreis=" + Gesamtpreis
 					+ ", aktualisiert=" + aktualisiert + "]";
 		}
-		
-		
-		
-		
-		
+			
 }

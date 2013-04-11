@@ -22,7 +22,8 @@ public class UriHelperBestellung {
 		final AbstractKunde kunde = bestellung.getKunde_ID();
 		if (kunde != null) {
 			final URI kundeUri = uriHelperKunde.getUriKunde(bestellung.getKunde_ID(), uriInfo);
-			bestellung.setKundeUri(kundeUri);
+			// TODO bestellung.setKundeUri(kundeUri)
+			//bestellung.setKundeUri(kundeUri);
 		}
 		
 	}
