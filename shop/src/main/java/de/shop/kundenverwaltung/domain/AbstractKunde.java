@@ -2,6 +2,7 @@ package de.shop.kundenverwaltung.domain;
 
 import java.io.Serializable;
 import java.net.URI;
+import java.security.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public abstract class AbstractKunde implements Serializable {
 	private String geschlecht;
 	private String email;
 	private Date Eintrittsdatum;
-	private Date Aktualisiert;
+	private Timestamp Aktualisiert;
 	
 	private Adresse adresse;
 	
@@ -75,10 +76,11 @@ public abstract class AbstractKunde implements Serializable {
 	public void setEintrittsdatum(Date eintrittsdatum) {
 		Eintrittsdatum = eintrittsdatum;
 	}
-	public Date getAktualisiert() {
+	
+	public Timestamp getAktualisiert() {
 		return Aktualisiert;
 	}
-	public void setAktualisiert(Date aktualisiert) {
+	public void setAktualisiert(Timestamp aktualisiert) {
 		Aktualisiert = aktualisiert;
 	}
 	public String getEmail() {

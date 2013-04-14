@@ -9,7 +9,7 @@ public class Adresse implements Serializable {
 	private static final long serialVersionUID = -3029272617931844501L;
 	private Long id;
 	private String strasse;
-	private Long hausnr;
+	private String hausnr;
 	private String plz;
 	private String ort;
 	private Date aktualisiert;
@@ -29,10 +29,10 @@ public class Adresse implements Serializable {
 	public void setStrasse(String strasse) {
 		this.strasse = strasse;
 	}
-	public Long getHausnr() {
+	public String getHausnr() {
 		return hausnr;
 	}
-	public void setHausnr(Long hausnr) {
+	public void setHausnr(String hausnr) {
 		this.hausnr = hausnr;
 	}
 	public Date getAktualisiert() {
