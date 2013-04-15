@@ -6,45 +6,45 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import de.shop.kundenverwaltung.domain.AbstractKunde;
 
 public class Bestellung {
-		private Long Bestellungs_ID;
-		private boolean Status;
-		private Long Version;
-		private double Gesamtpreis;
+		private Long id;
+		private StatusType status;
+		private Long version;
+		private double gesamtpreis;
 		private Timestamp aktualisiert;
 		@JsonIgnore
-		private AbstractKunde Kunde_ID;
-		private Date Bestelldatum;
+		private AbstractKunde kundeid;
+		private Date bestelldatum;
 		
 		
 		public Long getBestellungs_ID() {
-			return Bestellungs_ID;
+			return id;
 		}
 		public void setBestellungs_ID(Long bestellungs_ID) {
-			Bestellungs_ID = bestellungs_ID;
+			id = bestellungs_ID;
 		}
 		public Date getBestelldatum() {
-			return Bestelldatum;
+			return bestelldatum;
 		}
 		public void setBestelldatum(Date bestelldatum) {
-			Bestelldatum = bestelldatum;
+			this.bestelldatum = bestelldatum;
 		}
-		public boolean isStatus() {
-			return Status;
+		public StatusType isStatus() {
+			return status;
 		}
-		public void setStatus(boolean status) {
-			Status = status;
+		public void setStatus(StatusType status) {
+			this.status = status;
 		}
 		public Long getVersion() {
-			return Version;
+			return version;
 		}
 		public void setVersion(Long version) {
-			Version = version;
+			this.version = version;
 		}
 		public double getGesamtpreis() {
-			return Gesamtpreis;
+			return gesamtpreis;
 		}
 		public void setGesamtpreis(double gesamtpreis) {
-			Gesamtpreis = gesamtpreis;
+			this.gesamtpreis = gesamtpreis;
 		}
 		public Timestamp getAktualisiert() {
 			return aktualisiert;
@@ -53,10 +53,10 @@ public class Bestellung {
 			this.aktualisiert = aktualisiert;
 		}
 		public AbstractKunde getKunde_ID() {
-			return Kunde_ID;
+			return kundeid;
 		}
 		public void setKunde_ID(AbstractKunde kunde_ID) {
-			Kunde_ID = kunde_ID;
+			this.kundeid = kundeid;
 		}
 		
 		
@@ -66,7 +66,7 @@ public class Bestellung {
 			int result = 1;
 			result = prime
 					* result
-					+ ((Bestellungs_ID == null) ? 0 : Bestellungs_ID.hashCode());
+					+ ((id == null) ? 0 : id.hashCode());
 			return result;
 		}
 		@Override
@@ -78,20 +78,18 @@ public class Bestellung {
 			if (getClass() != obj.getClass())
 				return false;
 			Bestellung other = (Bestellung) obj;
-			if (Bestellungs_ID == null) {
-				if (other.Bestellungs_ID != null)
+			if (id == null) {
+				if (other.id != null)
 					return false;
-			} else if (!Bestellungs_ID.equals(other.Bestellungs_ID))
+			} else if (!id.equals(other.id))
 				return false;
 			return true;
 		}
 		@Override
 		public String toString() {
-			return "Bestellung [Bestellungs_ID=" + Bestellungs_ID
-					+ ", Kunde_ID=" + Kunde_ID + ", Bestelldatum="
-					+ Bestelldatum + ", Status=" + Status + ", Version="
-					+ Version + ", Gesamtpreis=" + Gesamtpreis
-					+ ", aktualisiert=" + aktualisiert + "]";
+			return "Bestellung [id=" + id + ", status=" + status 
+					+ ", version=" + version + ", gesamtpreis=" + gesamtpreis 
+					+ ", bestelldatum=" + bestelldatum + "]";
 		}
 			
 }

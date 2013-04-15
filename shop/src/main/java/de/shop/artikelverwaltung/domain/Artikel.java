@@ -16,18 +16,6 @@ public class Artikel {
 	private Date erstellt;
 	private Timestamp aktualisiert;
 	
-	public Artikel(Long id, String bezeichnung, String kategorie, String farbe, double preis,
-			boolean verfügbar, Date erstellt, Timestamp aktualisiert) {
-		super();
-		this.id = id;
-		this.bezeichnung = bezeichnung;
-		this.kategorie = kategorie;
-		this.farbe = farbe;
-		this.preis = preis;
-		this.verfügbar = verfügbar;
-		this.erstellt = erstellt;
-		this.aktualisiert = aktualisiert;
-	}
 	
 	public Long getId() {
 		return id;
