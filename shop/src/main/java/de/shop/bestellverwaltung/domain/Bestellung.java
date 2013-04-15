@@ -52,10 +52,10 @@ public class Bestellung implements Serializable {
 		public void setVersion(Long version) {
 			this.version = version;
 		}
-		public double getGesamtpreis() {
+		public Double getGesamtpreis() {
 			return gesamtpreis;
 		}
-		public void setGesamtpreis(double gesamtpreis) {
+		public void setGesamtpreis(Double gesamtpreis) {
 			this.gesamtpreis = gesamtpreis;
 		}
 		public Timestamp getAktualisiert() {
