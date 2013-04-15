@@ -28,11 +28,14 @@ public final class Mock {
 		
 		final AbstractKunde kunde = id % 2 == 1 ? new Privatkunde() : new Firmenkunde();
 		kunde.setId(id);
+		kunde.setVorname("Vorname" + id);
 		kunde.setNachname("Nachname" + id);
 		kunde.setEmail("" + id + "@hska.de");
 		
 		final Adresse adresse = new Adresse();
 		adresse.setId(id + 1);        // andere ID fuer die Adresse
+		adresse.setStrasse("Silverline");
+		adresse.setHausnr ("2");
 		adresse.setPlz("12345");
 		adresse.setOrt("Testort");
 		adresse.setKunde(kunde);

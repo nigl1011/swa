@@ -66,6 +66,7 @@ public class KundeResource {
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
 		final AbstractKunde kunde = Mock.findKundeById(id);
+		//Prüfung ob der Kunde angelegt ist
 		if (kunde == null) {
 			throw new NotFoundException("Kein Kunde mit der ID " + id + " gefunden.");
 		}
@@ -76,6 +77,7 @@ public class KundeResource {
 	}
 	
 	@GET
+	//Kunden anhand des Nachnamen finden
 	public Collection<AbstractKunde> findKundenByNachname(@QueryParam("nachname") @DefaultValue("") String nachname) {
 		@SuppressWarnings("unused")
 		final Locale locale = localeHelper.getLocale(headers);
