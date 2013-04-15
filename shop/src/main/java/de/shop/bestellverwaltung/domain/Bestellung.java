@@ -2,22 +2,19 @@ package de.shop.bestellverwaltung.domain;
 
 import java.security.Timestamp;
 import java.util.Date;
-
+import org.codehaus.jackson.annotate.JsonIgnore;
 import de.shop.kundenverwaltung.domain.AbstractKunde;
 
 public class Bestellung {
-	
-
-
 		private Long Bestellungs_ID;
-		private AbstractKunde Kunde_ID;
-		private Date Bestelldatum;
 		private boolean Status;
 		private Long Version;
 		private double Gesamtpreis;
 		private Timestamp aktualisiert;
+		@JsonIgnore
+		private AbstractKunde Kunde_ID;
+		private Date Bestelldatum;
 		
-		//JsonIgnore
 		
 		public Long getBestellungs_ID() {
 			return Bestellungs_ID;

@@ -125,4 +125,9 @@ public final class Mock {
 	}
 
 	private Mock() { /**/ }
+
+	public static Bestellung createBestellung(Bestellung bestellung) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
