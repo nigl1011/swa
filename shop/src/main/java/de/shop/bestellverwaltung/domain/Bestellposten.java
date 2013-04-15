@@ -3,43 +3,43 @@ package de.shop.bestellverwaltung.domain;
 
 public class Bestellposten {
 
-	private Long Positions_ID;
-	private Long Menge;
-	private Long Version;
-	private Long Zwischenpreis;
-	private Bestellung Bestellung_ID;
+	private Long id;
+	private Long menge;
+	private Long version;
+	private Long zwischenpreis;
+	private Bestellung bestellungId;
 	
 	
 	
 	public Long getPositions_ID() {
-		return Positions_ID;
+		return id;
 	}
 	public void setPositions_ID(Long positions_ID) {
-		Positions_ID = positions_ID;
+		id = positions_ID;
 	}
 	public Long getMenge() {
-		return Menge;
+		return menge;
 	}
 	public void setMenge(Long menge) {
-		Menge = menge;
+		this.menge = menge;
 	}
 	public Long getVersion() {
-		return Version;
+		return version;
 	}
 	public void setVersion(Long version) {
-		Version = version;
+		this.version = version;
 	}
 	public Long getZwischenpreis() {
-		return Zwischenpreis;
+		return zwischenpreis;
 	}
 	public void setZwischenpreis(Long zwischenpreis) {
-		Zwischenpreis = zwischenpreis;
+		this.zwischenpreis = zwischenpreis;
 	}
 	public Bestellung getBestellung_ID() {
-		return Bestellung_ID;
+		return bestellungId;
 	}
 	public void setBestellung_ID(Bestellung bestellung_ID) {
-		Bestellung_ID = bestellung_ID;
+		bestellungId = bestellung_ID;
 	}
 	
 	
@@ -48,7 +48,7 @@ public class Bestellposten {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((Positions_ID == null) ? 0 : Positions_ID.hashCode());
+				+ ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 	@Override
@@ -60,18 +60,18 @@ public class Bestellposten {
 		if (getClass() != obj.getClass())
 			return false;
 		Bestellposten other = (Bestellposten) obj;
-		if (Positions_ID == null) {
-			if (other.Positions_ID != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!Positions_ID.equals(other.Positions_ID))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
-		return "Bestellposten [Positions_ID=" + Positions_ID + ", Menge="
-				+ Menge + ", Version=" + Version + ", Zwischenpreis="
-				+ Zwischenpreis + ", Bestellung_ID=" + Bestellung_ID + "]";
+		return "Bestellposten [Positions_ID=" + id + ", Menge="
+				+ menge + ", Version=" + version + ", Zwischenpreis="
+				+ zwischenpreis + ", Bestellung_ID=" + bestellungId + "]";
 	}	
 }
 
