@@ -1,26 +1,34 @@
 package de.shop.bestellverwaltung.domain;
 
+import java.io.Serializable;
+import java.net.URI;
 import java.security.Timestamp;
 import java.util.Date;
-import org.codehaus.jackson.annotate.JsonIgnore;
+
 import de.shop.kundenverwaltung.domain.AbstractKunde;
 
-public class Bestellung {
+public class Bestellung implements Serializable {
+
+
+	private static final long serialVersionUID = 1L;
+	
 		private Long id;
 		private StatusType status;
 		private Long version;
 		private double gesamtpreis;
 		private Timestamp aktualisiert;
-		@JsonIgnore
-		private AbstractKunde kundeid;
+		
+		private AbstractKunde kunde;
+		private URI kundeUri;
+		
 		private Date bestelldatum;
 		
 		
-		public Long getBestellungs_ID() {
+		public Long getId() {
 			return id;
 		}
-		public void setBestellungs_ID(Long bestellungs_ID) {
-			id = bestellungs_ID;
+		public void setId(Long id) {
+			this.id = id;
 		}
 		public Date getBestelldatum() {
 			return bestelldatum;
@@ -52,12 +60,19 @@ public class Bestellung {
 		public void setAktualisiert(Timestamp aktualisiert) {
 			this.aktualisiert = aktualisiert;
 		}
-		public AbstractKunde getKunde_ID() {
-			return kundeid;
+		public AbstractKunde getKunde() {
+			return kunde;
 		}
-		public void setKunde_ID(AbstractKunde kunde_ID) {
-			this.kundeid = kundeid;
+		public void setKunde(AbstractKunde kunde) {
+			this.kunde = kunde;
 		}
+		public URI getKundeUri() {
+			return kundeUri;
+		}
+		public void setKundeUri(URI kundeUri) {
+			this.kundeUri = kundeUri;
+		}
+
 		
 		
 		@Override
@@ -87,9 +102,11 @@ public class Bestellung {
 		}
 		@Override
 		public String toString() {
-			return "Bestellung [id=" + id + ", status=" + status 
-					+ ", version=" + version + ", gesamtpreis=" + gesamtpreis 
-					+ ", bestelldatum=" + bestelldatum + "]";
+			return "Bestellung [id=" + id + ", status=" + status + ", version="
+					+ version + ", gesamtpreis=" + gesamtpreis + ", kundeUri="
+					+ kundeUri + ", bestelldatum=" + bestelldatum + "]";
 		}
+
+
 			
 }
