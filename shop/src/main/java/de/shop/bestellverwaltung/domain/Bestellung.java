@@ -5,6 +5,8 @@ import java.net.URI;
 import java.security.Timestamp;
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import de.shop.kundenverwaltung.domain.AbstractKunde;
 
 public class Bestellung implements Serializable {
@@ -13,9 +15,11 @@ public class Bestellung implements Serializable {
 		private Long id;
 		private StatusType status;
 		private Long version;
-		private double gesamtpreis;
+		private Double gesamtpreis;
 		private Timestamp aktualisiert;
 		
+		
+		@JsonIgnore
 		private AbstractKunde kunde;
 		private URI kundeUri;
 		
@@ -34,7 +38,9 @@ public class Bestellung implements Serializable {
 		public void setBestelldatum(Date bestelldatum) {
 			this.bestelldatum = bestelldatum;
 		}
-		public StatusType isStatus() {
+		
+
+		public StatusType getStatus() {
 			return status;
 		}
 		public void setStatus(StatusType status) {
@@ -103,8 +109,8 @@ public class Bestellung implements Serializable {
 			return "Bestellung [id=" + id + ", status=" + status + ", version="
 					+ version + ", gesamtpreis=" + gesamtpreis + ", kundeUri="
 					+ kundeUri + ", bestelldatum=" + bestelldatum + "]";
+
+
 		}
-
-
 			
 }
