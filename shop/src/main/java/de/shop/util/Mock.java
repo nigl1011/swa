@@ -12,6 +12,7 @@ import de.shop.kundenverwaltung.domain.Adresse;
 import de.shop.kundenverwaltung.domain.Firmenkunde;
 import de.shop.kundenverwaltung.domain.HobbyType;
 import de.shop.kundenverwaltung.domain.Privatkunde;
+import de.shop.artikelverwaltung.domain.Artikel;
 
 /**
  * Emulation des Anwendungskerns
@@ -20,6 +21,7 @@ public final class Mock {
 	private static final int MAX_ID = 99;
 	private static final int MAX_KUNDEN = 8;
 	private static final int MAX_BESTELLUNGEN = 4;
+	private static final int MAX_ARTIKEL = 5;
 
 	public static AbstractKunde findKundeById(Long id) {
 		if (id > MAX_ID) {
@@ -133,4 +135,48 @@ public final class Mock {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	//Mock: Artikel
+			public static Artikel findArtikelById(Long id) {
+				if (id > MAX_ID) {
+					return null;
+				}
+				final Artikel artikel = new Artikel();
+				artikel.setId(id);
+				
+				return artikel;
+			}
+			public static Collection<Artikel> findArtikelByBezeichnung(String bezeichnung) {
+				final int anzahl = bezeichnung.length();
+				final Collection<Artikel> allArtikel = new ArrayList<>(anzahl);
+				for (int i = 1; i <= anzahl; i++) {
+					final Artikel artikel = findArtikelById(Long.valueOf(i));
+					artikel.setKategorie(bezeichnung);
+					allArtikel.add(artikel);			
+				}
+				return allArtikel;
+			}
+			public static Collection<Artikel> findArtikelByKategorie(String kategorie) {
+				final int anzahl = kategorie.length();
+				final Collection<Artikel> allArtikel = new ArrayList<>(anzahl);
+				for (int i = 1; i <= anzahl; i++) {
+					final Artikel artikel = findArtikelById(Long.valueOf(i));
+					artikel.setKategorie(kategorie);
+					allArtikel.add(artikel);			
+				}
+				return allArtikel;
+			}
+			public static Collection<Artikel> findAllArtikel() {
+				final int anzahl = MAX_ARTIKEL;
+				final Collection<Artikel> allArtikel = new ArrayList<>(anzahl);
+				for (int i = 1; i <= anzahl; i++) {
+					final Artikel artikel = findArtikelById(Long.valueOf(i));
+					allArtikel.add(artikel);			
+				}
+				return allArtikel;
+			}
+			public static void updateArtikel(Artikel artikel) {
+				System.out.println("Aktualisierter Artikel: " + artikel);
+			}
+	
 }
