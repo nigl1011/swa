@@ -177,6 +177,15 @@ public final class Mock {
 			}
 			public static void updateArtikel(Artikel artikel) {
 				System.out.println("Aktualisierter Artikel: " + artikel);
+			
+			}
+			public static Artikel createArtikel(Artikel artikel) {
+				// Neue IDs fuer Artikel 
+				final String bezeichnung = artikel.getBezeichnung();
+				artikel.setId(Long.valueOf(bezeichnung.length()));
+				
+				System.out.println("Neuer Artikel: " + artikel);
+				return artikel;
 			}
 	
 }
