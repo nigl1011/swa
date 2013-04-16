@@ -21,7 +21,7 @@ public class UriHelperLieferung {
 		// URL fuer Bestellung setzen
 		final Bestellung bestellung = lieferung.getBestellungsId();
 		if (bestellung != null) {
-			final URI bestellungUri = uriHelperBestellung.getUriBestellung(lieferung.getBestellungsId(), uriInfo);
+			final URI BestellungUri = uriHelperBestellung.getUriBestellung(lieferung.getBestellungsId(), uriInfo);
 			// TODO lieferung.setBestellungUri(bestellungUri)
 						//lieferung.setBestellungUri(bestellungUri);
 		}
