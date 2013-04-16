@@ -64,20 +64,6 @@ public abstract class AbstractKunde implements Serializable {
 	public void setGeschlecht(GeschlechtType geschlecht) {
 		this.geschlecht = geschlecht;
 	}
-	/*public String getEintrittsdatum() {
-		return eintrittsdatum;
-	}
-	public void setEintrittsdatum(String eintrittsdatum) {
-		this.eintrittsdatum = eintrittsdatum;
-	}
-	
-	public Timestamp getAktualisiert() {
-		return aktualisiert;
-	}
-	public void setAktualisiert(Timestamp aktualisiert) {
-		this.aktualisiert = aktualisiert;
-	}*/
-	
 	public String getEmail() {
 		return email;
 	}
@@ -107,10 +93,6 @@ public abstract class AbstractKunde implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		//result = prime * result
-			//	+ ((aktualisiert == null) ? 0 : aktualisiert.hashCode());
-		//result = prime * result
-			//	+ ((eintrittsdatum == null) ? 0 : eintrittsdatum.hashCode());
 		result = prime * result + ((adresse == null) ? 0 : adresse.hashCode());
 		result = prime * result
 				+ ((bestellungen == null) ? 0 : bestellungen.hashCode());
@@ -135,16 +117,6 @@ public abstract class AbstractKunde implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		AbstractKunde other = (AbstractKunde) obj;
-		/*if (aktualisiert == null) {
-			if (other.aktualisiert != null)
-				return false;
-		} else if (!aktualisiert.equals(other.aktualisiert))
-			return false;
-		if (eintrittsdatum == null) {
-			if (other.eintrittsdatum != null)
-				return false;
-		} else if (!eintrittsdatum.equals(other.eintrittsdatum))
-			return false;*/
 		if (adresse == null) {
 			if (other.adresse != null)
 				return false;
