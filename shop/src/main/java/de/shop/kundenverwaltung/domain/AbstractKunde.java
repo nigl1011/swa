@@ -25,11 +25,10 @@ public abstract class AbstractKunde implements Serializable {
 	private Long id;
 	private String vorname;
 	private String nachname;
-	private String geburtsdatum;
 	private GeschlechtType geschlecht;
 	private String email;
-	private String eintrittsdatum;
-	private Timestamp aktualisiert;
+	//private String eintrittsdatum;
+	//private Timestamp aktualisiert;
 	
 	private Adresse adresse;
 	
@@ -57,19 +56,14 @@ public abstract class AbstractKunde implements Serializable {
 	public void setVorname(String vorname) {
 		this.vorname = vorname;
 	}
-	public String getGeburtsdatum() {
-		return geburtsdatum;
-	}
-	public void setGeburtsdatum(String geburtsdatum) {
-		this.geburtsdatum = geburtsdatum;
-	}
+	
 	public GeschlechtType getGeschlecht() {
 		return geschlecht;
 	}
 	public void setGeschlecht(GeschlechtType geschlecht) {
 		this.geschlecht = geschlecht;
 	}
-	public String getEintrittsdatum() {
+	/*public String getEintrittsdatum() {
 		return eintrittsdatum;
 	}
 	public void setEintrittsdatum(String eintrittsdatum) {
@@ -81,7 +75,8 @@ public abstract class AbstractKunde implements Serializable {
 	}
 	public void setAktualisiert(Timestamp aktualisiert) {
 		this.aktualisiert = aktualisiert;
-	}
+	}*/
+	
 	public String getEmail() {
 		return email;
 	}
@@ -111,18 +106,16 @@ public abstract class AbstractKunde implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((aktualisiert == null) ? 0 : aktualisiert.hashCode());
-		result = prime * result
-				+ ((eintrittsdatum == null) ? 0 : eintrittsdatum.hashCode());
+		//result = prime * result
+			//	+ ((aktualisiert == null) ? 0 : aktualisiert.hashCode());
+		//result = prime * result
+			//	+ ((eintrittsdatum == null) ? 0 : eintrittsdatum.hashCode());
 		result = prime * result + ((adresse == null) ? 0 : adresse.hashCode());
 		result = prime * result
 				+ ((bestellungen == null) ? 0 : bestellungen.hashCode());
 		result = prime * result
 				+ ((bestellungenUri == null) ? 0 : bestellungenUri.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result
-				+ ((geburtsdatum == null) ? 0 : geburtsdatum.hashCode());
 		result = prime * result
 				+ ((geschlecht == null) ? 0 : geschlecht.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -141,7 +134,7 @@ public abstract class AbstractKunde implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		AbstractKunde other = (AbstractKunde) obj;
-		if (aktualisiert == null) {
+		/*if (aktualisiert == null) {
 			if (other.aktualisiert != null)
 				return false;
 		} else if (!aktualisiert.equals(other.aktualisiert))
@@ -150,7 +143,7 @@ public abstract class AbstractKunde implements Serializable {
 			if (other.eintrittsdatum != null)
 				return false;
 		} else if (!eintrittsdatum.equals(other.eintrittsdatum))
-			return false;
+			return false;*/
 		if (adresse == null) {
 			if (other.adresse != null)
 				return false;
@@ -170,11 +163,6 @@ public abstract class AbstractKunde implements Serializable {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
-			return false;
-		if (geburtsdatum == null) {
-			if (other.geburtsdatum != null)
-				return false;
-		} else if (!geburtsdatum.equals(other.geburtsdatum))
 			return false;
 		if (geschlecht == null) {
 			if (other.geschlecht != null)
@@ -202,7 +190,7 @@ public abstract class AbstractKunde implements Serializable {
 	@Override
 	public String toString() {
 		return "AbstractKunde [id=" + id + ", vorname=" + vorname
-				+ ", nachname=" + nachname + ", geburtsdatum=" + geburtsdatum
+				+ ", nachname=" + nachname
 				+ ", geschlecht=" + geschlecht + ", email=" + email
 				+ ", adresse=" + adresse + ", bestellungenUri=" + bestellungenUri + "]";
 	}
