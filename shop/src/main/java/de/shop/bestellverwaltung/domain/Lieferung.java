@@ -7,6 +7,8 @@ import java.net.URI;
 import java.security.Timestamp;
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 
 public class Lieferung implements Serializable {
 	 
@@ -15,11 +17,12 @@ public class Lieferung implements Serializable {
 	private Long id;
 	private Date lieferdatum;
 	private Timestamp aktuell;
-	private Bestellung BestellungsId;
 	
 	
+	@JsonIgnore
+	private Bestellung bestellung;
+	private URI bestellungUri;
 	
-	//private URI bestellungUri;
 	
 	/*public Lieferung(Long id, Date lieferdatum, Timestamp aktuell) {
 		super();
@@ -46,18 +49,24 @@ public class Lieferung implements Serializable {
 	public void setAktuell(Timestamp aktuell) {
 		this.aktuell = aktuell;
 	}	
-	public Bestellung getBestellungsId() {
-		return BestellungsId;
+	public Bestellung getBestellung() {
+		return bestellung;
 	}
-	public void setBestellungsId(Bestellung bestellungsId) {
-		BestellungsId = bestellungsId;
+	public void setBestellung(Bestellung bestellung) {
+		this.bestellung = bestellung;
+	}
+	public URI getBestellungUri() {
+		return bestellungUri;
+	}
+	public void setBestellungUri(URI bestellungUri) {
+		this.bestellungUri = bestellungUri;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((BestellungsId == null) ? 0 : BestellungsId.hashCode());
+				+ ((bestellung == null) ? 0 : bestellung.hashCode());
 		result = prime * result + ((aktuell == null) ? 0 : aktuell.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
@@ -75,10 +84,10 @@ public class Lieferung implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Lieferung other = (Lieferung) obj;
-		if (BestellungsId == null) {
-			if (other.BestellungsId != null)
+		if (bestellung == null) {
+			if (other.bestellung != null)
 				return false;
-		} else if (!BestellungsId.equals(other.BestellungsId))
+		} else if (!bestellung.equals(other.bestellung))
 			return false;
 		if (aktuell == null) {
 			if (other.aktuell != null)
@@ -101,16 +110,9 @@ public class Lieferung implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Lieferung [id=" + id + ", lieferdatum=" + lieferdatum + "]";
+		return "Lieferung [id=" + id + ", lieferdatum=" + lieferdatum
+				+ ", bestellungUri=" + bestellungUri + "]";
 	}
-	/*public Lieferung(Long id, Date lieferdatum, Timestamp aktuell,
-			Bestellung bestellungsId) {
-		super();
-		this.id = id;
-		this.lieferdatum = lieferdatum;
-		this.aktuell = aktuell;
-		BestellungsId = bestellungsId;
-	}
-	*/
+
 
 }

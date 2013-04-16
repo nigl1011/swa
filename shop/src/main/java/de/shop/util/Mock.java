@@ -204,13 +204,13 @@ public final class Mock {
 				
 				return lieferung;
 			}
-			public static Artikel createLieferung(Lieferung lieferung) {
+			public static Lieferung createLieferung(Lieferung lieferung) {
 				// Neue IDs fuer Artikel 
-				final String bezeichnung = artikel.getBezeichnung();
-				artikel.setId(Long.valueOf(bezeichnung.length()));
+				final Long id = lieferung.getId();
+				lieferung.setId(Long.valueOf(id.length()));
 				
-				System.out.println("Neuer Artikel: " + artikel);
-				return artikel;
+				System.out.println("Neuer Artikel: " + lieferung);
+				return lieferung;
 			}
 			public static void updateLieferung(Lieferung lieferung) {
 				System.out.println("Aktualisierte Lieferungung: " + lieferung);
