@@ -3,7 +3,6 @@ package de.shop.kundenverwaltung.domain;
 import java.io.Serializable;
 import java.net.URI;
 import java.security.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -26,10 +25,10 @@ public abstract class AbstractKunde implements Serializable {
 	private Long id;
 	private String vorname;
 	private String nachname;
-	private Date geburtsdatum;
+	private String geburtsdatum;
 	private GeschlechtType geschlecht;
 	private String email;
-	private Date eintrittsdatum;
+	private String eintrittsdatum;
 	private Timestamp aktualisiert;
 	
 	private Adresse adresse;
@@ -58,10 +57,10 @@ public abstract class AbstractKunde implements Serializable {
 	public void setVorname(String vorname) {
 		this.vorname = vorname;
 	}
-	public Date getGeburtsdatum() {
+	public String getGeburtsdatum() {
 		return geburtsdatum;
 	}
-	public void setGeburtsdatum(Date geburtsdatum) {
+	public void setGeburtsdatum(String geburtsdatum) {
 		this.geburtsdatum = geburtsdatum;
 	}
 	public GeschlechtType getGeschlecht() {
@@ -70,10 +69,10 @@ public abstract class AbstractKunde implements Serializable {
 	public void setGeschlecht(GeschlechtType geschlecht) {
 		this.geschlecht = geschlecht;
 	}
-	public Date getEintrittsdatum() {
+	public String getEintrittsdatum() {
 		return eintrittsdatum;
 	}
-	public void setEintrittsdatum(Date eintrittsdatum) {
+	public void setEintrittsdatum(String eintrittsdatum) {
 		this.eintrittsdatum = eintrittsdatum;
 	}
 	
@@ -207,6 +206,11 @@ public abstract class AbstractKunde implements Serializable {
 				+ ", geschlecht=" + geschlecht + ", email=" + email
 				+ ", adresse=" + adresse + ", bestellungenUri=" + bestellungenUri + "]";
 	}
-
-
+	
+/*	SimpleDateFormat sd = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+	String dateString = sd.format(new Date()); 
+	System.out.println(dateString);
+	// Und zurück:
+	Date date = sd.parse(dateString);
+*/
 }
