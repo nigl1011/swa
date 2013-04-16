@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
+import de.shop.bestellverwaltung.domain.Lieferung;
 import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.kundenverwaltung.domain.Adresse;
 import de.shop.kundenverwaltung.domain.Firmenkunde;
@@ -187,5 +188,34 @@ public final class Mock {
 				System.out.println("Neuer Artikel: " + artikel);
 				return artikel;
 			}
+			
+			//Mock Lieferung
+			
+			public static Lieferung findLieferungById(Long id) {
+				if (id > MAX_ID) {
+					return null;
+				}
+
+				final AbstractKunde kunde = findKundeById(id + 1);  // andere ID fuer den Kunden
+
+				final Lieferung lieferung = new Lieferung();
+				lieferung.setId(id);
+				
+				
+				return lieferung;
+			}
+			public static Artikel createLieferung(Lieferung lieferung) {
+				// Neue IDs fuer Artikel 
+				final String bezeichnung = artikel.getBezeichnung();
+				artikel.setId(Long.valueOf(bezeichnung.length()));
+				
+				System.out.println("Neuer Artikel: " + artikel);
+				return artikel;
+			}
+			public static void updateLieferung(Lieferung lieferung) {
+				System.out.println("Aktualisierte Lieferungung: " + lieferung);
+			}
+			
+			
 	
 }

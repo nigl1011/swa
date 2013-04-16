@@ -1,23 +1,29 @@
 package de.shop.bestellverwaltung.domain;
 
 
+
+import java.io.Serializable;
 import java.security.Timestamp;
 import java.util.Date;
 
-public class Lieferung {
+
+public class Lieferung implements Serializable {
+	 
 	
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Date lieferdatum;
 	private Timestamp aktuell;
-	private Bestellung Bestellungs_ID;
+	private Bestellung BestellungsId;
 	
 	
-	public Lieferung(Long id, Date lieferdatum, Timestamp aktuell) {
+	/*public Lieferung(Long id, Date lieferdatum, Timestamp aktuell) {
 		super();
 		this.id = id;
 		this.lieferdatum = lieferdatum;
 		this.aktuell = aktuell;
 	}
+	*/
 	public Long getId() {
 		return id;
 	}
@@ -35,21 +41,19 @@ public class Lieferung {
 	}
 	public void setAktuell(Timestamp aktuell) {
 		this.aktuell = aktuell;
+	}	
+	public Bestellung getBestellungsId() {
+		return BestellungsId;
 	}
-	
-	
-	public Bestellung getBestellungs_ID() {
-		return Bestellungs_ID;
-	}
-	public void setBestellungs_ID(Bestellung bestellungs_ID) {
-		Bestellungs_ID = bestellungs_ID;
+	public void setBestellungsId(Bestellung bestellungsId) {
+		BestellungsId = bestellungsId;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((Bestellungs_ID == null) ? 0 : Bestellungs_ID.hashCode());
+				+ ((BestellungsId == null) ? 0 : BestellungsId.hashCode());
 		result = prime * result + ((aktuell == null) ? 0 : aktuell.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
@@ -67,10 +71,10 @@ public class Lieferung {
 		if (getClass() != obj.getClass())
 			return false;
 		Lieferung other = (Lieferung) obj;
-		if (Bestellungs_ID == null) {
-			if (other.Bestellungs_ID != null)
+		if (BestellungsId == null) {
+			if (other.BestellungsId != null)
 				return false;
-		} else if (!Bestellungs_ID.equals(other.Bestellungs_ID))
+		} else if (!BestellungsId.equals(other.BestellungsId))
 			return false;
 		if (aktuell == null) {
 			if (other.aktuell != null)
@@ -95,14 +99,14 @@ public class Lieferung {
 	public String toString() {
 		return "Lieferung [id=" + id + ", lieferdatum=" + lieferdatum + "]";
 	}
-	public Lieferung(Long id, Date lieferdatum, Timestamp aktuell,
-			Bestellung bestellungs_ID) {
+	/*public Lieferung(Long id, Date lieferdatum, Timestamp aktuell,
+			Bestellung bestellungsId) {
 		super();
 		this.id = id;
 		this.lieferdatum = lieferdatum;
 		this.aktuell = aktuell;
-		Bestellungs_ID = bestellungs_ID;
+		BestellungsId = bestellungsId;
 	}
-	
+	*/
 
 }

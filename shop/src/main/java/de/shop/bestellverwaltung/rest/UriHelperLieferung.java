@@ -19,9 +19,9 @@ public class UriHelperLieferung {
 	
 	public void updateUriLieferung(Lieferung lieferung, UriInfo uriInfo) {
 		// URL fuer Bestellung setzen
-		final Bestellung bestellung = lieferung.getBestellungs_ID();
+		final Bestellung bestellung = lieferung.getBestellungsId();
 		if (bestellung != null) {
-			final URI bestellungUri = uriHelperBestellung.getUriBestellung(lieferung.getBestellungs_ID(), uriInfo);
+			final URI bestellungUri = uriHelperBestellung.getUriBestellung(lieferung.getBestellungsId(), uriInfo);
 			// TODO lieferung.setBestellungUri(bestellungUri)
 						//lieferung.setBestellungUri(bestellungUri);
 		}
@@ -32,7 +32,7 @@ public class UriHelperLieferung {
 		final UriBuilder ub = uriInfo.getBaseUriBuilder()
 		                             .path(LieferungResource.class)
 		                             .path(LieferungResource.class, "findLieferungById");
-		final URI uri = ub.build(bestellung.getBestellungs_ID());
+		final URI uri = ub.build(Bestellung.getId());
 		return uri;
 	}
 }
