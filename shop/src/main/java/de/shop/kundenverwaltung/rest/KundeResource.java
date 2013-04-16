@@ -39,8 +39,8 @@ public class KundeResource {
 	@Context
 	private UriInfo uriInfo;
 	
-	@Context
-	private HttpHeaders headers;
+	//@Context
+	//private HttpHeaders headers;
 	
 	@Inject
 	private UriHelperKunde uriHelperKunde;
@@ -48,8 +48,8 @@ public class KundeResource {
 	@Inject
 	private UriHelperBestellung uriHelperBestellung;
 	
-	@Inject
-	private LocaleHelper localeHelper;
+	//@Inject
+	//private LocaleHelper localeHelper;
 	
 	@GET
 	@Produces(TEXT_PLAIN)

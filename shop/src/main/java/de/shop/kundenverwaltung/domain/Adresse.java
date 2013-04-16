@@ -1,7 +1,7 @@
 package de.shop.kundenverwaltung.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+//import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
