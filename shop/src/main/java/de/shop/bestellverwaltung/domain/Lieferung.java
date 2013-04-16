@@ -3,6 +3,7 @@ package de.shop.bestellverwaltung.domain;
 
 
 import java.io.Serializable;
+import java.net.URI;
 import java.security.Timestamp;
 import java.util.Date;
 
@@ -16,6 +17,9 @@ public class Lieferung implements Serializable {
 	private Timestamp aktuell;
 	private Bestellung BestellungsId;
 	
+	
+	
+	//private URI bestellungUri;
 	
 	/*public Lieferung(Long id, Date lieferdatum, Timestamp aktuell) {
 		super();
