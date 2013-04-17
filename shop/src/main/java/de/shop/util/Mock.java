@@ -1,7 +1,9 @@
 package de.shop.util;
 
+import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -103,10 +105,13 @@ public final class Mock {
 
 		final Bestellung bestellung = new Bestellung();
 		bestellung.setId(id);
-		
 		bestellung.setKunde(kunde);
 		bestellung.setStatus(StatusType.INBEARBEITUNG);
-		bestellung.setGesamtpreis(12.12);
+		bestellung.setGesamtpreis(12.99);
+		//bestellung.setVersion(null);
+		bestellung.setBestelldatum(new Date());
+		//bestellung.setAktualisiert (new Timestamp(new Date(), null));
+		
 		
 		return bestellung;
 	}
@@ -137,7 +142,17 @@ public final class Mock {
 
 	public static Bestellung createBestellung(Bestellung bestellung) {
 		// TODO Auto-generated method stub
-		return null;
+		final Long id = bestellung.getId();
+		bestellung.setId(id);
+		final StatusType status=bestellung.getStatus();
+		bestellung.setStatus(status);
+		final Long version = bestellung.getVersion();
+		bestellung.setVersion(version);
+		final double gesamtpreis = bestellung.getGesamtpreis();
+		bestellung.setGesamtpreis(gesamtpreis);
+		final Timestamp aktualisiert = bestellung.getAktualisiert();
+		bestellung.setAktualisiert(aktualisiert);
+		return bestellung;
 	}
 	
 	//Mock: Artikel
