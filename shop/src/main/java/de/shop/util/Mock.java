@@ -162,6 +162,13 @@ public final class Mock {
 				}
 				final Artikel artikel = new Artikel();
 				artikel.setId(id);
+				artikel.setBezeichnung("Tisch");
+				artikel.setKategorie("Holzmöbel");
+				artikel.setFarbe("blau");
+				artikel.setPreis(12.1);
+				artikel.setVerfügbar(true);
+				artikel.setErstellt(null);
+				artikel.setAktualisiert(null);
 				
 				return artikel;
 			}
