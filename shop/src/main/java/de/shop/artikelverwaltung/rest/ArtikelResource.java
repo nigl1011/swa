@@ -10,7 +10,6 @@ import java.util.Locale;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -25,8 +24,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import de.shop.artikelverwaltung.domain.Artikel;
-import de.shop.artikelverwaltung.rest.UriHelperArtikel;
-import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.util.LocaleHelper;
 import de.shop.util.Mock;
 import de.shop.util.NotFoundException;
@@ -74,7 +71,8 @@ public class ArtikelResource {
 	}
 	
 	@GET
-	public Collection<Artikel> findArtikelByBezeichnung(@QueryParam("bezeichnung") @DefaultValue("") String bezeichnung) {
+	public Collection<Artikel> findArtikelByBezeichnung(@QueryParam("bezeichnung") 
+	@DefaultValue("") String bezeichnung) {
 		@SuppressWarnings("unused")
 		final Locale locale = localeHelper.getLocale(headers);
 		

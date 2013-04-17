@@ -1,8 +1,10 @@
 package de.shop.artikelverwaltung.domain;
 
 import java.net.URI;
+
+//import static javax.persistence.TemporalType.TIMESTAMP;
+
 import java.security.Timestamp;
-import java.util.Date;
 
 
 public class Artikel {
@@ -11,9 +13,9 @@ public class Artikel {
 	private String bezeichnung;
 	private String kategorie;
 	private String farbe;
-	private double preis;
-	private boolean verfügbar;
-	private Date erstellt;
+	private Double preis;
+	private Boolean verfuegbar;
+	private Timestamp erstellt;
 	private Timestamp aktualisiert;
 	
 	
@@ -41,22 +43,22 @@ public class Artikel {
 	public void setFarbe(String farbe) {
 		this.farbe = farbe;
 	}
-	public double getPreis() {
+	public Double getPreis() {
 		return preis;
 	}
-	public void setPreis(double preis) {
+	public void setPreis(Double preis) {
 		this.preis = preis;
 	}
-	public boolean isVerfügbar() {
-		return verfügbar;
+	public Boolean isVerfuegbar() {
+		return verfuegbar;
 	}
-	public void setVerfügbar(boolean verfügbar) {
-		this.verfügbar = verfügbar;
+	public void setVerfuegbar(Boolean verfuegbar) {
+		this.verfuegbar = verfuegbar;
 	}
-	public Date getErstellt() {
+	public Timestamp getErstellt() {
 		return erstellt;
 	}
-	public void setErstellt(Date erstellt) {
+	public void setErstellt(Timestamp erstellt) {
 		this.erstellt = erstellt;
 	}
 	public Timestamp getAktualisiert() {
@@ -66,6 +68,19 @@ public class Artikel {
 		this.aktualisiert = aktualisiert;
 	}
 
+
+
+	@Override
+	public String toString() {
+		return "Artikel [id=" + id + ", bezeichnung=" + bezeichnung
+				+ ", kategorie=" + kategorie + ", farbe=" + farbe + ", preis="
+				+ preis + ", verfügbar=" + verfuegbar + ", erstellt=" + erstellt
+				+ ", aktualisiert=" + aktualisiert + "]";
+	}
+
+	public void setArtikelUri(URI artikelUri) {
+		// TODO Auto-generated method stub
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -80,13 +95,11 @@ public class Artikel {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((kategorie == null) ? 0 : kategorie.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(preis);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + (verfügbar ? 1231 : 1237);
+		result = prime * result + ((preis == null) ? 0 : preis.hashCode());
+		result = prime * result
+				+ ((verfuegbar == null) ? 0 : verfuegbar.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -95,54 +108,55 @@ public class Artikel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Artikel other = (Artikel) obj;
+		final Artikel other = (Artikel) obj;
 		if (aktualisiert == null) {
 			if (other.aktualisiert != null)
 				return false;
-		} else if (!aktualisiert.equals(other.aktualisiert))
+		}
+		else if (!aktualisiert.equals(other.aktualisiert))
 			return false;
 		if (bezeichnung == null) {
 			if (other.bezeichnung != null)
 				return false;
-		} else if (!bezeichnung.equals(other.bezeichnung))
+		}
+		else if (!bezeichnung.equals(other.bezeichnung))
 			return false;
 		if (erstellt == null) {
 			if (other.erstellt != null)
 				return false;
-		} else if (!erstellt.equals(other.erstellt))
+		}
+		else if (!erstellt.equals(other.erstellt))
 			return false;
 		if (farbe == null) {
 			if (other.farbe != null)
 				return false;
-		} else if (!farbe.equals(other.farbe))
+		}
+		else if (!farbe.equals(other.farbe))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		}
+		else if (!id.equals(other.id))
 			return false;
 		if (kategorie == null) {
 			if (other.kategorie != null)
 				return false;
-		} else if (!kategorie.equals(other.kategorie))
+		}
+		else if (!kategorie.equals(other.kategorie))
 			return false;
-		if (Double.doubleToLongBits(preis) != Double
-				.doubleToLongBits(other.preis))
+		if (preis == null) {
+			if (other.preis != null)
+				return false;
+		}
+		else if (!preis.equals(other.preis))
 			return false;
-		if (verfügbar != other.verfügbar)
+		if (verfuegbar == null) {
+			if (other.verfuegbar != null)
+				return false;
+		}
+		else if (!verfuegbar.equals(other.verfuegbar))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Artikel [id=" + id + ", bezeichnung=" + bezeichnung
-				+ ", kategorie=" + kategorie + ", farbe=" + farbe + ", preis="
-				+ preis + ", verfügbar=" + verfügbar + ", erstellt=" + erstellt
-				+ ", aktualisiert=" + aktualisiert + "]";
-	}
-
-	public void setArtikelUri(URI artikelUri) {
-		// TODO Auto-generated method stub
 	}
 }
