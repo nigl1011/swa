@@ -8,6 +8,7 @@ import java.util.Set;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.bestellverwaltung.domain.Lieferung;
+import de.shop.bestellverwaltung.domain.StatusType;
 import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.kundenverwaltung.domain.Adresse;
 import de.shop.kundenverwaltung.domain.Firmenkunde;
@@ -104,6 +105,8 @@ public final class Mock {
 		bestellung.setId(id);
 		
 		bestellung.setKunde(kunde);
+		bestellung.setStatus(StatusType.INBEARBEITUNG);
+		bestellung.setGesamtpreis(12.12);
 		
 		return bestellung;
 	}
