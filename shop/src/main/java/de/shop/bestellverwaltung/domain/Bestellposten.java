@@ -59,11 +59,12 @@ public class Bestellposten {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Bestellposten other = (Bestellposten) obj;
+		final Bestellposten other = (Bestellposten) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		}
+		else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

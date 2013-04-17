@@ -33,10 +33,10 @@ public class Bestellung implements Serializable {
 			this.id = id;
 		}
 		public Date getBestelldatum() {
-			return bestelldatum;
+			return (Date) bestelldatum.clone();
 		}
 		public void setBestelldatum(Date bestelldatum) {
-			this.bestelldatum = bestelldatum;
+			this.bestelldatum = (Date) bestelldatum.clone();
 		}
 		
 
@@ -96,11 +96,12 @@ public class Bestellung implements Serializable {
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			Bestellung other = (Bestellung) obj;
+			final Bestellung other = (Bestellung) obj;
 			if (id == null) {
 				if (other.id != null)
 					return false;
-			} else if (!id.equals(other.id))
+			}
+			else if (!id.equals(other.id))
 				return false;
 			return true;
 		}
@@ -111,6 +112,5 @@ public class Bestellung implements Serializable {
 					+ kundeUri + ", bestelldatum=" + bestelldatum + "]";
 
 
-		}
-			
+		}		
 }
