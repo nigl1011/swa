@@ -207,7 +207,7 @@ public final class Mock {
 			public static Lieferung createLieferung(Lieferung lieferung) {
 				// Neue IDs fuer Artikel 
 				final Long id = lieferung.getId();
-				lieferung.setId(Long.valueOf(id.length()));
+				lieferung.setId(Long.valueOf(id));
 				
 				System.out.println("Neuer Artikel: " + lieferung);
 				return lieferung;
