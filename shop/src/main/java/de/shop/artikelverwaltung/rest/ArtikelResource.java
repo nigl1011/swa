@@ -26,6 +26,7 @@ import javax.ws.rs.core.UriInfo;
 
 import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.artikelverwaltung.rest.UriHelperArtikel;
+import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.util.LocaleHelper;
 import de.shop.util.Mock;
 import de.shop.util.NotFoundException;
@@ -125,6 +126,31 @@ public class ArtikelResource {
 		}
 		
 		return allArtikel;
+	}
+	
+	@POST
+	@Consumes(APPLICATION_JSON)
+	@Produces
+	public Response createArtikel(Artikel artikel) {
+		//@SuppressWarnings("unused")
+		//final Locale locale = localeHelper.getLocale(headers);
+		
+		// TODO Anwendungskern statt Mock, Verwendung von Locale
+		artikel = Mock.createArtikel(artikel);
+		final URI artikelUri = uriHelperArtikel.getUriArtikel(artikel, uriInfo);
+		return Response.created(artikelUri).build();
+	}
+	
+	@PUT
+	@Consumes(APPLICATION_JSON)
+	@Produces
+	public Response updateArtikel(Artikel artikel) {
+		//@SuppressWarnings("unused")
+		//final Locale locale = localeHelper.getLocale(headers);
+		
+		// TODO Anwendungskern statt Mock, Verwendung von Locale
+		Mock.updateArtikel(artikel);
+		return Response.noContent().build();
 	}
 	
 }
