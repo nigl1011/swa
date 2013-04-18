@@ -166,7 +166,7 @@ public final class Mock {
 				artikel.setKategorie("Holzmöbel");
 				artikel.setFarbe("blau");
 				artikel.setPreis(12.1);
-				artikel.setVerfügbar(true);
+				artikel.setVerfuegbar(true);
 				artikel.setErstellt(null);
 				artikel.setAktualisiert(null);
 				
