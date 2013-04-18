@@ -174,8 +174,7 @@ public final class Mock {
 			}
 			
 			public static Collection<Artikel> findArtikelByKategorie(String kategorie) {
-//				final int anzahl = kategorie.length();
-				final int anzahl = 3;
+			final int anzahl = kategorie.length();
 				final Collection<Artikel> allArtikel = new ArrayList<>(anzahl);
 				for (int i = 1; i <= anzahl; i++) {
 					final Artikel artikel = findArtikelById(Long.valueOf(i));
