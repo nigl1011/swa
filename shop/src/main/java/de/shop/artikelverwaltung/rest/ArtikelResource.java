@@ -69,36 +69,8 @@ public class ArtikelResource {
 		uriHelperArtikel.updateUriArtikel(artikel, uriInfo);	
 		return artikel;
 	}
-	
+		
 	@GET
-	public Collection<Artikel> findArtikelByBezeichnung(@QueryParam("bezeichnung") 
-	@DefaultValue("") String bezeichnung) {
-		@SuppressWarnings("unused")
-		final Locale locale = localeHelper.getLocale(headers);
-		
-		Collection<Artikel> allArtikel = null;
-		if ("".equals(bezeichnung)) {
-			// TODO Anwendungskern statt Mock, Verwendung von Locale
-			allArtikel = Mock.findAllArtikel();
-			if (allArtikel.isEmpty()) {
-				throw new NotFoundException("Kein Artikel vorhanden.");
-			}
-		}
-		else {
-			// TODO Anwendungskern statt Mock, Verwendung von Locale
-			allArtikel = Mock.findArtikelByBezeichnung(bezeichnung);
-			if (allArtikel.isEmpty()) {
-				throw new NotFoundException("Kein Artikel mit der Bezeichnung " + bezeichnung + " gefunden.");
-			}
-		}
-		
-		for (Artikel artikel : allArtikel) {
-			uriHelperArtikel.updateUriArtikel(artikel, uriInfo);
-		}
-		
-		return allArtikel;
-	}
-	
 	public Collection<Artikel> findArtikelByKategorie(@QueryParam("kategorie") @DefaultValue("") String kategorie) {
 		@SuppressWarnings("unused")
 		final Locale locale = localeHelper.getLocale(headers);

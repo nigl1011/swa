@@ -163,7 +163,7 @@ public final class Mock {
 				final Artikel artikel = new Artikel();
 				artikel.setId(id);
 				artikel.setBezeichnung("Tisch");
-				artikel.setKategorie("Holzmöbel");
+				artikel.setKategorie("Holzmoebel");
 				artikel.setFarbe("blau");
 				artikel.setPreis(12.1);
 				artikel.setVerfuegbar(true);
@@ -172,23 +172,17 @@ public final class Mock {
 				
 				return artikel;
 			}
-			public static Collection<Artikel> findArtikelByBezeichnung(String bezeichnung) {
-				final int anzahl = bezeichnung.length();
-				final Collection<Artikel> allArtikel = new ArrayList<>(anzahl);
-				for (int i = 1; i <= anzahl; i++) {
-					final Artikel artikel = findArtikelById(Long.valueOf(i));
-					artikel.setKategorie(bezeichnung);
-					allArtikel.add(artikel);			
-				}
-				return allArtikel;
-			}
+			
 			public static Collection<Artikel> findArtikelByKategorie(String kategorie) {
-				final int anzahl = kategorie.length();
+//				final int anzahl = kategorie.length();
+				final int anzahl = 3;
 				final Collection<Artikel> allArtikel = new ArrayList<>(anzahl);
 				for (int i = 1; i <= anzahl; i++) {
 					final Artikel artikel = findArtikelById(Long.valueOf(i));
-					artikel.setKategorie(kategorie);
-					allArtikel.add(artikel);			
+					if(artikel.getKategorie().equals(kategorie))
+					{
+						allArtikel.add(artikel);
+					}
 				}
 				return allArtikel;
 			}
