@@ -19,14 +19,12 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.bestellverwaltung.domain.Lieferung;
-import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.util.LocaleHelper;
 import de.shop.util.Mock;
 import de.shop.util.NotFoundException;
 
-@Path("/lieferung")
+@Path("/lieferungen")
 @Produces(APPLICATION_JSON)
 @Consumes
 public class LieferungResource {
@@ -37,14 +35,14 @@ public class LieferungResource {
 	private HttpHeaders headers;
 
 	@Inject
-	private UriHelperBestellung uriHelperLieferung;
+	private UriHelperLieferung uriHelperLieferung;
 	
 	@Inject
 	private LocaleHelper localeHelper;
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
-	public Bestellung findLieferungById(@PathParam("id") Long id) {
+	public Lieferung findLieferungById(@PathParam("id") Long id) {
 		@SuppressWarnings("unused")
 		final Locale locale = localeHelper.getLocale(headers);
 		
