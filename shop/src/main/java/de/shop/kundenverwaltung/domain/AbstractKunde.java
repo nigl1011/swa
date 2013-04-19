@@ -39,7 +39,7 @@ public abstract class AbstractKunde implements Serializable {
 	private Date geburtsdatum;
 	private String email;
 	//in der Vergangenheit
-	private Date eintrittsdatum;
+	private Date seit;
 	//aktuelles Datum
 	private Timestamp aktualisiert;
 	
@@ -89,11 +89,11 @@ public abstract class AbstractKunde implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getEintrittsdatum() {
-		return eintrittsdatum;
+	public Date getSeit() {
+		return seit;
 	}
-	public void setEintrittsdatum(Date eintrittsdatum) {
-		this.eintrittsdatum = eintrittsdatum;
+	public void setSeit(Date seit) {
+		this.seit = seit;
 	}
 	public Timestamp getAktualisiert() {
 		return aktualisiert;
@@ -132,7 +132,7 @@ public abstract class AbstractKunde implements Serializable {
 		result = prime * result
 				+ ((bestellungenUri == null) ? 0 : bestellungenUri.hashCode());
 		result = prime * result
-				+ ((eintrittsdatum == null) ? 0 : eintrittsdatum.hashCode());
+				+ ((seit == null) ? 0 : seit.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result
 				+ ((geburtsdatum == null) ? 0 : geburtsdatum.hashCode());
@@ -178,11 +178,11 @@ public abstract class AbstractKunde implements Serializable {
 		}
 		else if (!bestellungenUri.equals(other.bestellungenUri))
 			return false;
-		if (eintrittsdatum == null) {
-			if (other.eintrittsdatum != null)
+		if (seit == null) {
+			if (other.seit != null)
 				return false;
 		} 
-		else if (!eintrittsdatum.equals(other.eintrittsdatum))
+		else if (!seit.equals(other.seit))
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -224,7 +224,7 @@ public abstract class AbstractKunde implements Serializable {
 		return "AbstractKunde [id=" + id + ", vorname=" + vorname
 				+ ", nachname=" + nachname + ", geschlecht=" + geschlecht
 				+ ", geburtsdatum=" + geburtsdatum + ", email=" + email
-				+ ", eintrittsdatum=" + eintrittsdatum + ", adresse=" + adresse
+				+ ", seit=" + seit + ", adresse=" + adresse
 				+ ", bestellungenUri=" + bestellungenUri + "]";
 	}
 
