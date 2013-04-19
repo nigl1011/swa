@@ -51,20 +51,14 @@ public abstract class AbstractKunde implements Serializable {
 	public static final int EMAIL_LENGTH_MAX = 128;
 	private static final long MIN_ID = 1;
 
-	
-
-
-	
 	@Min(value = MIN_ID, message = "{kundenverwaltung.kunde.id.min}", groups = IdGroup.class)
 	private Long id;
-	
 	
 	@NotNull(message = "{kundenverwaltung.kunde.vorname.notNull}")
 	@Size(min = VORNAME_LENGTH_MIN, max = VORNAME_LENGTH_MAX,
 	      message = "{kundenverwaltung.kunde.vorname.length}")
 	@Pattern(regexp = VORNAME_PATTERN, message = "{kundenverwaltung.kunde.vorname.pattern}")
 	private String vorname;
-	
 	
 	@NotNull(message = "{kundenverwaltung.kunde.nachname.notNull}")
 	@Size(min = NACHNAME_LENGTH_MIN, max = NACHNAME_LENGTH_MAX,
@@ -74,19 +68,17 @@ public abstract class AbstractKunde implements Serializable {
 	
 	@Enumerated
 	private GeschlechtType geschlecht;
-	//in der Vergangenheit
+
 	@Past(message = "{kundenverwaltung.kunde.geburtsdatum.past}")
 	private Date geburtsdatum;
-	
 	
 	@Email(message = "{kundenverwaltung.kunde.email.pattern}")
 	@NotNull(message = "{kundenverwaltung.kunde.email.notNull}")
 	@Size(max = EMAIL_LENGTH_MAX, message = "{kundenverwaltung.kunde.email.length}")
 	private String email;
-	//in der Vergangenheit
+	
 	@Past(message = "{kundenverwaltung.kunde.seit.past}")
 	private Date seit;
-	//aktuelles Datum
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Timestamp aktualisiert;
@@ -119,14 +111,12 @@ public abstract class AbstractKunde implements Serializable {
 	public void setVorname(String vorname) {
 		this.vorname = vorname;
 	}
-	
 	public GeschlechtType getGeschlecht() {
 		return geschlecht;
 	}
 	public void setGeschlecht(GeschlechtType geschlecht) {
 		this.geschlecht = geschlecht;
 	}
-	
 	public Date getGeburtsdatum() {
 		return geburtsdatum == null ? null : (Date) geburtsdatum.clone();
 	}

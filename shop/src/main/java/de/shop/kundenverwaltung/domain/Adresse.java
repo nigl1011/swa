@@ -1,22 +1,62 @@
 package de.shop.kundenverwaltung.domain;
 
 import java.io.Serializable;
+import java.security.Timestamp;
+
+
+
+
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 //import java.util.Date;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+
+import de.shop.util.IdGroup;
 
 public class Adresse implements Serializable {
 	private static final long serialVersionUID = -3029272617931844501L;
 	
-	//muss noch bearbeitet werden
+	private static final long MIN_ID = 1;
+	private static final int HAUSNR_LENGTH_MIN = 1;
+	private static final int HAUSNR_LENGTH_MAX = 4;
+	public static final int PLZ_LENGTH_MAX = 5;
+	public static final int ORT_LENGTH_MIN = 2;
+	public static final int ORT_LENGTH_MAX = 32;
 	
+
+	private static final int STRASSE_LENGTH_MIN = 3;
+	private static final int STRASSE_LENGTH_MAX = 32;
+
+
+
+	@Min(value = MIN_ID, message = "{kundenverwaltung.adresse.id.min}", groups = IdGroup.class)
 	private Long id;
-	private String strasse;
-	private String hausnr;
-	private String plz;
-	private String ort;
-	//private Date aktualisiert;
 	
+	@NotNull(message = "{kundenverwaltung.adresse.strasse.notNull}")
+	@Size(min = STRASSE_LENGTH_MIN, max = STRASSE_LENGTH_MAX, message = "{kundenverwaltung.adresse.strasse.length}")
+	private String strasse;
+	
+	@NotNull(message = "{kundenverwaltung.adresse.hausnr.notNull}")
+	@Size(min = HAUSNR_LENGTH_MIN, max = HAUSNR_LENGTH_MAX, message = "{kundenverwaltung.adresse.hausnr.length}")
+	private String hausnr;
+	
+	@NotNull(message = "{kundenverwaltung.adresse.plz.notNull}")
+	@Pattern(regexp = "\\d{5}", message = "{kundenverwaltung.adresse.plz}")
+	private String plz;
+	
+	@NotNull(message = "{kundenverwaltung.adresse.ort.notNull}")
+	@Size(min = ORT_LENGTH_MIN, max = ORT_LENGTH_MAX, message = "{kundenverwaltung.adresse.ort.length}")
+	private String ort;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Timestamp aktualisiert;
+	
+	@NotNull(message = "{kundenverwaltung.adresse.kunde.notNull}")
 	@JsonIgnore
 	private AbstractKunde kunde;
 	
@@ -38,13 +78,6 @@ public class Adresse implements Serializable {
 	public void setHausnr(String hausnr) {
 		this.hausnr = hausnr;
 	}
-	/*public Date getAktualisiert() {
-		return aktualisiert;
-	}
-	public void setAktualisiert(Date aktualisiert) {
-		this.aktualisiert = aktualisiert;}*/
-	
-
 	public String getPlz() {
 		return plz;
 	}
@@ -64,12 +97,19 @@ public class Adresse implements Serializable {
 	public void setKunde(AbstractKunde kunde) {
 		this.kunde = kunde;
 	}
+	public Timestamp getAktualisiert() {
+		return aktualisiert;
+	}
+	public void setAktualisiert(Timestamp aktualisiert) {
+		this.aktualisiert = aktualisiert;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		/*result = prime * result
-				+ ((aktualisiert == null) ? 0 : aktualisiert.hashCode());*/
+		result = prime * result
+				+ ((aktualisiert == null) ? 0 : aktualisiert.hashCode());
 		result = prime * result + ((hausnr == null) ? 0 : hausnr.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((kunde == null) ? 0 : kunde.hashCode());
@@ -86,47 +126,41 @@ public class Adresse implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final Adresse other = (Adresse) obj;
-		/*if (aktualisiert == null) {
+		Adresse other = (Adresse) obj;
+		if (aktualisiert == null) {
 			if (other.aktualisiert != null)
 				return false;
 		} else if (!aktualisiert.equals(other.aktualisiert))
-			return false;*/
+			return false;
 		if (hausnr == null) {
 			if (other.hausnr != null)
 				return false;
-		} 
-		else if (!hausnr.equals(other.hausnr))
+		} else if (!hausnr.equals(other.hausnr))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		} 
-		else if (!id.equals(other.id))
+		} else if (!id.equals(other.id))
 			return false;
 		if (kunde == null) {
 			if (other.kunde != null)
 				return false;
-		} 
-		else if (!kunde.equals(other.kunde))
+		} else if (!kunde.equals(other.kunde))
 			return false;
 		if (ort == null) {
 			if (other.ort != null)
 				return false;
-		}
-		else if (!ort.equals(other.ort))
+		} else if (!ort.equals(other.ort))
 			return false;
 		if (plz == null) {
 			if (other.plz != null)
 				return false;
-		} 
-		else if (!plz.equals(other.plz))
+		} else if (!plz.equals(other.plz))
 			return false;
 		if (strasse == null) {
 			if (other.strasse != null)
 				return false;
-		}
-		else if (!strasse.equals(other.strasse))
+		} else if (!strasse.equals(other.strasse))
 			return false;
 		return true;
 	}
@@ -136,4 +170,5 @@ public class Adresse implements Serializable {
 		return "Adresse [id=" + id + ", strasse=" + strasse + ", hausnr="
 				+ hausnr + ", plz=" + plz + ", ort=" + ort + "]";
 	}
+
 }
