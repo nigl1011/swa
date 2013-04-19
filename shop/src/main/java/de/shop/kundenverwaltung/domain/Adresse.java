@@ -3,12 +3,8 @@ package de.shop.kundenverwaltung.domain;
 import java.io.Serializable;
 import java.security.Timestamp;
 
-
-
-
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-//import java.util.Date;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
