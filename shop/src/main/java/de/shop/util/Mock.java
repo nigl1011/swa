@@ -180,13 +180,13 @@ public final class Mock {
 	public static void updateKunde(AbstractKunde kunde) {
 		LOGGER.infof("Aktualisierter Kunde: " + kunde);
 	}
-
-	public static void deleteKunde(Long kundeId) {
-	LOGGER.infof("Kunde mit ID=" + kundeId + " geloescht");
-	}
-
-	/*public static void deleteKunde(AbstractKunde kunde) {
+	public static void deleteKunde(AbstractKunde kunde) {
 		LOGGER.infof("Geloeschter Kunde: %s", kunde);
+	}
+	
+	
+	
+	/*
 	}
 
 	public static Bestellung createBestellung(Bestellung bestellung, AbstractKunde kunde) {
