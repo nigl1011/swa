@@ -47,6 +47,12 @@ public final class Mock {
 		kunde.setVorname("Vorname" + id);
 		kunde.setNachname("Nachname" + id);
 		kunde.setEmail("" + id + "@hska.de");
+		
+		final GregorianCalendar geburtsdatumCal = new GregorianCalendar(JAHR, MONAT, TAG);
+		final Date geburtsdatum = geburtsdatumCal.getTime();
+		kunde.setGeburtsdatum(geburtsdatum);
+		
+		
 		final GregorianCalendar seitCal = new GregorianCalendar(JAHR, MONAT, TAG);
 		final Date seit = seitCal.getTime();
 		kunde.setSeit(seit);

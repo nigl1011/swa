@@ -4,15 +4,28 @@ import java.io.Serializable;
 import java.net.URI;
 import java.security.Timestamp;
 import java.util.Date;
-//import java.security.Timestamp;
 import java.util.List;
+
+import javax.persistence.Enumerated;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonSubTypes;
 import org.codehaus.jackson.annotate.JsonSubTypes.Type;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
+import org.hibernate.validator.constraints.Email;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
+import de.shop.util.IdGroup;
+
+
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
@@ -25,24 +38,61 @@ public abstract class AbstractKunde implements Serializable {
 	public static final String PRIVATKUNDE = "P";
 	public static final String FIRMENKUNDE = "F";
 	
-	//muss noch bearbeitet werden
+	//Pattern mit UTF-8 (statt Latin-1 bzw. ISO-8859-1) Schreibweise fuer Umlaute:
+	private static final String NAME_PATTERN = "[A-Z\u00C4\u00D6\u00DC][a-z\u00E4\u00F6\u00FC\u00DF]+";
+	private static final String NACHNAME_PREFIX = "(o'|von|von der|von und zu|van)?";
 	
+	private static final String VORNAME_PATTERN = NAME_PATTERN;
+	private static final int VORNAME_LENGTH_MIN = 2;
+	private static final int VORNAME_LENGTH_MAX = 32;
+	public static final String NACHNAME_PATTERN = NACHNAME_PREFIX + NAME_PATTERN + "(-" + NAME_PATTERN + ")?";
+	public static final int NACHNAME_LENGTH_MIN = 2;
+	public static final int NACHNAME_LENGTH_MAX = 32;
+	public static final int EMAIL_LENGTH_MAX = 128;
+	private static final long MIN_ID = 1;
+
 	
+
+
 	
-	
-	
+	@Min(value = MIN_ID, message = "{kundenverwaltung.kunde.id.min}", groups = IdGroup.class)
 	private Long id;
+	
+	
+	@NotNull(message = "{kundenverwaltung.kunde.vorname.notNull}")
+	@Size(min = VORNAME_LENGTH_MIN, max = VORNAME_LENGTH_MAX,
+	      message = "{kundenverwaltung.kunde.vorname.length}")
+	@Pattern(regexp = VORNAME_PATTERN, message = "{kundenverwaltung.kunde.vorname.pattern}")
 	private String vorname;
+	
+	
+	@NotNull(message = "{kundenverwaltung.kunde.nachname.notNull}")
+	@Size(min = NACHNAME_LENGTH_MIN, max = NACHNAME_LENGTH_MAX,
+	      message = "{kundenverwaltung.kunde.nachname.length}")
+	@Pattern(regexp = NACHNAME_PATTERN, message = "{kundenverwaltung.kunde.nachname.pattern}")
 	private String nachname;
+	
+	@Enumerated
 	private GeschlechtType geschlecht;
 	//in der Vergangenheit
+	@Past(message = "{kundenverwaltung.kunde.geburtsdatum.past}")
 	private Date geburtsdatum;
+	
+	
+	@Email(message = "{kundenverwaltung.kunde.email.pattern}")
+	@NotNull(message = "{kundenverwaltung.kunde.email.notNull}")
+	@Size(max = EMAIL_LENGTH_MAX, message = "{kundenverwaltung.kunde.email.length}")
 	private String email;
 	//in der Vergangenheit
+	@Past(message = "{kundenverwaltung.kunde.seit.past}")
 	private Date seit;
 	//aktuelles Datum
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Timestamp aktualisiert;
 	
+	@Valid
+	@NotNull(message = "{kundenverwaltung.kunde.adresse.notNull}")
 	private Adresse adresse;
 	
 	
@@ -78,10 +128,10 @@ public abstract class AbstractKunde implements Serializable {
 	}
 	
 	public Date getGeburtsdatum() {
-		return geburtsdatum;
+		return geburtsdatum == null ? null : (Date) geburtsdatum.clone();
 	}
 	public void setGeburtsdatum(Date geburtsdatum) {
-		this.geburtsdatum = geburtsdatum;
+		this.geburtsdatum = geburtsdatum == null ? null : (Date) geburtsdatum.clone();
 	}
 	public String getEmail() {
 		return email;
@@ -90,10 +140,10 @@ public abstract class AbstractKunde implements Serializable {
 		this.email = email;
 	}
 	public Date getSeit() {
-		return seit;
+		return seit == null ? null : (Date) seit.clone();
 	}
 	public void setSeit(Date seit) {
-		this.seit = seit;
+		this.seit = seit == null ? null : (Date) seit.clone();
 	}
 	public Timestamp getAktualisiert() {
 		return aktualisiert;
