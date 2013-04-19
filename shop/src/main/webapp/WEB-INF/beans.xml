@@ -4,4 +4,7 @@
  <interceptors>
   <class>de.shop.util.LogInterceptor</class>
  </interceptors>
+ <alternatives>
+  <stereotype>de.shop.util.MockService</stereotype>
+ </alternatives>
 </beans>
