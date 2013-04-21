@@ -243,11 +243,10 @@ public final class Mock {
 				
 				return artikel;
 			}
-			////////////////////////////////
-			//Collection - List 
-			public static Collection<Artikel> findArtikelByKategorie(String kategorie) {
+			
+			public static List<Artikel> findArtikelByKategorie(String kategorie) {
 			final int anzahl = kategorie.length();
-				final Collection<Artikel> allArtikel = new ArrayList<>(anzahl);
+				final List<Artikel> allArtikel = new ArrayList<>(anzahl);
 				for (int i = 1; i <= anzahl; i++) {
 					final Artikel artikel = findArtikelById(Long.valueOf(i));
 					if (artikel.getKategorie().equals(kategorie)) {
@@ -256,9 +255,9 @@ public final class Mock {
 				}
 				return allArtikel;
 			}
-			public static Collection<Artikel> findAllArtikel() {
+			public static List<Artikel> findAllArtikel() {
 				final int anzahl = MAX_ARTIKEL;
-				final Collection<Artikel> allArtikel = new ArrayList<>(anzahl);
+				final List<Artikel> allArtikel = new ArrayList<>(anzahl);
 				for (int i = 1; i <= anzahl; i++) {
 					final Artikel artikel = findArtikelById(Long.valueOf(i));
 					allArtikel.add(artikel);			
@@ -268,7 +267,7 @@ public final class Mock {
 			/////////////////////////////////////
 			//System.out.println - LOGGER.infof
 			public static void updateArtikel(Artikel artikel) {
-				System.out.println("Aktualisierter Artikel: " + artikel);
+				LOGGER.infof("Aktualisierter Artikel: " + artikel);
 			
 			}
 			public static Artikel createArtikel(Artikel artikel) {
@@ -276,7 +275,7 @@ public final class Mock {
 				final String bezeichnung = artikel.getBezeichnung();
 				artikel.setId(Long.valueOf(bezeichnung.length()));
 				
-				System.out.println("Neuer Artikel: " + artikel);
+				LOGGER.infof("Neuer Artikel: " + artikel);
 				return artikel;
 			}
 			
@@ -300,11 +299,11 @@ public final class Mock {
 				final Timestamp aktuell = lieferung.getAktuell();
 				lieferung.setAktuell(aktuell);
 				
-				System.out.println("Die Lieferung " + id + " wurde aktualisiert am: " + aktuell);
+				LOGGER.infof("Die Lieferung " + id + " wurde aktualisiert am: " + aktuell);
 				return lieferung;
 			}
 			public static void updateLieferung(Lieferung lieferung) {
-				System.out.println("Aktualisierte Lieferungung: " + lieferung);
+				LOGGER.infof("Aktualisierte Lieferungung: " + lieferung);
 			}
 			
 			
