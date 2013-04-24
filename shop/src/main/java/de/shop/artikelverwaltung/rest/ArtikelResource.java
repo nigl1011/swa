@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import de.shop.artikelverwaltung.domain.Artikel;
+import de.shop.artikelverwaltung.domain.KategorieType;
 import de.shop.util.LocaleHelper;
 import de.shop.util.Mock;
 import de.shop.util.NotFoundException;
@@ -71,7 +72,7 @@ public class ArtikelResource {
 	}
 		
 	@GET
-	public Collection<Artikel> findArtikelByKategorie(@QueryParam("kategorie") @DefaultValue("") String kategorie) {
+	public Collection<Artikel> findArtikelByKategorie(@QueryParam("kategorie") @DefaultValue("") KategorieType kategorie) {
 		@SuppressWarnings("unused")
 		final Locale locale = localeHelper.getLocale(headers);
 		

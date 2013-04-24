@@ -21,6 +21,7 @@ import de.shop.kundenverwaltung.domain.HobbyType;
 import de.shop.kundenverwaltung.domain.Privatkunde;
 import de.shop.lieferverwaltung.domain.Lieferung;
 import de.shop.artikelverwaltung.domain.Artikel;
+import de.shop.artikelverwaltung.domain.KategorieType;
 
 /**
  * Emulation des Anwendungskerns
@@ -234,7 +235,7 @@ public final class Mock {
 				final Artikel artikel = new Artikel();
 				artikel.setId(id);
 				artikel.setBezeichnung("Tisch");
-				artikel.setKategorie("Holzmoebel");
+				artikel.setKategorie(KategorieType.KÜCHE);
 				artikel.setFarbe("blau");
 				artikel.setPreis(12.1);
 				artikel.setVerfuegbar(true);

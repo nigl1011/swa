@@ -1,22 +1,74 @@
 package de.shop.artikelverwaltung.domain;
 
+import static javax.persistence.TemporalType.TIMESTAMP;
+
+import java.io.Serializable;
 import java.net.URI;
 
 //import static javax.persistence.TemporalType.TIMESTAMP;
 
 import java.security.Timestamp;
 
+import javax.persistence.Enumerated;
+import javax.persistence.Temporal;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
-public class Artikel {
+import de.shop.util.IdGroup;
+
+
+public class Artikel implements Serializable {
+	private static final long serialVersionUID = 1472129607838538329L;
 	
+	private static final String NAME_PATTERN = "[A-Z\u00C4\u00D6\u00DC][a-z\u00E4\u00F6\u00FC\u00DF]+";
+	private static final String FARBEN_PATTERN = "[a-z\u00E4\u00F6\u00FC\u00DF]+[/][a-z\u00E4\u00F6\u00FC\u00DF]+";
+	
+	
+	private static final long MIN_ID = 1;
+	private static final int BEZEICHNUNG_LENGTH_MIN = 3;
+	private static final int BEZEICHNUNG_LENGTH_MAX = 32;
+	private static final String BEZEICHNUNG_PATTERN = NAME_PATTERN;
+	private static final int FARBE_LENGTH_MIN = 3;
+	private static final int FARBE_LENGTH_MAX = 12;
+	private static final String FARBE_PATTERN = FARBEN_PATTERN;
+	
+	
+
+	@Min(value = MIN_ID, message = "{kundenverwaltung.kunde.id.min}", groups = IdGroup.class)
 	private Long id;
+	
+
+	@NotNull(message = "{artikelverwaltung.artikel.bezeichnung.notNull}")
+	@Size(min = BEZEICHNUNG_LENGTH_MIN, max = BEZEICHNUNG_LENGTH_MAX,
+	      message = "{artikelverwaltung.artikel.bezeichnung.length}")
+	@Pattern(regexp = BEZEICHNUNG_PATTERN, message = "{artikelverwaltung.artikel.bezeichnung.pattern}")
 	private String bezeichnung;
-	private String kategorie;
+	
+	@Enumerated
+	private KategorieType kategorie;
+	
+	@NotNull(message = "{artikelverwaltung.artikel.farbe.notNull}")
+	@Size(min = FARBE_LENGTH_MIN, max = FARBE_LENGTH_MAX,
+	      message = "{artikelverwaltung.artikel.farbe.length}")
+	@Pattern(regexp = FARBE_PATTERN, message = "{artikelverwaltung.artikel.farbe.pattern}")
 	private String farbe;
+	
 	private Double preis;
+	
+	
 	private Boolean verfuegbar;
+	
+	@Temporal(TIMESTAMP)
 	private Timestamp erstellt;
+	
+	@Temporal(TIMESTAMP)
 	private Timestamp aktualisiert;
+
+
+	
+
 	
 	
 	public Long getId() {
@@ -31,10 +83,10 @@ public class Artikel {
 	public void setBezeichnung(String bezeichnung) {
 		this.bezeichnung = bezeichnung;
 	}
-	public String getKategorie() {
+	public KategorieType getKategorie() {
 		return kategorie;
 	}
-	public void setKategorie(String kategorie) {
+	public void setKategorie(KategorieType kategorie) {
 		this.kategorie = kategorie;
 	}
 	public String getFarbe() {
