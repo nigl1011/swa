@@ -55,9 +55,10 @@ public class Artikel implements Serializable {
 	@Pattern(regexp = FARBE_PATTERN, message = "{artikelverwaltung.artikel.farbe.pattern}")
 	private String farbe;
 	
+	// TODO PAttern Double ???
 	private Double preis;
 	
-	//TO-DO
+	// TODO Pattern Boolean ???
 	private Boolean verfuegbar;
 	
 	@Temporal(TIMESTAMP)
