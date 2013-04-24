@@ -3,7 +3,6 @@ package de.shop.util;
 import java.lang.invoke.MethodHandles;
 import java.security.Timestamp;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -17,6 +16,7 @@ import de.shop.bestellverwaltung.domain.StatusType;
 import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.kundenverwaltung.domain.Adresse;
 import de.shop.kundenverwaltung.domain.Firmenkunde;
+import de.shop.kundenverwaltung.domain.GeschlechtType;
 import de.shop.kundenverwaltung.domain.HobbyType;
 import de.shop.kundenverwaltung.domain.Privatkunde;
 import de.shop.lieferverwaltung.domain.Lieferung;
@@ -47,6 +47,7 @@ public final class Mock {
 		kunde.setId(id);
 		kunde.setVorname("Vorname" + id);
 		kunde.setNachname("Nachname" + id);
+		kunde.setGeschlecht(GeschlechtType.WEIBLICH);
 		kunde.setEmail("" + id + "@hska.de");
 		
 		final GregorianCalendar geburtsdatumCal = new GregorianCalendar(JAHR, MONAT, TAG);
@@ -175,6 +176,8 @@ public final class Mock {
 		// Ein neuer Kunde hat auch keine Bestellungen
 		final String nachname = kunde.getNachname();
 		kunde.setId(Long.valueOf(nachname.length()));
+		final Timestamp aktuell = kunde.getAktuell();
+		kunde.setAktuell(aktuell);
 		final Adresse adresse = kunde.getAdresse();
 		adresse.setId((Long.valueOf(nachname.length())) + 1);
 		adresse.setKunde(kunde);

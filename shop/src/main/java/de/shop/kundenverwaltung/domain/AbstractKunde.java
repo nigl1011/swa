@@ -141,7 +141,7 @@ public abstract class AbstractKunde implements Serializable {
 	public Timestamp getAktuell() {
 		return aktuell;
 	}
-	public void setAktualisiert(Timestamp aktuell) {
+	public void setAktuell(Timestamp aktuell) {
 		this.aktuell = aktuell;
 	}
 	public Adresse getAdresse() {
