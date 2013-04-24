@@ -245,8 +245,8 @@ public final class Mock {
 				return artikel;
 			}
 			
-			public static List<Artikel> findArtikelByKategorie(String kategorie) {
-			final int anzahl = kategorie.length();
+			public static List<Artikel> findArtikelByKategorie(KategorieType kategorie) {
+			final int anzahl = MAX_ARTIKEL;
 				final List<Artikel> allArtikel = new ArrayList<>(anzahl);
 				for (int i = 1; i <= anzahl; i++) {
 					final Artikel artikel = findArtikelById(Long.valueOf(i));

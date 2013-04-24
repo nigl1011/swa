@@ -57,7 +57,7 @@ public class Artikel implements Serializable {
 	
 	private Double preis;
 	
-	
+	//TO-DO
 	private Boolean verfuegbar;
 	
 	@Temporal(TIMESTAMP)
