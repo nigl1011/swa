@@ -1,6 +1,4 @@
-package de.shop.bestellverwaltung.domain;
-
-
+package de.shop.lieferverwaltung.domain;
 
 import java.io.Serializable;
 import java.net.URI;
@@ -9,58 +7,63 @@ import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import de.shop.bestellverwaltung.domain.Bestellung;
 
 public class Lieferung implements Serializable {
-	 
-	
+
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Date lieferdatum;
 	private Timestamp aktuell;
-	
-	
+
 	@JsonIgnore
 	private Bestellung bestellung;
 	private URI bestellungUri;
-	
-	
-	/*public Lieferung(Long id, Date lieferdatum, Timestamp aktuell) {
-		super();
-		this.id = id;
-		this.lieferdatum = lieferdatum;
-		this.aktuell = aktuell;
-	}
-	*/
+
+	/*
+	 * public Lieferung(Long id, Date lieferdatum, Timestamp aktuell) { super();
+	 * this.id = id; this.lieferdatum = lieferdatum; this.aktuell = aktuell; }
+	 */
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public Date getLieferdatum() {
 		return lieferdatum;
 	}
+
 	public void setLieferdatum(Date lieferdatum) {
 		this.lieferdatum = lieferdatum;
 	}
+
 	public Timestamp getAktuell() {
 		return aktuell;
 	}
+
 	public void setAktuell(Timestamp aktuell) {
 		this.aktuell = aktuell;
-	}	
+	}
+
 	public Bestellung getBestellung() {
 		return bestellung;
 	}
+
 	public void setBestellung(Bestellung bestellung) {
 		this.bestellung = bestellung;
 	}
+
 	public URI getBestellungUri() {
 		return bestellungUri;
 	}
+
 	public void setBestellungUri(URI bestellungUri) {
 		this.bestellungUri = bestellungUri;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -73,8 +76,7 @@ public class Lieferung implements Serializable {
 				+ ((lieferdatum == null) ? 0 : lieferdatum.hashCode());
 		return result;
 	}
-	
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -106,13 +108,11 @@ public class Lieferung implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		return "Lieferung [id=" + id + ", lieferdatum=" + lieferdatum
 				+ ", bestellungUri=" + bestellungUri + "]";
 	}
-
 
 }

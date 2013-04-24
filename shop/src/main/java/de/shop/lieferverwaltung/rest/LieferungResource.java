@@ -1,4 +1,4 @@
-package de.shop.bestellverwaltung.rest;
+package de.shop.lieferverwaltung.rest;
 
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -19,7 +19,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import de.shop.bestellverwaltung.domain.Lieferung;
+import de.shop.lieferverwaltung.domain.Lieferung;
 import de.shop.util.LocaleHelper;
 import de.shop.util.Mock;
 import de.shop.util.NotFoundException;

@@ -1,4 +1,4 @@
-package de.shop.bestellverwaltung.rest;
+package de.shop.lieferverwaltung.rest;
 
 import java.net.URI;
 
@@ -8,8 +8,8 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
-import de.shop.bestellverwaltung.domain.Lieferung;
 import de.shop.bestellverwaltung.rest.UriHelperBestellung;
+import de.shop.lieferverwaltung.domain.Lieferung;
 
 
 @ApplicationScoped

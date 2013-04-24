@@ -13,13 +13,13 @@ import java.util.Set;
 import org.jboss.logging.Logger;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
-import de.shop.bestellverwaltung.domain.Lieferung;
 import de.shop.bestellverwaltung.domain.StatusType;
 import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.kundenverwaltung.domain.Adresse;
 import de.shop.kundenverwaltung.domain.Firmenkunde;
 import de.shop.kundenverwaltung.domain.HobbyType;
 import de.shop.kundenverwaltung.domain.Privatkunde;
+import de.shop.lieferverwaltung.domain.Lieferung;
 import de.shop.artikelverwaltung.domain.Artikel;
 
 /**
