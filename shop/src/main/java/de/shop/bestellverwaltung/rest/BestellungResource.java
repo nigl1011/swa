@@ -70,4 +70,5 @@ public class BestellungResource {
 		return Response.created(bestellungUri).build();
 		
 	}
+	
 }

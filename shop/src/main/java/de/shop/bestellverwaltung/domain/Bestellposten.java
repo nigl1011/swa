@@ -11,11 +11,11 @@ public class Bestellposten {
 	
 	
 	
-	public Long getPositions_ID() {
+	public Long getPositionId() {
 		return id;
 	}
-	public void setPositions_ID(Long positions_ID) {
-		id = positions_ID;
+	public void setPositionId(Long positionId) {
+		id = positionId;
 	}
 	public Long getMenge() {
 		return menge;
@@ -35,11 +35,11 @@ public class Bestellposten {
 	public void setZwischenpreis(Long zwischenpreis) {
 		this.zwischenpreis = zwischenpreis;
 	}
-	public Bestellung getBestellung_ID() {
+	public Bestellung getBestellungId() {
 		return bestellungId;
 	}
-	public void setBestellung_ID(Bestellung bestellung_ID) {
-		bestellungId = bestellung_ID;
+	public void setBestellungId(Bestellung bestellungsId) {
+		bestellungId = bestellungsId;
 	}
 	
 	
