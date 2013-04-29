@@ -11,10 +11,17 @@ import java.security.Timestamp;
 
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+
+
+
+
 
 import de.shop.util.IdGroup;
 
@@ -55,10 +62,10 @@ public class Artikel implements Serializable {
 	@Pattern(regexp = FARBE_PATTERN, message = "{artikelverwaltung.artikel.farbe.pattern}")
 	private String farbe;
 	
-	// TODO PAttern Double ???
-	private Double preis;
+	@Digits(fraction=2, integer = 12)
+	private double preis;
 	
-	// TODO Pattern Boolean ???
+	@AssertTrue
 	private Boolean verfuegbar;
 	
 	@Temporal(TIMESTAMP)
@@ -96,10 +103,10 @@ public class Artikel implements Serializable {
 	public void setFarbe(String farbe) {
 		this.farbe = farbe;
 	}
-	public Double getPreis() {
+	public double getPreis() {
 		return preis;
 	}
-	public void setPreis(Double preis) {
+	public void setPreis(double preis) {
 		this.preis = preis;
 	}
 	public Boolean isVerfuegbar() {
@@ -148,7 +155,9 @@ public class Artikel implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((kategorie == null) ? 0 : kategorie.hashCode());
-		result = prime * result + ((preis == null) ? 0 : preis.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(preis);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result
 				+ ((verfuegbar == null) ? 0 : verfuegbar.hashCode());
 		return result;
@@ -161,55 +170,44 @@ public class Artikel implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final Artikel other = (Artikel) obj;
+		Artikel other = (Artikel) obj;
 		if (aktualisiert == null) {
 			if (other.aktualisiert != null)
 				return false;
-		}
-		else if (!aktualisiert.equals(other.aktualisiert))
+		} else if (!aktualisiert.equals(other.aktualisiert))
 			return false;
 		if (bezeichnung == null) {
 			if (other.bezeichnung != null)
 				return false;
-		}
-		else if (!bezeichnung.equals(other.bezeichnung))
+		} else if (!bezeichnung.equals(other.bezeichnung))
 			return false;
 		if (erstellt == null) {
 			if (other.erstellt != null)
 				return false;
-		}
-		else if (!erstellt.equals(other.erstellt))
+		} else if (!erstellt.equals(other.erstellt))
 			return false;
 		if (farbe == null) {
 			if (other.farbe != null)
 				return false;
-		}
-		else if (!farbe.equals(other.farbe))
+		} else if (!farbe.equals(other.farbe))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		}
-		else if (!id.equals(other.id))
+		} else if (!id.equals(other.id))
 			return false;
-		if (kategorie == null) {
-			if (other.kategorie != null)
-				return false;
-		}
-		else if (!kategorie.equals(other.kategorie))
+		if (kategorie != other.kategorie)
 			return false;
-		if (preis == null) {
-			if (other.preis != null)
-				return false;
-		}
-		else if (!preis.equals(other.preis))
+		if (Double.doubleToLongBits(preis) != Double
+				.doubleToLongBits(other.preis))
 			return false;
 		if (verfuegbar == null) {
 			if (other.verfuegbar != null)
 				return false;
-		}
-		else if (!verfuegbar.equals(other.verfuegbar))
+		} else if (!verfuegbar.equals(other.verfuegbar))
 			return false;
 		return true;
 	}
+	
+
 }
