@@ -100,6 +100,17 @@ public final class Mock {
 		return kunden;
 	}
 	
+	public static List<AbstractKunde> findKundenByVorname(String vorname) {
+		final int anzahl = vorname.length();
+		final List<AbstractKunde> kunden = new ArrayList<>(anzahl);
+		for (int i = 1; i <= anzahl; i++) {
+			final AbstractKunde kunde = findKundeById(Long.valueOf(i));
+			kunde.setVorname(vorname);
+			kunden.add(kunde);			
+		}
+		return kunden;
+	}
+	
 	public static AbstractKunde findKundeByEmail(String email) {
 		if (email.startsWith("x")) {
 			return null;
@@ -110,6 +121,7 @@ public final class Mock {
 		kunde.setVorname("Vorname");
 		kunde.setNachname("Nachname");
 		kunde.setEmail(email);
+		
 		final GregorianCalendar seitCal = new GregorianCalendar(JAHR, MONAT, TAG);
 		final Date seit = seitCal.getTime();
 		kunde.setSeit(seit);
@@ -176,6 +188,8 @@ public final class Mock {
 		// Ein neuer Kunde hat auch keine Bestellungen
 		final String nachname = kunde.getNachname();
 		kunde.setId(Long.valueOf(nachname.length()));
+		final String vorname = kunde.getVorname();
+		kunde.setId(Long.valueOf(vorname.length()));
 		final Timestamp aktuell = kunde.getAktuell();
 		kunde.setAktuell(aktuell);
 		final Adresse adresse = kunde.getAdresse();
