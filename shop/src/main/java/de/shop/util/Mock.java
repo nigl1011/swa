@@ -240,7 +240,7 @@ public final class Mock {
 				artikel.setBezeichnung("Tisch");
 				artikel.setKategorie(KategorieType.KÜCHE);
 				artikel.setFarbe("blau");
-				artikel.setPreis(12.1);
+				artikel.setPreis(12.30);
 				artikel.setVerfuegbar(true);
 				artikel.setErstellt(null);
 				artikel.setAktualisiert(null);
