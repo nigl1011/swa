@@ -17,9 +17,11 @@ import de.shop.util.IdGroup;
 public class Adresse implements Serializable {
 	private static final long serialVersionUID = -3029272617931844501L;
 	
+	private static final String NAME_PATTERN = "[A-Z\u00C4\u00D6\u00DC][a-z\u00E4\u00F6\u00FC\u00DF][ ][-][A-Z\u00C4\u00D6\u00DC][a-z\u00E4\u00F6\u00FC\u00DF] ";
+	
 	private static final long MIN_ID = 1;
 	private static final int HAUSNR_LENGTH_MIN = 1;
-	private static final int HAUSNR_LENGTH_MAX = 4;
+	private static final int HAUSNR_LENGTH_MAX = 5;
 	public static final int PLZ_LENGTH_MAX = 5;
 	public static final int ORT_LENGTH_MIN = 2;
 	public static final int ORT_LENGTH_MAX = 32;
@@ -35,9 +37,10 @@ public class Adresse implements Serializable {
 	
 	@NotNull(message = "{kundenverwaltung.adresse.strasse.notNull}")
 	@Size(min = STRASSE_LENGTH_MIN, max = STRASSE_LENGTH_MAX, message = "{kundenverwaltung.adresse.strasse.length}")
+	@Pattern(regexp = NAME_PATTERN, message = "{kundenverwaltung.kunde.strasse.pattern}")
 	private String strasse;
 	
-	// weiter machen
+
 	@NotNull(message = "{kundenverwaltung.adresse.hausnr.notNull}")
 	@Size(min = HAUSNR_LENGTH_MIN, max = HAUSNR_LENGTH_MAX, message = "{kundenverwaltung.adresse.hausnr.length}")
 	private String hausnr;
