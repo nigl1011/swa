@@ -8,7 +8,7 @@ import de.shop.util.MockService;
 
 @MockService
 @Log
-public class LieferungServiceMock extends LieferService {
+public class LieferServiceMock extends LieferService {
 	private static final long serialVersionUID = 1L;
 
 	@Override

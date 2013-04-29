@@ -1,19 +1,33 @@
 package de.shop.lieferverwaltung.domain;
 
+import static javax.persistence.TemporalType.TIMESTAMP;
+
 import java.io.Serializable;
 import java.net.URI;
 import java.security.Timestamp;
 import java.util.Date;
 
+import javax.persistence.Temporal;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Past;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
+import de.shop.util.IdGroup;
 
 public class Lieferung implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final long MIN_ID = 1;
+	
+	@Min(value = MIN_ID, message = "{lieferverwaltung.lieferung.id.min}", groups = IdGroup.class)
 	private Long id;
+	
+	@Past(message = "{lieferverwaltung.lieferung.lieferdatum.past}")
 	private Date lieferdatum;
+	
+	@Temporal(TIMESTAMP)
 	private Timestamp aktuell;
 
 	@JsonIgnore

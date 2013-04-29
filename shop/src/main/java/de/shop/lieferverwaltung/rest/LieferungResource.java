@@ -52,7 +52,7 @@ public class LieferungResource {
 			throw new NotFoundException("Keine Lieferung mit der ID " + id + " gefunden.");
 		}
 		
-		// URLs innerhalb der gefundenen Lieferung anpassen
+		// TODO URLs innerhalb der gefundenen Lieferung anpassen
 		uriHelperLieferung.updateUriLieferung(lieferung, uriInfo);
 		return lieferung;
 	}
