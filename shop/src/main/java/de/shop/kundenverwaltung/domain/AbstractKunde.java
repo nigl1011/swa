@@ -1,7 +1,5 @@
 package de.shop.kundenverwaltung.domain;
 
-import static javax.persistence.TemporalType.TIMESTAMP;
-
 import java.io.Serializable;
 import java.net.URI;
 import java.security.Timestamp;
@@ -9,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Enumerated;
-import javax.persistence.Temporal;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -83,8 +80,8 @@ public abstract class AbstractKunde implements Serializable {
 	@Past(message = "{kundenverwaltung.kunde.seit.past}")
 	private Date seit;
 	
-	@Temporal(TIMESTAMP)
-	private Timestamp aktuell;
+	//@@Temporal(TIMESTAMP)
+	private Timestamp aktualisiert;
 	
 	@Valid
 	@NotNull(message = "{kundenverwaltung.kunde.adresse.notNull}")
@@ -138,11 +135,11 @@ public abstract class AbstractKunde implements Serializable {
 	public void setSeit(Date seit) {
 		this.seit = seit == null ? null : (Date) seit.clone();
 	}
-	public Timestamp getAktuell() {
-		return aktuell;
+	public Timestamp getAktualisiert() {
+		return aktualisiert;
 	}
-	public void setAktuell(Timestamp aktuell) {
-		this.aktuell = aktuell;
+	public void setAktualisiert(Timestamp aktualisiert) {
+		this.aktualisiert = aktualisiert;
 	}
 	public Adresse getAdresse() {
 		return adresse;
@@ -169,7 +166,7 @@ public abstract class AbstractKunde implements Serializable {
 		int result = 1;
 		result = prime * result + ((adresse == null) ? 0 : adresse.hashCode());
 		result = prime * result
-				+ ((aktuell == null) ? 0 : aktuell.hashCode());
+				+ ((aktualisiert == null) ? 0 : aktualisiert.hashCode());
 		result = prime * result
 				+ ((bestellungen == null) ? 0 : bestellungen.hashCode());
 		result = prime * result
@@ -203,11 +200,11 @@ public abstract class AbstractKunde implements Serializable {
 		}
 		else if (!adresse.equals(other.adresse))
 			return false;
-		if (aktuell == null) {
-			if (other.aktuell != null)
+		if (aktualisiert == null) {
+			if (other.aktualisiert != null)
 				return false;
 		} 
-		else if (!aktuell.equals(other.aktuell))
+		else if (!aktualisiert.equals(other.aktualisiert))
 			return false;
 		if (bestellungen == null) {
 			if (other.bestellungen != null)
@@ -270,5 +267,6 @@ public abstract class AbstractKunde implements Serializable {
 				+ ", seit=" + seit + ", adresse=" + adresse
 				+ ", bestellungenUri=" + bestellungenUri + "]";
 	}
+
 
 }
