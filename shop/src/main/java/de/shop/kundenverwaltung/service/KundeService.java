@@ -47,6 +47,7 @@ public class KundeService implements Serializable {
 	}
 	
 	private void validateKundeId(Long kundeId, Locale locale) {
+		LOGGER.debugf("Kunde ID ist: " + kundeId + locale.toString());
 		final Validator validator = validatorProvider.getValidator(locale);
 		final Set<ConstraintViolation<AbstractKunde>> violations = validator.validateValue(AbstractKunde.class,
 				                                                                           "id",
@@ -68,7 +69,7 @@ public class KundeService implements Serializable {
 		validateNachname(nachname, locale);
 		
 		// TODO Datenbanzugriffsschicht statt Mock
-		final List<AbstractKunde> kunden = Mock.findKundenByNachname(nachname);
+		List<AbstractKunde> kunden = Mock.findKundenByNachname(nachname);
 		return kunden;
 	}
 	
@@ -81,25 +82,6 @@ public class KundeService implements Serializable {
 		if (!violations.isEmpty())
 			throw new InvalidNachnameException(nachname, violations);
 	}
-	
-	public List<AbstractKunde> findKundenByVorname(String vorname, Locale locale) {
-		validateVorname(vorname, locale);
-		
-		// TODO Datenbanzugriffsschicht statt Mock
-		final List<AbstractKunde> kunden = Mock.findKundenByVorname(vorname);
-		return kunden;
-	}
-	
-	private void validateVorname(String vorname, Locale locale) {
-		final Validator validator = validatorProvider.getValidator(locale);
-		final Set<ConstraintViolation<AbstractKunde>> violations = validator.validateValue(AbstractKunde.class,
-				                                                                           "vorname",
-				                                                                           vorname,
-				                                                                           Default.class);
-		if (!violations.isEmpty())
-			throw new InvalidNachnameException(vorname, violations);
-	}
-	
 
 	public AbstractKunde createKunde(AbstractKunde kunde, Locale locale) {
 		if (kunde == null) {
@@ -168,4 +150,3 @@ public class KundeService implements Serializable {
 		Mock.deleteKunde(kunde);
 	}
 }
-

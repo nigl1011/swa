@@ -70,7 +70,10 @@ public class KundeResource {
 	@GET
 	@Path("{id:[1-9][0-9]*}")
 	public AbstractKunde findKundeById(@PathParam("id") Long id) {
-		final Locale locale = localeHelper.getLocale(headers);
+		 Locale locale = localeHelper.getLocale(headers);
+		if(locale == null){
+			locale=Locale.GERMAN;
+		}
 		final AbstractKunde kunde = ks.findKundeById(id, locale);
 		if (kunde == null) {
 			throw new NotFoundException("Kein Kunde mit der ID " + id + " gefunden.");
