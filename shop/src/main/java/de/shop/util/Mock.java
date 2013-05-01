@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 import org.jboss.logging.Logger;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
@@ -37,7 +38,11 @@ public final class Mock {
 	private static final int JAHR = 2001;
 	private static final int MONAT = 0; // bei Calendar werden die Monate von 0 bis 11 gezaehlt
 	private static final int TAG = 31;  // bei Calendar die Monatstage ab 1 gezaehlt
-
+	
+	/*private static final int HOUR = 0;
+	private static final int MINUTE= 0;
+	private static final int SECOND = 0;*/
+	
 	public static AbstractKunde findKundeById(Long id) {
 		if (id > MAX_ID) {
 			return null;
@@ -48,12 +53,18 @@ public final class Mock {
 		kunde.setVorname("Vorname" + id);
 		kunde.setNachname("Nachname" + id);
 		kunde.setGeschlecht(GeschlechtType.WEIBLICH);
+		kunde.setGeburtsdatum(new Date());
 		kunde.setEmail("" + id + "@hska.de");
+		kunde.setSeit(new Date());
+		kunde.setAktualisiert(null);
 		
 		final GregorianCalendar geburtsdatumCal = new GregorianCalendar(JAHR, MONAT, TAG);
 		final Date geburtsdatum = geburtsdatumCal.getTime();
 		kunde.setGeburtsdatum(geburtsdatum);
 		
+		/*final GregorianCalendar aktualisiertCal = new GregorianCalendar(JAHR, MONAT, TAG, HOUR, MINUTE, SECOND);
+		final Date aktualisiert = aktualisiertCal.getTime();
+		kunde.setAktualisiert(aktualisiert);*/
 		
 		final GregorianCalendar seitCal = new GregorianCalendar(JAHR, MONAT, TAG);
 		final Date seit = seitCal.getTime();
@@ -190,8 +201,8 @@ public final class Mock {
 		kunde.setId(Long.valueOf(nachname.length()));
 		final String vorname = kunde.getVorname();
 		kunde.setId(Long.valueOf(vorname.length()));
-		final Timestamp aktuell = kunde.getAktuell();
-		kunde.setAktuell(aktuell);
+		final Timestamp aktualisiert = kunde.getAktualisiert();
+		kunde.setAktualisiert(aktualisiert);
 		final Adresse adresse = kunde.getAdresse();
 		adresse.setId((Long.valueOf(nachname.length())) + 1);
 		adresse.setKunde(kunde);
