@@ -17,8 +17,7 @@ import de.shop.util.IdGroup;
 public class Adresse implements Serializable {
 	private static final long serialVersionUID = -3029272617931844501L;
 	
-	private static final String NAME_PATTERN = "[A-Z\u00C4\u00D6\u00DC][a-z\u00E4\u00F6\u00FC\u00DF][ ][-]"
-			+ "[A-Z\u00C4\u00D6\u00DC][a-z\u00E4\u00F6\u00FC\u00DF] ";
+	private static final String NAME_PATTERN = "[A-Z\u00C4\u00D6\u00DC][a-z\u00E4\u00F6\u00FC\u00DF][ ][-][A-Z\u00C4\u00D6\u00DC][a-z\u00E4\u00F6\u00FC\u00DF] ";
 	
 	private static final long MIN_ID = 1;
 	private static final int HAUSNR_LENGTH_MIN = 1;
@@ -127,48 +126,41 @@ public class Adresse implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final Adresse other = (Adresse) obj;
+		Adresse other = (Adresse) obj;
 		if (aktualisiert == null) {
 			if (other.aktualisiert != null)
 				return false;
-		}
-		else if (!aktualisiert.equals(other.aktualisiert))
+		} else if (!aktualisiert.equals(other.aktualisiert))
 			return false;
 		if (hausnr == null) {
 			if (other.hausnr != null)
 				return false;
-		}
-		else if (!hausnr.equals(other.hausnr))
+		} else if (!hausnr.equals(other.hausnr))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		}
-		else if (!id.equals(other.id))
+		} else if (!id.equals(other.id))
 			return false;
 		if (kunde == null) {
 			if (other.kunde != null)
 				return false;
-		} 
-		else if (!kunde.equals(other.kunde))
+		} else if (!kunde.equals(other.kunde))
 			return false;
 		if (ort == null) {
 			if (other.ort != null)
 				return false;
-		} 
-		else if (!ort.equals(other.ort))
+		} else if (!ort.equals(other.ort))
 			return false;
 		if (plz == null) {
 			if (other.plz != null)
 				return false;
-		} 
-		else if (!plz.equals(other.plz))
+		} else if (!plz.equals(other.plz))
 			return false;
 		if (strasse == null) {
 			if (other.strasse != null)
 				return false;
-		}
-		else if (!strasse.equals(other.strasse))
+		} else if (!strasse.equals(other.strasse))
 			return false;
 		return true;
 	}

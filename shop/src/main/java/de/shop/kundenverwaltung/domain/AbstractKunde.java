@@ -196,7 +196,7 @@ public abstract class AbstractKunde implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final AbstractKunde other = (AbstractKunde) obj;
+		AbstractKunde other = (AbstractKunde) obj;
 		if (adresse == null) {
 			if (other.adresse != null)
 				return false;
