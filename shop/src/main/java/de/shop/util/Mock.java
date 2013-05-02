@@ -193,8 +193,8 @@ public final class Mock {
 		kunde.setId(Long.valueOf(nachname.length()));
 		final String vorname = kunde.getVorname();
 		kunde.setId(Long.valueOf(vorname.length()));
-		final Timestamp aktuell = kunde.getAktuell();
-		kunde.setAktuell(aktuell);
+		final Timestamp aktualisiert = kunde.getAktualisiert();
+		kunde.setAktualisiert(aktualisiert);
 		final Adresse adresse = kunde.getAdresse();
 		adresse.setId((Long.valueOf(nachname.length())) + 1);
 		adresse.setKunde(kunde);
