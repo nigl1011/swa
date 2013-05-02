@@ -47,8 +47,11 @@ public final class Mock {
 		kunde.setId(id);
 		kunde.setVorname("Vorname" + id);
 		kunde.setNachname("Nachname" + id);
+		kunde.setGeburtsdatum(new Date());
+		kunde.setSeit(new Date());
 		kunde.setGeschlecht(GeschlechtType.WEIBLICH);
 		kunde.setEmail("" + id + "@hska.de");
+		kunde.setAktualisieren(null);
 		
 		final GregorianCalendar geburtsdatumCal = new GregorianCalendar(JAHR, MONAT, TAG);
 		final Date geburtsdatum = geburtsdatumCal.getTime();
@@ -190,8 +193,8 @@ public final class Mock {
 		kunde.setId(Long.valueOf(nachname.length()));
 		final String vorname = kunde.getVorname();
 		kunde.setId(Long.valueOf(vorname.length()));
-		final Timestamp aktuell = kunde.getAktuell();
-		kunde.setAktuell(aktuell);
+		final Timestamp aktualisieren = kunde.getAktualisieren();
+		kunde.setAktualisieren(aktualisieren);
 		final Adresse adresse = kunde.getAdresse();
 		adresse.setId((Long.valueOf(nachname.length())) + 1);
 		adresse.setKunde(kunde);

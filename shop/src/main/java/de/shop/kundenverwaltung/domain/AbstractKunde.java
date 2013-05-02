@@ -84,7 +84,7 @@ public abstract class AbstractKunde implements Serializable {
 	private Date seit;
 	
 	@Temporal(TIMESTAMP)
-	private Timestamp aktuell;
+	private Timestamp aktualisieren;
 	
 	@Valid
 	@NotNull(message = "{kundenverwaltung.kunde.adresse.notNull}")
@@ -138,11 +138,11 @@ public abstract class AbstractKunde implements Serializable {
 	public void setSeit(Date seit) {
 		this.seit = seit == null ? null : (Date) seit.clone();
 	}
-	public Timestamp getAktuell() {
-		return aktuell;
+	public Timestamp getAktualisieren() {
+		return aktualisieren;
 	}
-	public void setAktuell(Timestamp aktuell) {
-		this.aktuell = aktuell;
+	public void setAktualisieren(Timestamp aktualisieren) {
+		this.aktualisieren = aktualisieren;
 	}
 	public Adresse getAdresse() {
 		return adresse;
@@ -169,7 +169,7 @@ public abstract class AbstractKunde implements Serializable {
 		int result = 1;
 		result = prime * result + ((adresse == null) ? 0 : adresse.hashCode());
 		result = prime * result
-				+ ((aktuell == null) ? 0 : aktuell.hashCode());
+				+ ((aktualisieren == null) ? 0 : aktualisieren.hashCode());
 		result = prime * result
 				+ ((bestellungen == null) ? 0 : bestellungen.hashCode());
 		result = prime * result
@@ -203,11 +203,11 @@ public abstract class AbstractKunde implements Serializable {
 		}
 		else if (!adresse.equals(other.adresse))
 			return false;
-		if (aktuell == null) {
-			if (other.aktuell != null)
+		if (aktualisieren == null) {
+			if (other.aktualisieren != null)
 				return false;
 		} 
-		else if (!aktuell.equals(other.aktuell))
+		else if (!aktualisieren.equals(other.aktualisieren))
 			return false;
 		if (bestellungen == null) {
 			if (other.bestellungen != null)
