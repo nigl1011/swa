@@ -48,7 +48,7 @@ public final class Mock {
 		kunde.setVorname("Vorname" + id);
 		kunde.setNachname("Nachname" + id);
 		kunde.setGeburtsdatum(new Date());
-		kunde.setSeit(new Date());
+		kunde.setErzeugt(new Date());
 		kunde.setGeschlecht(GeschlechtType.WEIBLICH);
 		kunde.setEmail("" + id + "@hska.de");
 		kunde.setAktualisieren(null);
@@ -58,9 +58,9 @@ public final class Mock {
 		kunde.setGeburtsdatum(geburtsdatum);
 		
 		
-		final GregorianCalendar seitCal = new GregorianCalendar(JAHR, MONAT, TAG);
-		final Date seit = seitCal.getTime();
-		kunde.setSeit(seit);
+		final GregorianCalendar erzeugtCal = new GregorianCalendar(JAHR, MONAT, TAG);
+		final Date erzeugt = erzeugtCal.getTime();
+		kunde.setErzeugt(erzeugt);
 		
 		final Adresse adresse = new Adresse();
 		adresse.setId(id + 1);        // andere ID fuer die Adresse
@@ -125,9 +125,9 @@ public final class Mock {
 		kunde.setNachname("Nachname");
 		kunde.setEmail(email);
 		
-		final GregorianCalendar seitCal = new GregorianCalendar(JAHR, MONAT, TAG);
-		final Date seit = seitCal.getTime();
-		kunde.setSeit(seit);
+		final GregorianCalendar erzeugtCal = new GregorianCalendar(JAHR, MONAT, TAG);
+		final Date erzeugt = erzeugtCal.getTime();
+		kunde.setErzeugt(erzeugt);
 		
 		final Adresse adresse = new Adresse();
 		adresse.setId(kunde.getId() + 1);        // andere ID fuer die Adresse

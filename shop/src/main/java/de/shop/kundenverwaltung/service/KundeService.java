@@ -111,9 +111,9 @@ public class KundeService implements Serializable {
 
 		// Pruefung, ob die Email-Adresse schon existiert
 		// TODO Datenbanzugriffsschicht statt Mock
-		if (Mock.findKundeByEmail(kunde.getEmail()) != null) {
-			throw new EmailExistsException(kunde.getEmail());
-		}
+		//if (Mock.findKundeByEmail(kunde.getEmail()) != null) {
+		//throw new EmailExistsException(kunde.getEmail());
+		//}
 
 		kunde = Mock.createKunde(kunde);
 
@@ -138,6 +138,7 @@ public class KundeService implements Serializable {
 		// Werden alle Constraints beim Modifizieren gewahrt?
 		validateKunde(kunde, locale, Default.class, IdGroup.class);
 
+		/*
 		// Pruefung, ob die Email-Adresse schon existiert
 		final AbstractKunde vorhandenerKunde = Mock.findKundeByEmail(kunde.getEmail());
 
@@ -145,7 +146,7 @@ public class KundeService implements Serializable {
 		if (vorhandenerKunde.getId().longValue() != kunde.getId().longValue()) {
 			throw new EmailExistsException(kunde.getEmail());
 		}
-		
+		*/
 		// TODO Datenbanzugriffsschicht statt Mock
 		Mock.updateKunde(kunde);
 		
