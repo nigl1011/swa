@@ -7,4 +7,7 @@
  <alternatives>
   <stereotype>de.shop.util.MockService</stereotype>
  </alternatives>
+ <decorators>
+  <class>de.shop.bestellverwaltung.service.BestellverwaltungMitGeschenkverpackung</class>
+ </decorators>
 </beans>
