@@ -82,7 +82,7 @@ public abstract class AbstractKunde implements Serializable {
 	private String email;
 	
 	@JsonIgnore
-	@Past(message = "{kundenverwaltung.kunde.seit.past}")
+	@Past(message = "{kundenverwaltung.kunde.erzeugt.past}")
 	private Date erzeugt;
 	
 	@Temporal(TIMESTAMP)
