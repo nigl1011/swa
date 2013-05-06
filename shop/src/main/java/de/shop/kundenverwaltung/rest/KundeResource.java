@@ -31,6 +31,7 @@ import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.kundenverwaltung.service.KundeService;
 import de.shop.util.LocaleHelper;
 import de.shop.util.Log;
+//import de.shop.util.Mock;
 import de.shop.util.NotFoundException;
 
 @Path("/kunden")
@@ -143,7 +144,11 @@ public class KundeResource {
 		
 		ks.updateKunde(kunde, locale);
 		
+		//Mock.updateKunde(kunde);
 		return Response.noContent().build();
+		
+		
+
 	}
 	
 	@DELETE

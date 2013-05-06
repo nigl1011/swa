@@ -18,6 +18,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonSubTypes;
 import org.codehaus.jackson.annotate.JsonSubTypes.Type;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
@@ -80,11 +81,13 @@ public abstract class AbstractKunde implements Serializable {
 	@Size(max = EMAIL_LENGTH_MAX, message = "{kundenverwaltung.kunde.email.length}")
 	private String email;
 	
+	@JsonIgnore
 	@Past(message = "{kundenverwaltung.kunde.seit.past}")
-	private Date seit;
+	private Date erzeugt;
 	
 	@Temporal(TIMESTAMP)
-	private Timestamp aktuell;
+	private Timestamp aktualisiert;
+	
 	
 	@Valid
 	@NotNull(message = "{kundenverwaltung.kunde.adresse.notNull}")
@@ -95,7 +98,8 @@ public abstract class AbstractKunde implements Serializable {
 	@JsonIgnore
 	private List<Bestellung> bestellungen;
 	private URI bestellungenUri;
-
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -132,17 +136,18 @@ public abstract class AbstractKunde implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getSeit() {
-		return seit == null ? null : (Date) seit.clone();
+	@JsonProperty("datum")
+	public Date getErzeugt() {
+		return erzeugt == null ? null : (Date) erzeugt.clone();
 	}
-	public void setSeit(Date seit) {
-		this.seit = seit == null ? null : (Date) seit.clone();
+	public void setErzeugt(Date erzeugt) {
+		this.erzeugt = erzeugt == null ? null : (Date) erzeugt.clone();
 	}
-	public Timestamp getAktuell() {
-		return aktuell;
+	public Timestamp getAktualisieren() {
+		return aktualisiert;
 	}
-	public void setAktuell(Timestamp aktuell) {
-		this.aktuell = aktuell;
+	public void setAktualisieren(Timestamp aktualisieren) {
+		this.aktualisiert = aktualisieren;
 	}
 	public Adresse getAdresse() {
 		return adresse;
@@ -167,15 +172,14 @@ public abstract class AbstractKunde implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((adresse == null) ? 0 : adresse.hashCode());
 		result = prime * result
-				+ ((aktuell == null) ? 0 : aktuell.hashCode());
+				+ ((aktualisiert == null) ? 0 : aktualisiert.hashCode());
 		result = prime * result
 				+ ((bestellungen == null) ? 0 : bestellungen.hashCode());
 		result = prime * result
 				+ ((bestellungenUri == null) ? 0 : bestellungenUri.hashCode());
 		result = prime * result
-				+ ((seit == null) ? 0 : seit.hashCode());
+				+ ((erzeugt == null) ? 0 : erzeugt.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result
 				+ ((geburtsdatum == null) ? 0 : geburtsdatum.hashCode());
@@ -197,17 +201,17 @@ public abstract class AbstractKunde implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		final AbstractKunde other = (AbstractKunde) obj;
-		if (adresse == null) {
+		/*if (adresse == null) {
 			if (other.adresse != null)
 				return false;
 		}
 		else if (!adresse.equals(other.adresse))
-			return false;
-		if (aktuell == null) {
-			if (other.aktuell != null)
+			return false;*/
+		if (aktualisiert == null) {
+			if (other.aktualisiert != null)
 				return false;
 		} 
-		else if (!aktuell.equals(other.aktuell))
+		else if (!aktualisiert.equals(other.aktualisiert))
 			return false;
 		if (bestellungen == null) {
 			if (other.bestellungen != null)
@@ -221,11 +225,11 @@ public abstract class AbstractKunde implements Serializable {
 		}
 		else if (!bestellungenUri.equals(other.bestellungenUri))
 			return false;
-		if (seit == null) {
-			if (other.seit != null)
+		if (erzeugt == null) {
+			if (other.erzeugt != null)
 				return false;
 		} 
-		else if (!seit.equals(other.seit))
+		else if (!erzeugt.equals(other.erzeugt))
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -267,8 +271,8 @@ public abstract class AbstractKunde implements Serializable {
 		return "AbstractKunde [id=" + id + ", vorname=" + vorname
 				+ ", nachname=" + nachname + ", geschlecht=" + geschlecht
 				+ ", geburtsdatum=" + geburtsdatum + ", email=" + email
-				+ ", seit=" + seit + ", adresse=" + adresse
-				+ ", bestellungenUri=" + bestellungenUri + "]";
+				+ ", erzeugt=" + erzeugt + ", adresse=" + adresse 
+				+ "]";
 	}
 
 }
