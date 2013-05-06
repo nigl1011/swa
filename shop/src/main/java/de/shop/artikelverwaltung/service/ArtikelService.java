@@ -2,7 +2,6 @@ package de.shop.artikelverwaltung.service;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -47,7 +46,8 @@ public class ArtikelService implements Serializable {
 		validateArtikelId(id, locale);
 		// TODO id pruefen
 		// TODO Datenbanzugriffsschicht statt Mock
-		return Mock.findArtikelById(id);
+		final Artikel artikel =  Mock.findArtikelById(id);
+		return artikel;
 	}
 	private void validateArtikelId(Long artikelId, Locale locale) {
 		final Validator validator = validatorProvider.getValidator(locale);
@@ -59,13 +59,13 @@ public class ArtikelService implements Serializable {
 			throw new InvalidArtikelIdException(artikelId, violations);
 	}
 
-	public Collection<Artikel> findAllArtikel() {
+	public List<Artikel> findAllArtikel() {
 		// TODO Datenbanzugriffsschicht statt Mock
 				final List<Artikel> allArtikel = Mock.findAllArtikel();
 				return allArtikel;
 	}
 
-	public Collection<Artikel> findArtikelByKategorie(KategorieType kategorie, Locale locale) {
+	public List<Artikel> findArtikelByKategorie(KategorieType kategorie, Locale locale) {
 	validateKategorie(kategorie, locale);
 		
 		// TODO Datenbanzugriffsschicht statt Mock

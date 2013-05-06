@@ -38,6 +38,8 @@ public final class Mock {
 	private static final int MONAT = 0; // bei Calendar werden die Monate von 0 bis 11 gezaehlt
 	private static final int TAG = 31;  // bei Calendar die Monatstage ab 1 gezaehlt
 
+
+
 	public static AbstractKunde findKundeById(Long id) {
 		if (id > MAX_ID) {
 			return null;
@@ -47,11 +49,9 @@ public final class Mock {
 		kunde.setId(id);
 		kunde.setVorname("Vorname" + id);
 		kunde.setNachname("Nachname" + id);
-		kunde.setGeburtsdatum(new Date());
-		kunde.setErzeugt(new Date());
 		kunde.setGeschlecht(GeschlechtType.WEIBLICH);
 		kunde.setEmail("" + id + "@hska.de");
-		kunde.setAktualisieren(null);
+		kunde.setAktualisiert(null);
 		
 		final GregorianCalendar geburtsdatumCal = new GregorianCalendar(JAHR, MONAT, TAG);
 		final Date geburtsdatum = geburtsdatumCal.getTime();
@@ -193,8 +193,8 @@ public final class Mock {
 		kunde.setId(Long.valueOf(nachname.length()));
 		final String vorname = kunde.getVorname();
 		kunde.setId(Long.valueOf(vorname.length()));
-		final Timestamp aktualisieren = kunde.getAktualisieren();
-		kunde.setAktualisieren(aktualisieren);
+		final Timestamp aktualisiert = kunde.getAktualisiert();
+		kunde.setAktualisiert(aktualisiert);
 		final Adresse adresse = kunde.getAdresse();
 		adresse.setId((Long.valueOf(nachname.length())) + 1);
 		adresse.setKunde(kunde);
@@ -254,8 +254,8 @@ public final class Mock {
 				}
 				final Artikel artikel = new Artikel();
 				artikel.setId(id);
-				artikel.setBezeichnung("Tisch");
-				artikel.setKategorie(KategorieType.KÜCHE);
+				artikel.setBezeichnung("Bezeichung_" + id);
+				artikel.setKategorie(KategorieType.BADEZIMMER);
 				artikel.setFarbe("blau");
 				artikel.setPreis(12.30);
 				artikel.setVerfuegbar(true);
@@ -295,7 +295,8 @@ public final class Mock {
 				// Neue IDs fuer Artikel 
 				final String bezeichnung = artikel.getBezeichnung();
 				artikel.setId(Long.valueOf(bezeichnung.length()));
-				
+
+			
 				LOGGER.infof("Neuer Artikel: " + artikel);
 				return artikel;
 			}

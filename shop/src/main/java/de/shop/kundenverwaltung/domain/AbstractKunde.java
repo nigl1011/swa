@@ -136,18 +136,18 @@ public abstract class AbstractKunde implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	@JsonProperty("datum")
+	@JsonProperty("Erzeugt am:")
 	public Date getErzeugt() {
 		return erzeugt == null ? null : (Date) erzeugt.clone();
 	}
 	public void setErzeugt(Date erzeugt) {
 		this.erzeugt = erzeugt == null ? null : (Date) erzeugt.clone();
 	}
-	public Timestamp getAktualisieren() {
+	public Timestamp getAktualisiert() {
 		return aktualisiert;
 	}
-	public void setAktualisieren(Timestamp aktualisieren) {
-		this.aktualisiert = aktualisieren;
+	public void setAktualisiert(Timestamp aktualisiert) {
+		this.aktualisiert = aktualisiert;
 	}
 	public Adresse getAdresse() {
 		return adresse;
