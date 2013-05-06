@@ -111,9 +111,10 @@ public class KundeService implements Serializable {
 
 		// Pruefung, ob die Email-Adresse schon existiert
 		// TODO Datenbanzugriffsschicht statt Mock
-		//if (Mock.findKundeByEmail(kunde.getEmail()) != null) {
-		//throw new EmailExistsException(kunde.getEmail());
-		//}
+		
+		/*if (Mock.findKundeByEmail(kunde.getEmail()) != null) {
+		throw new EmailExistsException(kunde.getEmail());
+		}*/
 
 		kunde = Mock.createKunde(kunde);
 
@@ -161,9 +162,9 @@ public class KundeService implements Serializable {
 		}
 
 		// Gibt es Bestellungen?
-		if (!kunde.getBestellungen().isEmpty()) {
+		/*if (!kunde.getBestellungen().isEmpty()) {
 			throw new KundeDeleteBestellungException(kunde);
-		}
+		}*/
 		
 		// TODO Datenbanzugriffsschicht statt Mock
 		Mock.deleteKunde(kunde);
