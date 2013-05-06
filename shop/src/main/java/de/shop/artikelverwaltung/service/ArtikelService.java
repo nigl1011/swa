@@ -2,6 +2,8 @@ package de.shop.artikelverwaltung.service;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -10,10 +12,12 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import javax.validation.groups.Default;
 
 import org.jboss.logging.Logger;
 
 import de.shop.artikelverwaltung.domain.Artikel;
+import de.shop.artikelverwaltung.domain.KategorieType;
 import de.shop.artikelverwaltung.service.InvalidArtikelIdException;
 import de.shop.util.IdGroup;
 import de.shop.util.Log;
@@ -54,4 +58,64 @@ public class ArtikelService implements Serializable {
 		if (!violations.isEmpty())
 			throw new InvalidArtikelIdException(artikelId, violations);
 	}
+
+	public Collection<Artikel> findAllArtikel() {
+		// TODO Datenbanzugriffsschicht statt Mock
+				final List<Artikel> allArtikel = Mock.findAllArtikel();
+				return allArtikel;
+	}
+
+	public Collection<Artikel> findArtikelByKategorie(KategorieType kategorie, Locale locale) {
+	validateKategorie(kategorie, locale);
+		
+		// TODO Datenbanzugriffsschicht statt Mock
+		final List<Artikel> allArtikelMitKategorie = Mock.findArtikelByKategorie(kategorie);
+		return allArtikelMitKategorie;
+	}
+	
+	private void validateKategorie(KategorieType kategorie, Locale locale) {
+		/*final Validator validator = validatorProvider.getValidator(locale);
+		final Set<ConstraintViolation<Artikel>> violations = validator.validateValue(Artikel.class,
+				                                                                           "kategorie",
+				                                                                           kategorie,
+				                                                                           Default.class); */
+	}
+
+	public Artikel createArtikel(Artikel artikel,Locale locale) {
+		if (artikel == null) {
+			return artikel;
+		}
+
+		// Werden alle Constraints beim Einfuegen gewahrt?
+		validateArtikel(artikel, locale, Default.class);
+
+		// TODO Datenbanzugriffsschicht statt Mock
+		artikel = Mock.createArtikel(artikel);
+
+		return artikel;
+	}
+	private void validateArtikel(Artikel artikel, Locale locale, Class<?>... groups) {
+		// Werden alle Constraints beim Einfuegen gewahrt?
+		final Validator validator = validatorProvider.getValidator(locale);
+		
+		final Set<ConstraintViolation<Artikel>> violations = validator.validate(artikel, groups);
+		if (!violations.isEmpty()) {
+			throw new InvalidArtikelException(artikel, violations);
+		}
+	}
+
+	public Artikel updateArtikel(Artikel artikel, Locale locale) {
+			if (artikel == null) {
+				return null;
+			}
+
+			// Werden alle Constraints beim Modifizieren gewahrt?
+			validateArtikel(artikel, locale, Default.class, IdGroup.class);
+
+
+			// TODO Datenbanzugriffsschicht statt Mock
+			Mock.updateArtikel(artikel);
+			
+			return artikel;
+		}
 }

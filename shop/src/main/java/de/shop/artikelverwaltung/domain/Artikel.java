@@ -65,7 +65,7 @@ public class Artikel implements Serializable {
 	@Digits(fraction=2, integer = 12)
 	private double preis;
 	
-	@AssertTrue
+	@AssertTrue // 03validierung -s.6/20
 	private Boolean verfuegbar;
 	
 	@Temporal(TIMESTAMP)

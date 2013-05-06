@@ -25,8 +25,8 @@ import javax.ws.rs.core.UriInfo;
 
 import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.artikelverwaltung.domain.KategorieType;
+import de.shop.artikelverwaltung.service.ArtikelService;
 import de.shop.util.LocaleHelper;
-import de.shop.util.Mock;
 import de.shop.util.NotFoundException;
 
 @Path("/artikel")
@@ -46,6 +46,9 @@ public class ArtikelResource {
 	private UriHelperArtikel uriHelperArtikel;
 	
 	@Inject
+	private ArtikelService as;
+	
+	@Inject
 	private LocaleHelper localeHelper;
 	
 	@GET
@@ -57,36 +60,34 @@ public class ArtikelResource {
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
-	public Artikel findArtikelById(@PathParam("id") Long id) {
-		@SuppressWarnings("unused")
+	public Artikel findArtikelById(@PathParam("id") Long id, @Context UriInfo uirInfo) {
 		final Locale locale = localeHelper.getLocale(headers);
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
-		final Artikel artikel = Mock.findArtikelById(id);
+		final Artikel artikel = as.findArtikelById(id,locale);
 		if (artikel == null) {
 			throw new NotFoundException("Kein Artikel mit der ID " + id + " gefunden.");
 		}
-		// URLs innerhalb des gefundenen Kunden anpassen
+		// URLs innerhalb des gefundenen Artikels anpassen
 		uriHelperArtikel.updateUriArtikel(artikel, uriInfo);	
 		return artikel;
 	}
 		
 	@GET
 	public Collection<Artikel> findArtikelByKategorie(@QueryParam("kategorie") @DefaultValue("") KategorieType kategorie) {
-		@SuppressWarnings("unused")
 		final Locale locale = localeHelper.getLocale(headers);
 		
 		Collection<Artikel> allArtikel = null;
 		if ("".equals(kategorie)) {
 			// TODO Anwendungskern statt Mock, Verwendung von Locale
-			allArtikel = Mock.findAllArtikel();
+			allArtikel = as.findAllArtikel();
 			if (allArtikel.isEmpty()) {
 				throw new NotFoundException("Kein Artikel vorhanden.");
 			}
 		}
 		else {
 			// TODO Anwendungskern statt Mock, Verwendung von Locale
-			allArtikel = Mock.findArtikelByKategorie(kategorie);
+			allArtikel = as.findArtikelByKategorie(kategorie, locale);
 			if (allArtikel.isEmpty()) {
 				throw new NotFoundException("Kein Artikel mit der Kategorie " + kategorie + " gefunden.");
 			}
@@ -105,9 +106,9 @@ public class ArtikelResource {
 	public Response createArtikel(Artikel artikel) {
 		//@SuppressWarnings("unused")
 		//final Locale locale = localeHelper.getLocale(headers);
-		
-		// TODO Anwendungskern statt Mock, Verwendung von Locale
-		artikel = Mock.createArtikel(artikel);
+
+		final Locale locale = localeHelper.getLocale(headers);
+		artikel = as.createArtikel(artikel,locale);
 		final URI artikelUri = uriHelperArtikel.getUriArtikel(artikel, uriInfo);
 		return Response.created(artikelUri).build();
 	}
@@ -116,11 +117,10 @@ public class ArtikelResource {
 	@Consumes(APPLICATION_JSON)
 	@Produces
 	public Response updateArtikel(Artikel artikel) {
-		//@SuppressWarnings("unused")
-		//final Locale locale = localeHelper.getLocale(headers);
+		final Locale locale = localeHelper.getLocale(headers);
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
-		Mock.updateArtikel(artikel);
+		as.updateArtikel(artikel,locale);
 		return Response.noContent().build();
 	}
 	
