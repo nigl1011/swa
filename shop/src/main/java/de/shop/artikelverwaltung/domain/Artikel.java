@@ -43,7 +43,7 @@ public class Artikel implements Serializable {
 	
 	
 
-	@Min(value = MIN_ID, message = "{kundenverwaltung.kunde.id.min}", groups = IdGroup.class)
+	@Min(value = MIN_ID, message = "{artikelverwaltung.artikel.id.min}", groups = IdGroup.class)
 	private Long id;
 	
 
@@ -65,7 +65,7 @@ public class Artikel implements Serializable {
 	@Digits(fraction=2, integer = 12)
 	private double preis;
 	
-	@AssertTrue // 03validierung -s.6/20
+	@AssertTrue 
 	private Boolean verfuegbar;
 	
 	@Temporal(TIMESTAMP)
