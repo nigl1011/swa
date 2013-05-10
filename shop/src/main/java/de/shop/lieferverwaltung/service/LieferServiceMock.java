@@ -15,7 +15,6 @@ public class LieferServiceMock extends LieferService {
 	public Lieferung findLieferungById(Long id,Locale locale) {
 		final Lieferung lieferung = new Lieferung();
 		lieferung.setId(id);
-		//artikel.setBezeichnung("Bezeichnung_" + id + "_Mock");
 		return lieferung;
 	}
 }

@@ -10,6 +10,7 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import javax.validation.groups.Default;
 
 import org.jboss.logging.Logger;
 
@@ -54,4 +55,42 @@ public class LieferService implements Serializable {
 		if (!violations.isEmpty())
 			throw new InvalidLieferIdException(lieferId, violations);
 	}
+	
+	public Lieferung createLieferung(Lieferung lieferung, Locale locale) {
+		if (lieferung == null) {
+			return lieferung;
+		}
+
+		// Werden alle Constraints beim Einfuegen gewahrt?
+		validateLieferung(lieferung, locale, Default.class);
+
+		lieferung = Mock.createLieferung(lieferung);
+
+		return lieferung;
+	}
+
+	private void validateLieferung(Lieferung lieferung, Locale locale, Class<?>... groups) {
+		// Werden alle Constraints beim Einfuegen gewahrt?
+		final Validator validator = validatorProvider.getValidator(locale);
+		
+		final Set<ConstraintViolation<Lieferung>> violations = validator.validate(lieferung, groups);
+		if (!violations.isEmpty()) {
+			throw new InvalidLieferException(lieferung, violations);
+		}
+	}
+
+	public Lieferung updateLieferung(Lieferung lieferung, Locale locale) {
+		if (lieferung == null) {
+			return null;
+		}
+
+		// Werden alle Constraints beim Modifizieren gewahrt?
+		validateLieferung(lieferung, locale, Default.class, IdGroup.class);
+
+		// TODO Datenbanzugriffsschicht statt Mock
+		Mock.updateLieferung(lieferung);
+		
+		return lieferung;
+	}
+
 }

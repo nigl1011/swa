@@ -19,9 +19,11 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import de.shop.bestellverwaltung.service.BestellungService;
 import de.shop.lieferverwaltung.domain.Lieferung;
+import de.shop.lieferverwaltung.service.LieferService;
 import de.shop.util.LocaleHelper;
-import de.shop.util.Mock;
+//import de.shop.util.Mock;
 import de.shop.util.NotFoundException;
 
 @Path("/lieferungen")
@@ -38,16 +40,22 @@ public class LieferungResource {
 	private UriHelperLieferung uriHelperLieferung;
 	
 	@Inject
+	private LieferService ls;
+	
+	@Inject
+	private BestellungService bs;
+	
+	@Inject
 	private LocaleHelper localeHelper;
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
 	public Lieferung findLieferungById(@PathParam("id") Long id) {
-		@SuppressWarnings("unused")
+		//@SuppressWarnings("unused")
 		final Locale locale = localeHelper.getLocale(headers);
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
-		final Lieferung lieferung = Mock.findLieferungById(id);
+		final Lieferung lieferung = ls.findLieferungById(id, locale);
 		if (lieferung == null) {
 			throw new NotFoundException("Keine Lieferung mit der ID " + id + " gefunden.");
 		}
@@ -61,11 +69,11 @@ public class LieferungResource {
 	@Consumes(APPLICATION_JSON)
 	@Produces
 	public Response createLieferung(Lieferung lieferung) {
-		@SuppressWarnings("unused")
+		//@SuppressWarnings("unused")
 		final Locale locale = localeHelper.getLocale(headers);
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
-		lieferung = Mock.createLieferung(lieferung);
+		lieferung = ls.createLieferung(lieferung, locale);
 		final URI kundeUri = uriHelperLieferung.getUriLieferung(lieferung, uriInfo);
 		return Response.created(kundeUri).build();
 	}
@@ -74,11 +82,13 @@ public class LieferungResource {
 	@Consumes(APPLICATION_JSON)
 	@Produces
 	public Response updateLieferung(Lieferung lieferung) {
-		@SuppressWarnings("unused")
+		//@SuppressWarnings("unused")
 		final Locale locale = localeHelper.getLocale(headers);
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
-		Mock.updateLieferung(lieferung);
+		ls.updateLieferung(lieferung, locale);
+		
+		//Mock.updateLieferung(lieferung);
 		return Response.noContent().build();
 	}
 
