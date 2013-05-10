@@ -9,7 +9,6 @@ import javax.enterprise.inject.Any;
 import javax.inject.Inject;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
-import de.shop.kundenverwaltung.domain.AbstractKunde;
 
 @Decorator
 public abstract class BestellverwaltungMitGeschenkverpackung implements
@@ -38,9 +37,9 @@ public abstract class BestellverwaltungMitGeschenkverpackung implements
 
 	@Override
 	public Bestellung createBestellung(Bestellung bestellung,
-			AbstractKunde kunde, Locale locale) {
+			 Locale locale) {
 		// TODO Auto-generated method stub
-		return bestellverwaltung.createBestellung(bestellung, kunde, locale);
+		return bestellverwaltung.createBestellung(bestellung, locale);
 	}
 
 }

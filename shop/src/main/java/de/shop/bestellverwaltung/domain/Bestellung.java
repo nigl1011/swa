@@ -40,7 +40,7 @@ public class Bestellung implements Serializable {
 		@NotNull(message = "{bestellverwaltung.bestellung.gesamtpreis.notEmpty}")
 		private Double gesamtpreis;
 		
-		@NotNull(message = "{bestellverwaltung.bestellung.aktualisiert.notNull}")
+		//@NotNull(message = "{bestellverwaltung.bestellung.aktualisiert.notNull}")
 		@Temporal(TIMESTAMP)
 		private Timestamp aktualisiert;
 		

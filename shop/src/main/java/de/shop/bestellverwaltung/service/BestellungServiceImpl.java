@@ -18,6 +18,7 @@ import org.jboss.logging.Logger;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.kundenverwaltung.domain.AbstractKunde;
+import de.shop.util.IdGroup;
 import de.shop.util.Log;
 import de.shop.util.Mock;
 import de.shop.util.ValidatorProvider;
@@ -61,7 +62,10 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	}
 
 	@Override
-	public Bestellung createBestellung(Bestellung bestellung, AbstractKunde kunde, Locale locale) {
+	public Bestellung createBestellung(Bestellung bestellung, Locale locale) {
+		//if(bestellung == null){
+		//	return bestellung;
+		//	}
 		validateBestellung(bestellung, locale, Default.class);
 		
 		// TODO Datenbanzugriffsschicht statt Mock
@@ -80,4 +84,22 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 			throw new InvalidBestellungException(bestellung, violations);
 		}
 	}
-}
+	@Override
+	public Bestellung updateBestellung(Bestellung bestellung,AbstractKunde kunde, Locale locale) {
+		if (bestellung == null) {
+			return null;
+		}
+
+		// Werden alle Constraints beim Modifizieren gewahrt?
+		validateBestellung(bestellung, locale, Default.class, IdGroup.class);
+
+	
+		
+		
+		// TODO Datenbanzugriffsschicht statt Mock
+		Mock.updateBestellung(bestellung);
+		return bestellung;
+		}
+	}
+
+

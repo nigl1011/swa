@@ -263,12 +263,7 @@ public final class Mock {
 		bestellung.setAktualisiert(aktualisiert);
 		final List<Bestellposten> posten = bestellung.getBestellposten();
 		bestellung.setBestellposten(posten);
-		final String kundeUri = bestellung.getKundeUri().toString();
-		final int pos = kundeUri.indexOf("/kunden/")+8;
-		final String kundeIdString = kundeUri.substring(pos);
-		AbstractKunde kunde = findKundeById(Long.valueOf(kundeIdString));
-		bestellung.setKunde(kunde);
-		
+
 		return bestellung;
 	}
 	public static void updateBestellung(Bestellung bestellung) {
