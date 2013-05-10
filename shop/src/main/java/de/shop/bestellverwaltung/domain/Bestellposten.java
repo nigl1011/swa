@@ -2,6 +2,8 @@ package de.shop.bestellverwaltung.domain;
 
 import java.net.URI;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import de.shop.artikelverwaltung.domain.Artikel;
 
 
@@ -11,7 +13,9 @@ public class Bestellposten {
 	private Long menge;
 	private Long version;
 	private Long zwischenpreis;
+	@JsonIgnore
 	private Bestellung bestellung;
+	@JsonIgnore
 	private Artikel artikel;
 	private URI bestellungUri;
 	private URI artikelUri;
@@ -41,18 +45,13 @@ public class Bestellposten {
 	public void setZwischenpreis(Long zwischenpreis) {
 		this.zwischenpreis = zwischenpreis;
 	}
-	public Bestellung getBestellungId() {
-		return bestellung;
-	}
-	public void setBestellungId(Bestellung bestellungsId) {
-		bestellung = bestellungsId;
-	}
 	public Bestellung getBestellung() {
 		return bestellung;
 	}
 	public void setBestellung(Bestellung bestellung) {
 		this.bestellung = bestellung;
 	}
+
 	public Artikel getArtikel() {
 		return artikel;
 	}

@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.jboss.logging.Logger;
 
+import de.shop.bestellverwaltung.domain.Bestellposten;
 import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.bestellverwaltung.domain.StatusType;
 import de.shop.kundenverwaltung.domain.AbstractKunde;
@@ -165,6 +166,16 @@ public final class Mock {
 		
 		return bestellungen;
 	}
+	
+	public static Bestellposten findBestellpostenById(Long id) {
+		Bestellposten posten = new Bestellposten();
+		posten.setPositionId(id);
+		posten.setMenge((long) 3);
+		Artikel artikel = findArtikelById((long) 3);
+		posten.setArtikel(artikel);
+		posten.setZwischenpreis((long) (artikel.getPreis()*posten.getMenge()));
+		return posten;
+	}
 
 	public static Bestellung findBestellungById(Long id) {
 		if (id > MAX_ID) {
@@ -178,6 +189,12 @@ public final class Mock {
 		bestellung.setKunde(kunde);
 		bestellung.setStatus(StatusType.INBEARBEITUNG);
 		bestellung.setGesamtpreis(12.99);
+		
+		List<Bestellposten> posten = new ArrayList<Bestellposten>();
+		Bestellposten bp =findBestellpostenById((long)3);
+		bp.setBestellung(bestellung);
+		posten.add(bp);
+		bestellung.setBestellposten(posten);
 		//bestellung.setVersion(null);
 		bestellung.setBestelldatum(new Date());
 		//bestellung.setAktualisiert (new Timestamp(new Date(), null));
@@ -244,8 +261,22 @@ public final class Mock {
 		bestellung.setGesamtpreis(gesamtpreis);
 		final Timestamp aktualisiert = bestellung.getAktualisiert();
 		bestellung.setAktualisiert(aktualisiert);
+		final List<Bestellposten> posten = bestellung.getBestellposten();
+		bestellung.setBestellposten(posten);
+		final String kundeUri = bestellung.getKundeUri().toString();
+		final int pos = kundeUri.indexOf("/kunden/")+8;
+		final String kundeIdString = kundeUri.substring(pos);
+		AbstractKunde kunde = findKundeById(Long.valueOf(kundeIdString));
+		bestellung.setKunde(kunde);
+		
 		return bestellung;
 	}
+	public static void updateBestellung(Bestellung bestellung) {
+		LOGGER.infof("Aktualisierte Bestellung: " + bestellung);
+	}
+	//public static void deleteKunde(AbstractKunde kunde) {
+		//LOGGER.infof("Geloeschter Kunde: %s", kunde);
+	
 	
 	//Mock: Artikel
 			public static Artikel findArtikelById(Long id) {

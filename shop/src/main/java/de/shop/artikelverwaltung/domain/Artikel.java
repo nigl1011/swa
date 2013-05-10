@@ -135,7 +135,7 @@ public class Artikel implements Serializable {
 		return "Artikel [id=" + id + ", bezeichnung=" + bezeichnung
 				+ ", kategorie=" + kategorie + ", farbe=" + farbe + ", preis="
 				+ preis + ", verfügbar=" + verfuegbar + ", erstellt=" + erstellt
-				+ ", aktualisiert=" + aktualisiert + "]";
+				+ ", aktualisiert=" + aktualisiert +"]";
 	}
 
 	public void setArtikelUri(URI artikelUri) {

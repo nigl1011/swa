@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.net.URI;
 import java.security.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
@@ -47,8 +48,14 @@ public class Bestellung implements Serializable {
 		@JsonIgnore
 		private AbstractKunde kunde;
 		
+		@NotNull(message = "{bestellverwaltung.bestellung.bestellposten.notNull}")
+		private List<Bestellposten> bestellposten;
+		
+		
 		private URI kundeUri;
 		private Date bestelldatum;
+		
+		
 		
 		
 		public Long getId() {
@@ -137,6 +144,12 @@ public class Bestellung implements Serializable {
 					+ ", bestelldatum=" + bestelldatum + "]";
 
 
+		}
+		public List<Bestellposten> getBestellposten() {
+			return bestellposten;
+		}
+		public void setBestellposten(List<Bestellposten> bestellposten) {
+			this.bestellposten = bestellposten;
 		}
 		
 		
