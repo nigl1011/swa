@@ -14,10 +14,13 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+
 import org.codehaus.jackson.annotate.JsonIgnore;
+
 
 import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.util.IdGroup;
+
 
 public class Bestellung implements Serializable {
 	private static final long serialVersionUID = 1L;
