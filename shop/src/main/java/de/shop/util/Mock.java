@@ -168,12 +168,12 @@ public final class Mock {
 	}
 	
 	public static Bestellposten findBestellpostenById(Long id) {
-		Bestellposten posten = new Bestellposten();
+		final Bestellposten posten = new Bestellposten();
 		posten.setPositionId(id);
 		posten.setMenge((long) 3);
-		Artikel artikel = findArtikelById((long) 3);
+		final Artikel artikel = findArtikelById((long) 3);
 		posten.setArtikel(artikel);
-		posten.setZwischenpreis((long) (artikel.getPreis()*posten.getMenge()));
+		posten.setZwischenpreis((long)(artikel.getPreis()*posten.getMenge()));
 		return posten;
 	}
 
@@ -190,8 +190,8 @@ public final class Mock {
 		bestellung.setStatus(StatusType.INBEARBEITUNG);
 		bestellung.setGesamtpreis(12.99);
 		
-		List<Bestellposten> posten = new ArrayList<Bestellposten>();
-		Bestellposten bp =findBestellpostenById((long)3);
+		final List<Bestellposten> posten = new ArrayList<Bestellposten>();
+		final Bestellposten bp = findBestellpostenById((long)3);
 		bp.setBestellung(bestellung);
 		posten.add(bp);
 		bestellung.setBestellposten(posten);

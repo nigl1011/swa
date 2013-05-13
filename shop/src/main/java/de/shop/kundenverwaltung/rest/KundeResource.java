@@ -91,7 +91,8 @@ public class KundeResource {
 				throw new NotFoundException("Keine Kunden vorhanden.");
 			}
 		}
-		else {
+		else
+		{
 			final Locale locale = localeHelper.getLocale(headers);
 			kunden = ks.findKundenByNachname(nachname, locale);
 			if (kunden.isEmpty()) {
