@@ -229,24 +229,6 @@ public final class Mock {
 	}
 	
 	
-	
-	/*
-	}
-
-	public static Bestellung createBestellung(Bestellung bestellung, AbstractKunde kunde) {
-		LOGGER.infof("Neue Bestellung: %s fuer Kunde: %s", bestellung, kunde);
-		return bestellung;
-	}
-
-	public static Artikel findArtikelById(Long id) {
-		final Artikel artikel = new Artikel();
-		artikel.setId(id);
-		artikel.setBezeichnung("Bezeichnung_" + id);
-		return artikel;
-	}
-	*/
-	
-	
 	private Mock() { /**/ }
 
 	public static Bestellung createBestellung(Bestellung bestellung) {
@@ -269,9 +251,7 @@ public final class Mock {
 	public static void updateBestellung(Bestellung bestellung) {
 		LOGGER.infof("Aktualisierte Bestellung: " + bestellung);
 	}
-	//public static void deleteKunde(AbstractKunde kunde) {
-		//LOGGER.infof("Geloeschter Kunde: %s", kunde);
-	
+
 	
 	//Mock: Artikel
 			public static Artikel findArtikelById(Long id) {

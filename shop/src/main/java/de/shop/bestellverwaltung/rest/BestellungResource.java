@@ -68,7 +68,8 @@ public class BestellungResource {
 	@GET
 	@Path("{id:[1-9][0-9]*}")
 	public Bestellung findBestellungById(@PathParam("id") Long id) {
-		final Bestellung bestellung = bs.findBestellungById(id);
+		final Locale locale = localeHelper.getLocale(headers);
+		final Bestellung bestellung = bs.findBestellungById(id,locale);
 		if (bestellung == null) {
 			throw new NotFoundException("Keine Bestellung mit der ID " + id + " gefunden.");
 		}

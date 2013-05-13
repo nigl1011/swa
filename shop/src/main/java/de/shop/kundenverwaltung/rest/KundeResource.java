@@ -109,7 +109,8 @@ public class KundeResource {
 	@GET
 	@Path("{id:[1-9][0-9]*}/bestellungen")
 	public Collection<Bestellung> findBestellungenByKundeId(@PathParam("id") Long kundeId) {
-		final Collection<Bestellung> bestellungen = bs.findBestellungenByKundeId(kundeId);
+		final Locale locale = localeHelper.getLocale(headers);
+		final Collection<Bestellung> bestellungen = bs.findBestellungenByKundeId(kundeId,locale);
 		if (bestellungen.isEmpty()) {
 			throw new NotFoundException("Zur ID " + kundeId + " wurden keine Bestellungen gefunden");
 		}

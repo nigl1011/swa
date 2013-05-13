@@ -50,17 +50,33 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	}
 	
 	@Override
-	public Bestellung findBestellungById(Long id) {
+	public Bestellung findBestellungById(Long id,Locale locale) {
+		validateBestellungId(id, locale);
 		// TODO Datenbanzugriffsschicht statt Mock
-		return Mock.findBestellungById(id);
+		final Bestellung bestellung =  Mock.findBestellungById(id);
+		return bestellung;
 	}
+	private void validateBestellungId(Long bestellungId, Locale locale) {
+		final Validator validator = validatorProvider.getValidator(locale);
+		final Set<ConstraintViolation<Bestellung>> violations = validator.validateValue(Bestellung.class,
+				                                                                           "id",
+				                                                                           bestellungId,
+				                                                                           IdGroup.class);
+		if (!violations.isEmpty())
+			throw new InvalidBestellungIdException(bestellungId, violations);
+	}
+
 
 	@Override
-	public List<Bestellung> findBestellungenByKundeId(Long kundeId) {
+	public List<Bestellung> findBestellungenByKundeId(Long kundeId, Locale locale) {
 		// TODO Datenbanzugriffsschicht statt Mock
-		return Mock.findBestellungenByKundeId(kundeId);
+		validateKundenId(kundeId, locale);
+		final List<Bestellung> bestellungByKundenId =  Mock.findBestellungenByKundeId(kundeId);
+		return bestellungByKundenId;
 	}
-
+	private void validateKundenId(Long kundenId, Locale locale) {
+	}
+	
 	@Override
 	public Bestellung createBestellung(Bestellung bestellung, Locale locale) {
 		//if(bestellung == null){

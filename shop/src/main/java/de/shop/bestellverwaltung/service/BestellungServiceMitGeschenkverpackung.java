@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
-import de.shop.kundenverwaltung.domain.AbstractKunde;
+
 
 @Decorator
 public abstract class BestellungServiceMitGeschenkverpackung implements BestellungService {
@@ -24,13 +24,13 @@ public abstract class BestellungServiceMitGeschenkverpackung implements Bestellu
 	private BestellungService bs;
 
 	@Override
-	public Bestellung findBestellungById(Long id) {
-		return bs.findBestellungById(id);
+	public Bestellung findBestellungById(Long id,Locale locale) {
+		return bs.findBestellungById(id,locale);
 	}
 
 	@Override
-	public List<Bestellung> findBestellungenByKundeId(Long kundeId) {
-		return bs.findBestellungenByKundeId(kundeId);
+	public List<Bestellung> findBestellungenByKundeId(Long kundeId,Locale locale) {
+		return bs.findBestellungenByKundeId(kundeId,locale);
 	}
 
 	@Override

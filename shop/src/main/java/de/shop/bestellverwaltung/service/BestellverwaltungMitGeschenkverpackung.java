@@ -24,15 +24,15 @@ public abstract class BestellverwaltungMitGeschenkverpackung implements
 	}
 
 	@Override
-	public Bestellung findBestellungById(Long id) {
+	public Bestellung findBestellungById(Long id,Locale locale) {
 		// TODO Auto-generated method stub
-		return bestellverwaltung.findBestellungById(id);
+		return bestellverwaltung.findBestellungById(id,locale);
 	}
 
 	@Override
-	public List<Bestellung> findBestellungenByKundeId(Long kundeId) {
+	public List<Bestellung> findBestellungenByKundeId(Long kundeId,Locale locale) {
 		// TODO Auto-generated method stub
-		return bestellverwaltung.findBestellungenByKundeId(kundeId);
+		return bestellverwaltung.findBestellungenByKundeId(kundeId,locale);
 	}
 
 	@Override
