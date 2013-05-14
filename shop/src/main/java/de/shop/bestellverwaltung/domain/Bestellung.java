@@ -7,17 +7,12 @@ import java.net.URI;
 import java.security.Timestamp;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
-import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-
 import org.codehaus.jackson.annotate.JsonIgnore;
-
-
 import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.util.IdGroup;
 
@@ -28,22 +23,21 @@ public class Bestellung implements Serializable {
 
 	private static final long MIN_ID = 1;
 	private static final long MIN_VERSION = 1;
+
 	
-		@Valid
-		@Min(value = MIN_ID, message = "{bestellverwaltung.bestellung.id.min}", groups = IdGroup.class)
+		@Min(value=MIN_ID,message = "{bestellverwaltung.bestellung.id.min}")
 		private Long id;
 		
 		@Enumerated
 		@NotNull(message = "{bestellverwaltung.bestellung.status.notEmpty}")
 		private StatusType status;
 		
-		@Min(value = MIN_VERSION, message = "{bestellverwaltung.bestellung.version.min}", groups = IdGroup.class)
+		@Min(value=MIN_VERSION,message = "{bestellverwaltung.bestellung.version.min}", groups = IdGroup.class)
 		private Long version;
 		
 		@NotNull(message = "{bestellverwaltung.bestellung.gesamtpreis.notEmpty}")
 		private Double gesamtpreis;
 		
-		//@NotNull(message = "{bestellverwaltung.bestellung.aktualisiert.notNull}")
 		@Temporal(TIMESTAMP)
 		private Timestamp aktualisiert;
 		

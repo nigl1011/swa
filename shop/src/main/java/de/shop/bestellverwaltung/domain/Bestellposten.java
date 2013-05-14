@@ -2,6 +2,9 @@ package de.shop.bestellverwaltung.domain;
 
 import java.net.URI;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import de.shop.artikelverwaltung.domain.Artikel;
@@ -9,12 +12,22 @@ import de.shop.artikelverwaltung.domain.Artikel;
 
 public class Bestellposten {
 
+	private static final long MIN_MENGE = 1;
+
 	private Long id;
+	
+	@NotNull(message = "{bestellverwaltung.bestellung.menge.notEmpty}")
+	@Min(value=MIN_MENGE,message = "{bestellverwaltung.bestellung.menge.Min}")
 	private Long menge;
+	
 	private Long version;
+	
+	@NotNull(message = "{bestellverwaltung.bestellung.zwischenpreis.notEmpty}")
 	private Long zwischenpreis;
+	
 	@JsonIgnore
 	private Bestellung bestellung;
+	
 	@JsonIgnore
 	private Artikel artikel;
 	private URI bestellungUri;
