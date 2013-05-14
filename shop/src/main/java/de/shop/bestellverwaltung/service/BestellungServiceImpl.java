@@ -50,7 +50,7 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	}
 	
 	@Override
-	public Bestellung findBestellungById(Long id,Locale locale) {
+	public Bestellung findBestellungById(Long id, Locale locale) {
 		validateBestellungId(id, locale);
 		// TODO Datenbanzugriffsschicht statt Mock
 		final Bestellung bestellung =  Mock.findBestellungById(id);
@@ -101,7 +101,7 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 		}
 	}
 	@Override
-	public Bestellung updateBestellung(Bestellung bestellung,AbstractKunde kunde, Locale locale) {
+	public Bestellung updateBestellung(Bestellung bestellung, AbstractKunde kunde, Locale locale) {
 		if (bestellung == null) {
 			return null;
 		}

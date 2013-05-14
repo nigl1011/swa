@@ -24,19 +24,19 @@ public abstract class BestellungServiceMitGeschenkverpackung implements Bestellu
 	private BestellungService bs;
 
 	@Override
-	public Bestellung findBestellungById(Long id,Locale locale) {
-		return bs.findBestellungById(id,locale);
+	public Bestellung findBestellungById(Long id, Locale locale) {
+		return bs.findBestellungById(id, locale);
 	}
 
 	@Override
-	public List<Bestellung> findBestellungenByKundeId(Long kundeId,Locale locale) {
-		return bs.findBestellungenByKundeId(kundeId,locale);
+	public List<Bestellung> findBestellungenByKundeId(Long kundeId, Locale locale) {
+		return bs.findBestellungenByKundeId(kundeId, locale);
 	}
 
 	@Override
 	public Bestellung createBestellung(Bestellung bestellung, Locale locale) {
 		LOGGER.warn("Geschenkverpackung noch nicht implementiert");
 		
-		return bs.createBestellung(bestellung,locale);
+		return bs.createBestellung(bestellung, locale);
 	}
 }

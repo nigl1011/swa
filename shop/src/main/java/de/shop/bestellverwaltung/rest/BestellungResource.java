@@ -69,7 +69,7 @@ public class BestellungResource {
 	@Path("{id:[1-9][0-9]*}")
 	public Bestellung findBestellungById(@PathParam("id") Long id) {
 		final Locale locale = localeHelper.getLocale(headers);
-		final Bestellung bestellung = bs.findBestellungById(id,locale);
+		final Bestellung bestellung = bs.findBestellungById(id, locale);
 		if (bestellung == null) {
 			throw new NotFoundException("Keine Bestellung mit der ID " + id + " gefunden.");
 		}
@@ -88,12 +88,12 @@ public class BestellungResource {
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
 		final String kundeUri = bestellung.getKundeUri().toString();
-		final int pos = kundeUri.indexOf("/kunden/")+8;
+		final int pos = kundeUri.indexOf("/kunden/") + 8;
 		final String kundeIdString = kundeUri.substring(pos);
-		AbstractKunde kunde = ks.findKundeById(Long.valueOf(kundeIdString),locale);
+		final AbstractKunde kunde = ks.findKundeById(Long.valueOf(kundeIdString), locale);
 		bestellung.setKunde(kunde);
 		
-		bestellung = bs.createBestellung(bestellung,locale);
+		bestellung = bs.createBestellung(bestellung, locale);
 		final URI bestellungUri = uriHelperBestellung.getUriBestellung(bestellung, uriInfo);
 		return Response.created(bestellungUri).build();
 		
@@ -101,11 +101,11 @@ public class BestellungResource {
 	@PUT
 	@Consumes(APPLICATION_JSON)
 	@Produces
-	public Response updateBestellung(Bestellung bestellung,AbstractKunde kunde) {
+	public Response updateBestellung(Bestellung bestellung, AbstractKunde kunde) {
 		final Locale locale = localeHelper.getLocale(headers);
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
-		bs.updateBestellung(bestellung,kunde,locale);
+		bs.updateBestellung(bestellung, kunde, locale);
 		return Response.noContent().build();
 	}
 	

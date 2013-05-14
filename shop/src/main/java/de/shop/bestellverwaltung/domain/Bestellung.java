@@ -25,14 +25,14 @@ public class Bestellung implements Serializable {
 	private static final long MIN_VERSION = 1;
 
 	
-		@Min(value=MIN_ID,message = "{bestellverwaltung.bestellung.id.min}")
+		@Min(value = MIN_ID, message = "{bestellverwaltung.bestellung.id.min}")
 		private Long id;
 		
 		@Enumerated
 		@NotNull(message = "{bestellverwaltung.bestellung.status.notEmpty}")
 		private StatusType status;
 		
-		@Min(value=MIN_VERSION,message = "{bestellverwaltung.bestellung.version.min}", groups = IdGroup.class)
+		@Min(value = MIN_VERSION, message = "{bestellverwaltung.bestellung.version.min}", groups = IdGroup.class)
 		private Long version;
 		
 		@NotNull(message = "{bestellverwaltung.bestellung.gesamtpreis.notEmpty}")

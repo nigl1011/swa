@@ -17,7 +17,7 @@ public class Bestellposten {
 	private Long id;
 	
 	@NotNull(message = "{bestellverwaltung.bestellung.menge.notEmpty}")
-	@Min(value=MIN_MENGE,message = "{bestellverwaltung.bestellung.menge.Min}")
+	@Min(value = MIN_MENGE , message = "{bestellverwaltung.bestellung.menge.Min}")
 	private Long menge;
 	
 	private Long version;
@@ -106,41 +106,48 @@ public class Bestellposten {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Bestellposten other = (Bestellposten) obj;
+		final Bestellposten other = (Bestellposten) obj;
 		if (artikel == null) {
 			if (other.artikel != null)
 				return false;
-		} else if (!artikel.equals(other.artikel))
+		}
+		else if (!artikel.equals(other.artikel))
 			return false;
 		if (artikelUri == null) {
 			if (other.artikelUri != null)
 				return false;
-		} else if (!artikelUri.equals(other.artikelUri))
+		}
+		else if (!artikelUri.equals(other.artikelUri))
 			return false;
 		if (bestellungUri == null) {
 			if (other.bestellungUri != null)
 				return false;
-		} else if (!bestellungUri.equals(other.bestellungUri))
+		} 
+		else if (!bestellungUri.equals(other.bestellungUri))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} 
+		else if (!id.equals(other.id))
 			return false;
 		if (menge == null) {
 			if (other.menge != null)
 				return false;
-		} else if (!menge.equals(other.menge))
+		} 
+		else if (!menge.equals(other.menge))
 			return false;
 		if (version == null) {
 			if (other.version != null)
 				return false;
-		} else if (!version.equals(other.version))
+		} 
+		else if (!version.equals(other.version))
 			return false;
 		if (zwischenpreis == null) {
 			if (other.zwischenpreis != null)
 				return false;
-		} else if (!zwischenpreis.equals(other.zwischenpreis))
+		} 
+		else if (!zwischenpreis.equals(other.zwischenpreis))
 			return false;
 		return true;
 	}

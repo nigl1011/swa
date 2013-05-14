@@ -8,8 +8,8 @@ import de.shop.kundenverwaltung.domain.AbstractKunde;
 
 
 public interface BestellungService {
-	Bestellung findBestellungById(Long id,Locale locale);
-	List<Bestellung> findBestellungenByKundeId(Long kundeId,Locale locale);
+	Bestellung findBestellungById(Long id, Locale locale);
+	List<Bestellung> findBestellungenByKundeId(Long kundeId, Locale locale);
 	Bestellung createBestellung(Bestellung bestellung, Locale locale);
-	public Bestellung updateBestellung(Bestellung bestellung,AbstractKunde kunde, Locale locale); //nicht in denem ihrs
+	Bestellung updateBestellung(Bestellung bestellung, AbstractKunde kunde, Locale locale); //nicht in denem ihrs
 }
