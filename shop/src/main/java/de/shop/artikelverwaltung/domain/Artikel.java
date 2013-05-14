@@ -3,6 +3,7 @@ package de.shop.artikelverwaltung.domain;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.net.URI;
 
 //import static javax.persistence.TemporalType.TIMESTAMP;
@@ -17,6 +18,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+
 
 
 
@@ -63,10 +66,10 @@ public class Artikel implements Serializable {
 	private String farbe;
 	
 	@Digits(fraction=2, integer = 12)
-	private double preis;
+	private BigDecimal preis;
 	
 	@AssertTrue 
-	private Boolean verfuegbar;
+	private boolean verfuegbar;
 	
 	@Temporal(TIMESTAMP)
 	private Timestamp erstellt;
@@ -103,16 +106,16 @@ public class Artikel implements Serializable {
 	public void setFarbe(String farbe) {
 		this.farbe = farbe;
 	}
-	public double getPreis() {
+	public BigDecimal getPreis() {
 		return preis;
 	}
-	public void setPreis(double preis) {
+	public void setPreis(BigDecimal preis) {
 		this.preis = preis;
 	}
-	public Boolean isVerfuegbar() {
+	public boolean isVerfuegbar() {
 		return verfuegbar;
 	}
-	public void setVerfuegbar(Boolean verfuegbar) {
+	public void setVerfuegbar(boolean verfuegbar) {
 		this.verfuegbar = verfuegbar;
 	}
 	public Timestamp getErstellt() {
@@ -155,11 +158,8 @@ public class Artikel implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((kategorie == null) ? 0 : kategorie.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(preis);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result
-				+ ((verfuegbar == null) ? 0 : verfuegbar.hashCode());
+		result = prime * result + ((preis == null) ? 0 : preis.hashCode());
+		result = prime * result + (verfuegbar ? 1231 : 1237);
 		return result;
 	}
 	@Override
@@ -198,16 +198,16 @@ public class Artikel implements Serializable {
 			return false;
 		if (kategorie != other.kategorie)
 			return false;
-		if (Double.doubleToLongBits(preis) != Double
-				.doubleToLongBits(other.preis))
-			return false;
-		if (verfuegbar == null) {
-			if (other.verfuegbar != null)
+		if (preis == null) {
+			if (other.preis != null)
 				return false;
-		} else if (!verfuegbar.equals(other.verfuegbar))
+		} else if (!preis.equals(other.preis))
+			return false;
+		if (verfuegbar != other.verfuegbar)
 			return false;
 		return true;
 	}
+	
 	
 
 }

@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import java.math.BigDecimal;
+
 import org.jboss.logging.Logger;
 
 import de.shop.bestellverwaltung.domain.Bestellposten;
@@ -173,7 +175,7 @@ public final class Mock {
 		posten.setMenge((long) 3);
 		final Artikel artikel = findArtikelById((long) 3);
 		posten.setArtikel(artikel);
-		posten.setZwischenpreis((long)(artikel.getPreis()*posten.getMenge()));
+		posten.setZwischenpreis((Long)(artikel.getPreis()*posten.getMenge()));
 		return posten;
 	}
 
@@ -260,10 +262,11 @@ public final class Mock {
 				}
 				final Artikel artikel = new Artikel();
 				artikel.setId(id);
-				artikel.setBezeichnung("Bezeichung_" + id);
+				artikel.setBezeichnung("Schrank");
 				artikel.setKategorie(KategorieType.BADEZIMMER);
 				artikel.setFarbe("blau");
-				artikel.setPreis(12.30);
+				BigDecimal d=new BigDecimal("123.56");
+				artikel.setPreis(d);
 				artikel.setVerfuegbar(true);
 				artikel.setErstellt(null);
 				artikel.setAktualisiert(null);
