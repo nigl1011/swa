@@ -265,7 +265,7 @@ public final class Mock {
 				artikel.setBezeichnung("Schrank");
 				artikel.setKategorie(KategorieType.BADEZIMMER);
 				artikel.setFarbe("blau");
-				BigDecimal d=new BigDecimal("123.56");
+				final BigDecimal d = new BigDecimal("123.56");
 				artikel.setPreis(d);
 				artikel.setVerfuegbar(true);
 				artikel.setErstellt(null);

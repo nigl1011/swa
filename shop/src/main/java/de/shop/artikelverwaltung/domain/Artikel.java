@@ -13,7 +13,6 @@ import java.security.Timestamp;
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -65,7 +64,7 @@ public class Artikel implements Serializable {
 	@Pattern(regexp = FARBE_PATTERN, message = "{artikelverwaltung.artikel.farbe.pattern}")
 	private String farbe;
 	
-	@Digits(fraction=2, integer = 12)
+	//in folien bei bigdecimal
 	private BigDecimal preis;
 	
 	@AssertTrue 
@@ -138,7 +137,7 @@ public class Artikel implements Serializable {
 		return "Artikel [id=" + id + ", bezeichnung=" + bezeichnung
 				+ ", kategorie=" + kategorie + ", farbe=" + farbe + ", preis="
 				+ preis + ", verfügbar=" + verfuegbar + ", erstellt=" + erstellt
-				+ ", aktualisiert=" + aktualisiert +"]";
+				+ ", aktualisiert=" + aktualisiert + "]";
 	}
 
 	public void setArtikelUri(URI artikelUri) {
@@ -170,38 +169,44 @@ public class Artikel implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Artikel other = (Artikel) obj;
+		final Artikel other = (Artikel) obj;
 		if (aktualisiert == null) {
 			if (other.aktualisiert != null)
 				return false;
-		} else if (!aktualisiert.equals(other.aktualisiert))
+		}
+		else if (!aktualisiert.equals(other.aktualisiert))
 			return false;
 		if (bezeichnung == null) {
 			if (other.bezeichnung != null)
 				return false;
-		} else if (!bezeichnung.equals(other.bezeichnung))
+		}
+		else if (!bezeichnung.equals(other.bezeichnung))
 			return false;
 		if (erstellt == null) {
 			if (other.erstellt != null)
 				return false;
-		} else if (!erstellt.equals(other.erstellt))
+		}
+		else if (!erstellt.equals(other.erstellt))
 			return false;
 		if (farbe == null) {
 			if (other.farbe != null)
 				return false;
-		} else if (!farbe.equals(other.farbe))
+		}
+		else if (!farbe.equals(other.farbe))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		}
+		else if (!id.equals(other.id))
 			return false;
 		if (kategorie != other.kategorie)
 			return false;
 		if (preis == null) {
 			if (other.preis != null)
 				return false;
-		} else if (!preis.equals(other.preis))
+		}
+		else if (!preis.equals(other.preis))
 			return false;
 		if (verfuegbar != other.verfuegbar)
 			return false;
