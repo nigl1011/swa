@@ -33,7 +33,7 @@ public class Artikel implements Serializable {
 	private static final long serialVersionUID = 1472129607838538329L;
 	
 	private static final String NAME_PATTERN = "[A-Z\u00C4\u00D6\u00DC][a-z\u00E4\u00F6\u00FC\u00DF]+";
-	private static final String FARBEN_PATTERN = "[a-z\u00E4\u00F6\u00FC\u00DF]+[/][a-z\u00E4\u00F6\u00FC\u00DF]+";
+	private static final String FARBEN_PATTERN = "[a-z\u00E4\u00F6\u00FC\u00DF]+";
 	
 	
 	private static final long MIN_ID = 1;
