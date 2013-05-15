@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import de.shop.bestellverwaltung.domain.Bestellung;
 
 @Decorator
-public abstract class BestellverwaltungMitGeschenkverpackung implements
+public abstract class AbstractBestellverwaltungMitGeschenkverpackung implements
 		BestellungService {
 
 	@Inject
@@ -19,9 +19,9 @@ public abstract class BestellverwaltungMitGeschenkverpackung implements
 	@Any
 	private BestellungService bestellverwaltung;
 
-	public BestellverwaltungMitGeschenkverpackung() {
+	//public AbstractBestellverwaltungMitGeschenkverpackung() {
 		// TODO Auto-generated constructor stub
-	}
+//	}
 
 	@Override
 	public Bestellung findBestellungById(Long id, Locale locale) {

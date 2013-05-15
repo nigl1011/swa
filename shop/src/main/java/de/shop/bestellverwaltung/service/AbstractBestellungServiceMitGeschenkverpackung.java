@@ -15,7 +15,7 @@ import de.shop.bestellverwaltung.domain.Bestellung;
 
 
 @Decorator
-public abstract class BestellungServiceMitGeschenkverpackung implements BestellungService {
+public abstract class AbstractBestellungServiceMitGeschenkverpackung implements BestellungService {
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 	
 	@Inject
