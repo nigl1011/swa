@@ -12,7 +12,7 @@ public class ArtikelServiceMock extends ArtikelService {
 	private static final long serialVersionUID = -2919310633845009282L;
 
 	@Override
-	public Artikel findArtikelById(Long id,Locale locale) {
+	public Artikel findArtikelById(Long id, Locale locale) {
 		final Artikel artikel = new Artikel();
 		artikel.setId(id);
 		artikel.setBezeichnung("Bezeichnung_" + id + "_Mock");

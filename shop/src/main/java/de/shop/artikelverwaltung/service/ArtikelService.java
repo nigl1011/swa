@@ -17,7 +17,6 @@ import org.jboss.logging.Logger;
 
 import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.artikelverwaltung.domain.KategorieType;
-import de.shop.artikelverwaltung.service.InvalidArtikelIdException;
 import de.shop.util.IdGroup;
 import de.shop.util.Log;
 import de.shop.util.Mock;
@@ -81,7 +80,7 @@ public class ArtikelService implements Serializable {
 				                                                                           Default.class); */
 	}
 
-	public Artikel createArtikel(Artikel artikel,Locale locale) {
+	public Artikel createArtikel(Artikel artikel, Locale locale) {
 		if (artikel == null) {
 			return artikel;
 		}
