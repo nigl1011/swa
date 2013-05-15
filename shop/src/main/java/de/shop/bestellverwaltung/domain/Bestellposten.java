@@ -1,5 +1,6 @@
 package de.shop.bestellverwaltung.domain;
 
+import java.math.BigDecimal;
 import java.net.URI;
 
 import javax.validation.constraints.Min;
@@ -23,7 +24,7 @@ public class Bestellposten {
 	private Long version;
 	
 	@NotNull(message = "{bestellverwaltung.bestellung.zwischenpreis.notEmpty}")
-	private Long zwischenpreis;
+	private BigDecimal zwischenpreis;
 	
 	@JsonIgnore
 	private Bestellung bestellung;
@@ -52,10 +53,10 @@ public class Bestellposten {
 	public void setVersion(Long version) {
 		this.version = version;
 	}
-	public Long getZwischenpreis() {
+	public BigDecimal getZwischenpreis() {
 		return zwischenpreis;
 	}
-	public void setZwischenpreis(Long zwischenpreis) {
+	public void setZwischenpreis(BigDecimal zwischenpreis) {
 		this.zwischenpreis = zwischenpreis;
 	}
 	public Bestellung getBestellung() {
