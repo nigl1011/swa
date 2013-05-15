@@ -99,26 +99,30 @@ public class Lieferung implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Lieferung other = (Lieferung) obj;
+		final Lieferung other = (Lieferung) obj;
 		if (bestellung == null) {
 			if (other.bestellung != null)
 				return false;
-		} else if (!bestellung.equals(other.bestellung))
+		}
+		else if (!bestellung.equals(other.bestellung))
 			return false;
 		if (aktuell == null) {
 			if (other.aktuell != null)
 				return false;
-		} else if (!aktuell.equals(other.aktuell))
+		}
+		else if (!aktuell.equals(other.aktuell))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		}
+		else if (!id.equals(other.id))
 			return false;
 		if (lieferdatum == null) {
 			if (other.lieferdatum != null)
 				return false;
-		} else if (!lieferdatum.equals(other.lieferdatum))
+		}
+		else if (!lieferdatum.equals(other.lieferdatum))
 			return false;
 		return true;
 	}
