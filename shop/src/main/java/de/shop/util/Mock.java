@@ -262,7 +262,7 @@ public final class Mock {
 				}
 				final Artikel artikel = new Artikel();
 				artikel.setId(id);
-				artikel.setBezeichnung("Bezeichung_" + id);
+				artikel.setBezeichnung("Schrank");
 				artikel.setKategorie(KategorieType.BADEZIMMER);
 				artikel.setFarbe("blau");
 				final BigDecimal d = new BigDecimal("123.99");
