@@ -174,7 +174,7 @@ public final class Mock {
 		posten.setMenge((long) 3);
 		final Artikel artikel = findArtikelById((long) 3);
 		posten.setArtikel(artikel);
-		BigDecimal b = new BigDecimal(posten.getMenge());
+		final BigDecimal b = new BigDecimal(posten.getMenge());
 		posten.setZwischenpreis((BigDecimal)(artikel.getPreis().multiply(b)));
 		return posten;
 	}
