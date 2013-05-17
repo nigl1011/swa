@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+
 //import javax.annotation.PostConstruct;
 //import javax.annotation.PreDestroy;
 import javax.enterprise.event.Event;
@@ -18,6 +19,7 @@ import org.jboss.logging.Logger;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.kundenverwaltung.domain.AbstractKunde;
+import de.shop.kundenverwaltung.service.InvalidKundeIdException;
 import de.shop.util.IdGroup;
 import de.shop.util.Log;
 import de.shop.util.Mock;
@@ -70,11 +72,19 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	@Override
 	public List<Bestellung> findBestellungenByKundeId(Long kundeId, Locale locale) {
 		// TODO Datenbanzugriffsschicht statt Mock
-		validateKundenId(kundeId, locale);
+		validateBestellungId(kundeId, locale);
 		final List<Bestellung> bestellungByKundenId =  Mock.findBestellungenByKundeId(kundeId);
 		return bestellungByKundenId;
 	}
-	private void validateKundenId(Long kundeId, Locale locale) {
+	@SuppressWarnings("unused")
+	private void validateKundeId(Long kundeId, Locale locale) {
+		final Validator validator = validatorProvider.getValidator(locale);
+		final Set<ConstraintViolation<AbstractKunde>> violations = validator.validateValue(AbstractKunde.class,
+				                                                                           "id",
+				                                                                           kundeId,
+				                                                                           IdGroup.class);
+		if (!violations.isEmpty())
+			throw new InvalidKundeIdException(kundeId, violations);
 	}
 	
 	@Override
