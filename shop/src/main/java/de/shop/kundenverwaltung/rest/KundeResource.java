@@ -190,7 +190,7 @@ public class KundeResource {
 	@POST
 	@Consumes(APPLICATION_JSON)
 	@Produces
-	public Response createKunde(AbstractKunde kunde) {
+	public Response createPrivatkunde(Privatkunde kunde) {
 		final Locale locale = localeHelper.getLocale(headers);
 
 		kunde.setId(KEINE_ID);
@@ -202,17 +202,23 @@ public class KundeResource {
 		}
 		kunde.setBestellungenUri(null);
 		
-		kunde = ks.createKunde(kunde, locale);
+		kunde = (Privatkunde) ks.createKunde(kunde, locale);
 		LOGGER.tracef("Kunde: %s", kunde);
 		
 		final URI kundeUri = uriHelperKunde.getUriKunde(kunde, uriInfo);
 		return Response.created(kundeUri).build();
 	}
 	
+	
+	/**
+	 * Mit der URL /kunden einen Kunden per PUT aktualisieren
+	 * @param kunde zu aktualisierende Daten des Kunden
+	 */
 	@PUT
 	@Consumes(APPLICATION_JSON)
 	@Produces
-	public Response updateKunde(AbstractKunde kunde) {
+	public void updatePrivatkunde(Privatkunde kunde) {
+		// Vorhandenen Kunden ermitteln
 		final Locale locale = localeHelper.getLocale(headers);
 		final AbstractKunde origKunde = ks.findKundeById(kunde.getId(), FetchType.NUR_KUNDE, locale);
 		if (origKunde == null) {
@@ -227,7 +233,7 @@ public class KundeResource {
 		LOGGER.tracef("Kunde nachher: %s", origKunde);
 		
 		// Update durchfuehren
-		kunde = ks.updateKunde(origKunde, locale);
+		kunde = (Privatkunde) ks.updateKunde(origKunde, locale);
 		if (kunde == null) {
 			// TODO msg passend zu locale
 			final String msg = "Kein Kunde gefunden mit der ID " + origKunde.getId();
@@ -235,6 +241,11 @@ public class KundeResource {
 		}
 	}
 	
+	
+	/**
+	 * Mit der URL /kunden{id} einen Kunden per DELETE l&ouml;schen
+	 * @param kundeId des zu l&ouml;schenden Kunden
+	 */
 	@Path("{id:[0-9]+}")
 	@DELETE
 	@Produces
@@ -243,5 +254,4 @@ public class KundeResource {
 		final AbstractKunde kunde = ks.findKundeById(kundeId, FetchType.NUR_KUNDE, locale);
 		ks.deleteKunde(kunde);
 	}
-}
 }
