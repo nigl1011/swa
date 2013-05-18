@@ -2,11 +2,16 @@ package de.shop.kundenverwaltung.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
+import static de.shop.util.Constants.KEINE_ID;
 
+import java.lang.invoke.MethodHandles;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -24,22 +29,31 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.jboss.logging.Logger;
+
 import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.bestellverwaltung.rest.UriHelperBestellung;
 import de.shop.bestellverwaltung.service.BestellungService;
 import de.shop.kundenverwaltung.domain.AbstractKunde;
+import de.shop.kundenverwaltung.domain.Adresse;
+import de.shop.kundenverwaltung.domain.Privatkunde;
 import de.shop.kundenverwaltung.service.KundeService;
+import de.shop.kundenverwaltung.service.KundeService.FetchType;
 import de.shop.util.LocaleHelper;
 import de.shop.util.Log;
-//import de.shop.util.Mock;
 import de.shop.util.NotFoundException;
+import de.shop.util.Transactional;
 
 @Path("/kunden")
 @Produces(APPLICATION_JSON)
 @Consumes
 @RequestScoped
+@Transactional
 @Log
 public class KundeResource {
+	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
+	private static final String VERSION = "1.0";
+	
 	@Context
 	private UriInfo uriInfo;
 	
@@ -61,6 +75,16 @@ public class KundeResource {
 	@Inject
 	private LocaleHelper localeHelper;
 	
+	@PostConstruct
+	private void postConstruct() {
+		LOGGER.debugf("CDI-faehiges Bean %s wurde erzeugt", this);
+	}
+	
+	@PreDestroy
+	private void preDestroy() {
+		LOGGER.debugf("CDI-faehiges Bean %s wird geloescht", this);
+	}
+	
 	@GET
 	@Produces(TEXT_PLAIN)
 	@Path("version")
@@ -72,9 +96,10 @@ public class KundeResource {
 	@Path("{id:[1-9][0-9]*}")
 	public AbstractKunde findKundeById(@PathParam("id") Long id) {
 		final Locale locale = localeHelper.getLocale(headers);
-		final AbstractKunde kunde = ks.findKundeById(id, locale);
+		final AbstractKunde kunde = ks.findKundeById(id, FetchType.NUR_KUNDE, locale);
 		if (kunde == null) {
-			throw new NotFoundException("Kein Kunde mit der ID " + id + " gefunden.");
+			final String msg = "Kein Kunde gefunden mit der ID " + id;
+			throw new NotFoundException(msg);
 		}
 		// URLs innerhalb des gefundenen Kunden anpassen
 		uriHelperKunde.updateUriKunde(kunde, uriInfo);
@@ -86,17 +111,19 @@ public class KundeResource {
 	public Collection<AbstractKunde> findKundenByNachname(@QueryParam("nachname") @DefaultValue("") String nachname) {
 		Collection<AbstractKunde> kunden = null;
 		if ("".equals(nachname)) {
-			kunden = ks.findAllKunden();
+			kunden = ks.findAllKunden(FetchType.NUR_KUNDE, null);
 			if (kunden.isEmpty()) {
-				throw new NotFoundException("Keine Kunden vorhanden.");
+				final String msg = "Keine Kunden vorhanden";
+				throw new NotFoundException(msg);
 			}
 		}
 		else
 		{
 			final Locale locale = localeHelper.getLocale(headers);
-			kunden = ks.findKundenByNachname(nachname, locale);
+			kunden = ks.findKundenByNachname(nachname, FetchType.NUR_KUNDE, locale);
 			if (kunden.isEmpty()) {
-				throw new NotFoundException("Kein Kunde mit Nachname " + nachname + " gefunden.");
+				final String msg = "Kein Kunde gefunden mit Nachname " + nachname;
+				throw new NotFoundException(msg);
 			}
 		}
 		
@@ -108,13 +135,30 @@ public class KundeResource {
 	}
 	
 	@GET
+	@Path("/prefix/id/{id:[1-9][0-9]*}")
+	public Collection<Long> findIdsByPrefix(@PathParam("id") String idPrefix) {
+		final Collection<Long> ids = ks.findIdsByPrefix(idPrefix);
+		return ids;
+	}
+	
+	@GET
+	@Path("/prefix/nachname/{nachname}")
+	public Collection<String> findNachnamenByPrefix(@PathParam("nachname") String nachnamePrefix) {
+		final Collection<String> nachnamen = ks.findNachnamenByPrefix(nachnamePrefix);
+		return nachnamen;
+	}
+
+	@GET
 	@Path("{id:[1-9][0-9]*}/bestellungen")
 	public Collection<Bestellung> findBestellungenByKundeId(@PathParam("id") Long kundeId) {
 		final Locale locale = localeHelper.getLocale(headers);
-		final Collection<Bestellung> bestellungen = bs.findBestellungenByKundeId(kundeId,locale);
-		if (bestellungen.isEmpty()) {
-			throw new NotFoundException("Zur ID " + kundeId + " wurden keine Bestellungen gefunden");
+		
+		final AbstractKunde kunde = ks.findKundeById(kundeId, FetchType.MIT_BESTELLUNGEN, locale);
+		if (kunde == null) {
+			throw new NotFoundException("Kein Kunde mit der ID " + kundeId + " gefunden.");
 		}
+		
+		final Collection<Bestellung> bestellungen = bs.findBestellungenByKunde(kunde);
 		
 		// URLs innerhalb der gefundenen Bestellungen anpassen
 		for (Bestellung bestellung : bestellungen) {
@@ -124,17 +168,44 @@ public class KundeResource {
 		return bestellungen;
 	}
 	
+	@GET
+	@Path("{id:[1-9][0-9]*}/bestellungenIds")
+	public Collection<Long> findBestellungenIdsByKundeId(@PathParam("id") Long kundeId) {
+		final Collection<Bestellung> bestellungen = findBestellungenByKundeId(kundeId);
+		if (bestellungen.isEmpty()) {
+			final String msg = "Kein Kunde gefunden mit der ID " + kundeId;
+			throw new NotFoundException(msg);
+		}
+		
+		final int anzahl = bestellungen.size();
+		final Collection<Long> bestellungenIds = new ArrayList<>(anzahl);
+		for (Bestellung bestellung : bestellungen) {
+			bestellungenIds.add(bestellung.getId());
+		}
+		
+		return bestellungenIds;
+	}
+
+	
 	@POST
 	@Consumes(APPLICATION_JSON)
 	@Produces
 	public Response createKunde(AbstractKunde kunde) {
-		// Rueckwaertsverweis von Adresse zu Kunde setzen
-		kunde.getAdresse().setKunde(kunde);
-		
 		final Locale locale = localeHelper.getLocale(headers);
-		kunde = ks.createKunde(kunde, locale);
-		final URI kundeUri = uriHelperKunde.getUriKunde(kunde, uriInfo);
+
+		kunde.setId(KEINE_ID);
+		kunde.setPasswordWdh(kunde.getPassword());
 		
+		final Adresse adresse = kunde.getAdresse();
+		if (adresse != null) {
+			adresse.setKunde(kunde);
+		}
+		kunde.setBestellungenUri(null);
+		
+		kunde = ks.createKunde(kunde, locale);
+		LOGGER.tracef("Kunde: %s", kunde);
+		
+		final URI kundeUri = uriHelperKunde.getUriKunde(kunde, uriInfo);
 		return Response.created(kundeUri).build();
 	}
 	
@@ -143,24 +214,34 @@ public class KundeResource {
 	@Produces
 	public Response updateKunde(AbstractKunde kunde) {
 		final Locale locale = localeHelper.getLocale(headers);
+		final AbstractKunde origKunde = ks.findKundeById(kunde.getId(), FetchType.NUR_KUNDE, locale);
+		if (origKunde == null) {
+			// TODO msg passend zu locale
+			final String msg = "Kein Kunde gefunden mit der ID " + kunde.getId();
+			throw new NotFoundException(msg);
+		}
+		LOGGER.tracef("Kunde vorher: %s", origKunde);
+	
+		// Daten des vorhandenen Kunden ueberschreiben
+		origKunde.setValues(kunde);
+		LOGGER.tracef("Kunde nachher: %s", origKunde);
 		
-		ks.updateKunde(kunde, locale);
-		
-		//Mock.updateKunde(kunde);
-		return Response.noContent().build();
-		
-		
-
+		// Update durchfuehren
+		kunde = ks.updateKunde(origKunde, locale);
+		if (kunde == null) {
+			// TODO msg passend zu locale
+			final String msg = "Kein Kunde gefunden mit der ID " + origKunde.getId();
+			throw new NotFoundException(msg);
+		}
 	}
 	
+	@Path("{id:[0-9]+}")
 	@DELETE
-	@Path("{id:[1-9][0-9]*}")
 	@Produces
-	public Response deleteKunde(@PathParam("id") Long kundeId) {
+	public void deleteKunde(@PathParam("id") Long kundeId) {
 		final Locale locale = localeHelper.getLocale(headers);
-		
-		ks.deleteKunde(kundeId, locale);
-		
-		return Response.noContent().build();
+		final AbstractKunde kunde = ks.findKundeById(kundeId, FetchType.NUR_KUNDE, locale);
+		ks.deleteKunde(kunde);
 	}
+}
 }
