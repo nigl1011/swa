@@ -83,7 +83,7 @@ private static final String FARBE_PATTERN = FARBEN_PATTERN;
 
 @Id
 @GeneratedValue
-@Column(nullable=false, updatable = false)
+@Column(nullable = false, updatable = false)
 @Min(value = MIN_ID, message = "{artikelverwaltung.artikel.id.min}", groups = IdGroup.class)
 private Long id = KEINE_ID;
 
@@ -98,7 +98,7 @@ private String bezeichnung = "";
 @Enumerated
 private KategorieType kategorie;
 
-@Column(length=FARBE_LENGTH_MAX, nullable = false)
+@Column(length = FARBE_LENGTH_MAX, nullable = false)
 @NotNull(message = "{artikelverwaltung.artikel.farbe.notNull}")
 @Size(min = FARBE_LENGTH_MIN, max = FARBE_LENGTH_MAX,
 message = "{artikelverwaltung.artikel.farbe.length}")
@@ -125,7 +125,7 @@ public Artikel() {
 	super();
 }
 
-public Artikel(String bezeichnung, KategorieType kategorie, String farbe, BigDecimal preis){
+public Artikel(String bezeichnung, KategorieType kategorie, String farbe, BigDecimal preis) {
 	super();
 	this.bezeichnung = bezeichnung;
 	this.kategorie = kategorie;
@@ -135,7 +135,7 @@ public Artikel(String bezeichnung, KategorieType kategorie, String farbe, BigDec
 
 @PrePersist
 private void prePersist() {
-	erstellt =new Date();
+	erstellt = new Date();
 	aktualisiert = new Date();
 }
 
@@ -235,38 +235,44 @@ public boolean equals(Object obj) {
 		return false;
 	if (getClass() != obj.getClass())
 		return false;
-	Artikel other = (Artikel) obj;
+	final Artikel other = (Artikel) obj;
 	if (aktualisiert == null) {
 		if (other.aktualisiert != null)
 			return false;
-	} else if (!aktualisiert.equals(other.aktualisiert))
+	}
+	else if (!aktualisiert.equals(other.aktualisiert))
 		return false;
 	if (bezeichnung == null) {
 		if (other.bezeichnung != null)
 			return false;
-	} else if (!bezeichnung.equals(other.bezeichnung))
+	}
+	else if (!bezeichnung.equals(other.bezeichnung))
 		return false;
 	if (erstellt == null) {
 		if (other.erstellt != null)
 			return false;
-	} else if (!erstellt.equals(other.erstellt))
+	}
+	else if (!erstellt.equals(other.erstellt))
 		return false;
 	if (farbe == null) {
 		if (other.farbe != null)
 			return false;
-	} else if (!farbe.equals(other.farbe))
+	}
+	else if (!farbe.equals(other.farbe))
 		return false;
 	if (id == null) {
 		if (other.id != null)
 			return false;
-	} else if (!id.equals(other.id))
+	}
+	else if (!id.equals(other.id))
 		return false;
 	if (kategorie != other.kategorie)
 		return false;
 	if (preis == null) {
 		if (other.preis != null)
 			return false;
-	} else if (!preis.equals(other.preis))
+	}
+	else if (!preis.equals(other.preis))
 		return false;
 	if (verfuegbar != other.verfuegbar)
 		return false;

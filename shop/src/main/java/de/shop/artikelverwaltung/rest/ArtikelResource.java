@@ -40,7 +40,7 @@ import de.shop.util.NotFoundException;
 import de.shop.util.Transactional;
 
 @Path("/artikel")
-@Produces({APPLICATION_XML, TEXT_XML,APPLICATION_JSON})
+@Produces({APPLICATION_XML, TEXT_XML, APPLICATION_JSON })
 @Consumes
 @RequestScoped
 @Transactional
