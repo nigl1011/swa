@@ -216,6 +216,8 @@ public abstract class AbstractKunde implements Serializable {
 	@Size(max = EMAIL_LENGTH_MAX, message = "{kundenverwaltung.kunde.email.length}")
 	private String email;
 	
+	private boolean newsletter = false;
+	
 	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
 	@Past(message = "{kundenverwaltung.kunde.erzeugt.past}")
@@ -244,17 +246,18 @@ public abstract class AbstractKunde implements Serializable {
 	@Valid
 	@NotNull(message = "{kundenverwaltung.kunde.adresse.notNull}")
 	private Adresse adresse;
-	
-	private boolean newsletter = false;
-	
+
+	// Default: fetch=LAZY
 	@OneToMany
 	@JoinColumn(name = "kunde_fk", nullable = false)
 	@OrderColumn(name = "idx", nullable = false)
 	@JsonIgnore
 	private List<Bestellung> bestellungen;
+	
+	//Transient wird nicht in der Datenbank abgespeichert
 	@Transient
 	private URI bestellungenUri;
-	
+
 	@OneToMany
 	@JoinColumn(name = "kunde_fk", nullable = false)
 	@OrderColumn(name = "idx", nullable = false)
@@ -395,6 +398,9 @@ public abstract class AbstractKunde implements Serializable {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public void setNewsletter(boolean newsletter) {
+		this.newsletter = newsletter;
 	}
 	public boolean isNewsletter() {
 		return newsletter;

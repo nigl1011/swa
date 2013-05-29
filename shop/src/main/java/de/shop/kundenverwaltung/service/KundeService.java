@@ -377,8 +377,8 @@ public class KundeService implements Serializable {
 		final Root<AbstractKunde> k = criteriaQuery.from(AbstractKunde.class);
 
 		final Join<AbstractKunde, Bestellung> b = k.join(AbstractKunde_.bestellungen);
-		final Join<Bestellung, Bestellposition> bp = b.join(Bestellung_.bestellpositionen);
-		criteriaQuery.where(builder.gt(bp.<Short>get(Bestellposition_.anzahl), minMenge))
+		final Join<Bestellung, Bestellposten> bp = b.join(Bestellung_.bestellpositionen);
+		criteriaQuery.where(builder.gt(bp.<Short>get(Bestellposten_.anzahl), minMenge))
 		             .distinct(true);
 		
 		final List<AbstractKunde> kunden = em.createQuery(criteriaQuery).getResultList();
