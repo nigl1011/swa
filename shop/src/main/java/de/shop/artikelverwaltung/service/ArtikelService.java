@@ -29,9 +29,6 @@ import com.google.common.base.Strings;
 
 import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.artikelverwaltung.domain.KategorieType;
-import de.shop.kundenverwaltung.domain.AbstractKunde;
-import de.shop.kundenverwaltung.domain.PasswordGroup;
-import de.shop.kundenverwaltung.service.EmailExistsException;
 import de.shop.util.IdGroup;
 import de.shop.util.Log;
 import de.shop.util.ValidatorProvider;
