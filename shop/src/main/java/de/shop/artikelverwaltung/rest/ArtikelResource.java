@@ -1,12 +1,18 @@
 package de.shop.artikelverwaltung.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML;
+import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
+
+import java.lang.invoke.MethodHandles;
 
 import java.net.URI;
 import java.util.Collection;
 import java.util.Locale;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -23,19 +29,25 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.jboss.logging.Logger;
+
 import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.artikelverwaltung.domain.KategorieType;
 import de.shop.artikelverwaltung.service.ArtikelService;
 import de.shop.util.LocaleHelper;
+import de.shop.util.Log;
 import de.shop.util.NotFoundException;
+import de.shop.util.Transactional;
 
 @Path("/artikel")
-@Produces(APPLICATION_JSON)
+@Produces({APPLICATION_XML, TEXT_XML,APPLICATION_JSON})
 @Consumes
 @RequestScoped
-
+@Transactional
+@Log
 public class ArtikelResource {
-
+	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
+	
 	@Context
 	private UriInfo uriInfo;
 	
@@ -47,6 +59,16 @@ public class ArtikelResource {
 	
 	@Inject
 	private ArtikelService as;
+	
+	@PostConstruct
+	private void postConstruct() {
+		LOGGER.debugf("CDI-faehiges Bean %s wurde erzeugt", this);
+	}
+	
+	@PreDestroy
+	private void preDestroy() {
+		LOGGER.debugf("CDI-faehiges Bean %s wird geloescht", this);
+	}
 	
 	@Inject
 	private LocaleHelper localeHelper;
@@ -79,17 +101,6 @@ public class ArtikelResource {
 		final Locale locale = localeHelper.getLocale(headers);
 		
 		Collection<Artikel> allArtikel = null;
-		/* Alles löschen, weil Kategorie nie leer ist?!?!
-		  if ("".equals(kategorie)) {
-			// TODO Anwendungskern statt Mock, Verwendung von Locale
-			allArtikel = as.findAllArtikel();
-			if (allArtikel.isEmpty()) {
-				throw new NotFoundException("Kein Artikel vorhanden.");
-			}
-		}
-		else { */
-			// TODO Anwendungskern statt Mock, Verwendung von Locale
-		
 			allArtikel = as.findArtikelByKategorie(kategorie, locale);
 			if (allArtikel.isEmpty()) {
 				throw new NotFoundException("Kein Artikel mit der Kategorie " + kategorie + " gefunden.");
