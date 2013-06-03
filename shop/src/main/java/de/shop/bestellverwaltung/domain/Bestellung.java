@@ -88,7 +88,7 @@ public class Bestellung implements Serializable {
 		@Min(value = MIN_VERSION, message = "{bestellverwaltung.bestellung.version.min}", groups = IdGroup.class)
 		private Long version;
 		
-		@Column(nullable = false)
+		@Column(precision = 5, scale = 4,nullable = false)
 		@NotNull(message = "{bestellverwaltung.bestellung.gesamtpreis.notEmpty}")
 		private Double gesamtpreis;
 		

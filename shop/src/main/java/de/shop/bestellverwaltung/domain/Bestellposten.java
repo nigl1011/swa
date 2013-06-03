@@ -9,29 +9,56 @@ import javax.validation.constraints.NotNull;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import de.shop.artikelverwaltung.domain.Artikel;
+import static de.shop.util.Constants.KEINE_ID;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
 
 
 public class Bestellposten {
 
 	private static final long MIN_MENGE = 1;
-
-	private Long id;
+	private static final int ANZAHL_MIN = 1;
 	
+	@Id
+	@GeneratedValue
+	@Column(nullable = false, updatable = false)
+	private Long id = KEINE_ID;
+	
+	@ManyToOne
+	@JoinColumn(name = "bestellung_fk",nullable = false)
 	@NotNull(message = "{bestellverwaltung.bestellung.menge.notEmpty}")
 	@Min(value = MIN_MENGE , message = "{bestellverwaltung.bestellung.menge.Min}")
 	private Long menge;
 	
+	@ManyToOne(optional = false)
+    @JoinColumn(name = "artikel_fk", nullable = false)
+	@NotNull(message = "{bestellverwaltung.bestellposition.artikel.notNull}")
+	@JsonIgnore
+	private Artikel artikel;
+	
+	@Column(nullable = false,updatable = true)
 	private Long version;
 	
+	@Column(nullable = false, precision = 5, scale = 4)
 	@NotNull(message = "{bestellverwaltung.bestellung.zwischenpreis.notEmpty}")
 	private BigDecimal zwischenpreis;
 	
 	@JsonIgnore
 	private Bestellung bestellung;
 	
-	@JsonIgnore
-	private Artikel artikel;
+	@Column(name = "anzahl", nullable = false)
+	@Min(value = ANZAHL_MIN, message = "{bestellverwaltung.bestellposition.anzahl.min}")
+	private short anzahl;
+	
+	@Transient
 	private URI bestellungUri;
+	@Transient
 	private URI artikelUri;
 	
 	
