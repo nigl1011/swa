@@ -233,7 +233,7 @@ public class KundeResource {
 		LOGGER.tracef("Kunde nachher: %s", origKunde);
 		
 		// Update durchfuehren
-		kunde = (AbstractKunde) ks.updateKunde(origKunde, locale);
+		kunde = ks.updateKunde(origKunde, locale);
 		if (kunde == null) {
 			// TODO msg passend zu locale
 			final String msg = "Kein Kunde gefunden mit der ID " + origKunde.getId();

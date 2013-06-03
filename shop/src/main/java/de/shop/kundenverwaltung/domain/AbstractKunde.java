@@ -562,7 +562,6 @@ public abstract class AbstractKunde implements Serializable {
 			   + ", password=" + password + ", passwordWdh=" + passwordWdh
 			   + ", erzeugt=" + erzeugt
 			   + ", aktualisiert=" + aktualisiert 
-			   + ", adresse=" + adresse 
 			   + "]";
 	}
 
