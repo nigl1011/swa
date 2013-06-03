@@ -16,35 +16,95 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.util.IdGroup;
 
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.FetchType.EAGER;
+
+
+
+
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
+
+import javax.persistence.Table;
+
+
+
+
+
+@Entity
+@Table(name = "bestellung")
+@NamedQueries({
+	@NamedQuery(name  = Bestellung.FIND_BESTELLUNGEN_BY_KUNDE,
+                query = "SELECT b"
+			            + " FROM   Bestellung b"
+						+ " WHERE  b.kunde = :" + Bestellung.PARAM_KUNDE),
+	@NamedQuery(name  = Bestellung.FIND_KUNDE_BY_ID,
+ 			    query = "SELECT b.kunde"
+                        + " FROM   Bestellung b"
+  			            + " WHERE  b.id = :" + Bestellung.PARAM_ID)
+})
 
 public class Bestellung implements Serializable {
-	private static final long serialVersionUID = 1L;
 
 
+	private static final long serialVersionUID = -1900888975491172450L;
+	//private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
+	
+	private static final String PREFIX = "Bestellung.";
+	public static final String FIND_BESTELLUNGEN_BY_KUNDE = PREFIX + "findBestellungenByKunde";
+	public static final String FIND_KUNDE_BY_ID = PREFIX + "findBestellungKundeById";
+	
+	public static final String PARAM_KUNDE = "kunde";
+	public static final String PARAM_ID = "id";
+	
+	
+	
+	
 	private static final long MIN_ID = 1;
 	private static final long MIN_VERSION = 1;
 
-	
+		@Id
+		@GeneratedValue
+		@Column(nullable = false, updatable = false)
 		@Min(value = MIN_ID, message = "{bestellverwaltung.bestellung.id.min}")
 		private Long id;
 		
+		@Column(nullable = false)
 		@Enumerated
 		@NotNull(message = "{bestellverwaltung.bestellung.status.notEmpty}")
 		private StatusType status;
 		
+		@Column(nullable = false,updatable = true)
 		@Min(value = MIN_VERSION, message = "{bestellverwaltung.bestellung.version.min}", groups = IdGroup.class)
 		private Long version;
 		
+		@Column(nullable = false)
 		@NotNull(message = "{bestellverwaltung.bestellung.gesamtpreis.notEmpty}")
 		private Double gesamtpreis;
 		
+		@Column(nullable = false)
 		@Temporal(TIMESTAMP)
 		private Timestamp aktualisiert;
 		
+		@ManyToOne(optional = false)
+		@JoinColumn(name = "kunde_fk", nullable = false, insertable = false, updatable = false)
 		@NotNull(message = "{bestellverwaltung.bestellung.kunde.notNull}")
 		@JsonIgnore
 		private AbstractKunde kunde;
 		
+		@OneToMany(fetch = EAGER, cascade = { PERSIST, REMOVE })
+		@JoinColumn(name = "bestellung_fk", nullable = false)
+		@OrderColumn(name = "idx", nullable = false)
 		@NotNull(message = "{bestellverwaltung.bestellung.bestellposten.notNull}")
 		private List<Bestellposten> bestellposten;
 		
