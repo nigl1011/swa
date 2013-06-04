@@ -7,10 +7,15 @@ import java.util.Locale;
 import java.util.Set;
 
 
+
+
+
 //import javax.annotation.PostConstruct;
 //import javax.annotation.PreDestroy;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.validation.groups.Default;
@@ -20,9 +25,9 @@ import org.jboss.logging.Logger;
 import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.kundenverwaltung.service.InvalidKundeIdException;
+import de.shop.kundenverwaltung.service.KundeService;
 import de.shop.util.IdGroup;
 import de.shop.util.Log;
-import de.shop.util.Mock;
 import de.shop.util.ValidatorProvider;
 
 @Log
@@ -33,6 +38,12 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	private static final long serialVersionUID = -519454062519816252L;
 
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
+	
+	@PersistenceContext
+	private transient EntityManager em;
+	
+	@Inject
+	private KundeService ks;
 	
 	@Inject
 	@NeueBestellung
@@ -55,7 +66,7 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	public Bestellung findBestellungById(Long id, Locale locale) {
 		validateBestellungId(id, locale);
 		// TODO Datenbanzugriffsschicht statt Mock
-		final Bestellung bestellung =  Mock.findBestellungById(id);
+		final Bestellung bestellung =  em.find(Bestellung.class,id);
 		return bestellung;
 	}
 	private void validateBestellungId(Long bestellungId, Locale locale) {
@@ -73,8 +84,11 @@ public class BestellungServiceImpl implements BestellungService, Serializable {
 	public List<Bestellung> findBestellungenByKundeId(Long kundeId, Locale locale) {
 		// TODO Datenbanzugriffsschicht statt Mock
 		validateBestellungId(kundeId, locale);
-		final List<Bestellung> bestellungByKundenId =  Mock.findBestellungenByKundeId(kundeId);
-		return bestellungByKundenId;
+		final List<Bestellung> bestellungByKundenId =  em.createNamedQuery(Bestellung.FIND_BESTELLUNGEN_BY_KUNDE,
+				 Bestellung.class)
+                 .setParameter(Bestellung.PARAM_KUNDE, kundeId)
+                 .getResultList();
+				return bestellungByKundenId;
 	}
 	@SuppressWarnings("unused")
 	private void validateKundeId(Long kundeId, Locale locale) {

@@ -3,22 +3,36 @@ package de.shop.bestellverwaltung.domain;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 import java.io.Serializable;
+import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.security.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
+
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import javax.validation.constraints.Min;
+
+import static de.shop.util.Constants.KEINE_ID;
+
 import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+
 import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.util.IdGroup;
-
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.FetchType.EAGER;
+
+
+
+
+
+
 
 
 
@@ -34,7 +48,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
-
+import javax.persistence.PostPersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 
@@ -72,12 +87,12 @@ public class Bestellung implements Serializable {
 	
 	private static final long MIN_ID = 1;
 	private static final long MIN_VERSION = 1;
-
+	//private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 		@Id
 		@GeneratedValue
 		@Column(nullable = false, updatable = false)
-		@Min(value = MIN_ID, message = "{bestellverwaltung.bestellung.id.min}")
-		private Long id;
+		@Min(value = MIN_ID, message = "{bestellverwaltung.bestellung.id.min}", groups = IdGroup.class)
+		private Long id = KEINE_ID;
 		
 		@Column(nullable = false)
 		@Enumerated
@@ -112,8 +127,27 @@ public class Bestellung implements Serializable {
 		private URI kundeUri;
 		private Date bestelldatum;
 		
+		public Bestellung() {
+			super();
+		}
+		
+		public Bestellung(List<Bestellposten> bestellpositionen) {
+			super();
+			this.bestellposten = bestellpositionen;
+		}
+
+
 		
 		
+		/*@PostPersist
+		private void postPersist() {
+			LOGGER.debugf("Neue Bestellung mit ID=%d", id);
+		}*/
+		
+		/*@PreUpdate
+		private void preUpdate() {
+			aktualisiert = new Date();
+		}*/
 		
 		public Long getId() {
 			return id;
@@ -121,6 +155,38 @@ public class Bestellung implements Serializable {
 		public void setId(Long id) {
 			this.id = id;
 		}
+
+		public List<Bestellposten> getBestellpositionen() {
+			if (bestellposten == null) {
+				return null;
+			}
+			
+			return Collections.unmodifiableList(bestellposten);
+		}
+		
+		public void setBestellpositionen(List<Bestellposten> bestellpositionen) {
+			if (this.bestellposten == null) {
+				this.bestellposten = bestellpositionen;
+				return;
+			}
+			
+			// Wiederverwendung der vorhandenen Collection
+			this.bestellposten.clear();
+			if (bestellpositionen != null) {
+				this.bestellposten.addAll(bestellpositionen);
+			}
+		}
+		
+		public Bestellung addBestellposition(Bestellposten bestellposition) {
+			if (bestellposten == null) {
+				bestellposten = new ArrayList<>();
+			}
+			bestellposten.add(bestellposition);
+			return this;
+		}
+		
+		
+	
 		public Date getBestelldatum() {
 			return (Date) bestelldatum.clone();
 		}
@@ -175,6 +241,7 @@ public class Bestellung implements Serializable {
 			result = prime
 					* result
 					+ ((id == null) ? 0 : id.hashCode());
+			result = prime * result + ((kunde == null) ? 0 : kunde.hashCode());
 			return result;
 		}
 		@Override

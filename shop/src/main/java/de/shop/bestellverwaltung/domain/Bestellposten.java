@@ -1,5 +1,6 @@
 package de.shop.bestellverwaltung.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.net.URI;
 
@@ -20,19 +21,23 @@ import javax.persistence.Transient;
 
 
 
-public class Bestellposten {
-
+public class Bestellposten implements Serializable {
+	
+	/**
+	 * 
+	 */
+	//Gelb unterstrichen, da anscheinend kein "private static final long?"
+	private static final long serialVersionUID = -1427065293027144676L;
 	private static final long MIN_MENGE = 1;
 	private static final int ANZAHL_MIN = 1;
+	//private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 	
 	@Id
 	@GeneratedValue
 	@Column(nullable = false, updatable = false)
 	private Long id = KEINE_ID;
 	
-	@ManyToOne
-	@JoinColumn(name = "bestellung_fk",nullable = false)
-	@NotNull(message = "{bestellverwaltung.bestellung.menge.notEmpty}")
+	@Column(name = "menge",nullable = false)
 	@Min(value = MIN_MENGE , message = "{bestellverwaltung.bestellung.menge.Min}")
 	private Long menge;
 	
@@ -60,6 +65,22 @@ public class Bestellposten {
 	private URI bestellungUri;
 	@Transient
 	private URI artikelUri;
+	
+	public Bestellposten() {
+		super();
+	}
+	
+	public Bestellposten(Artikel artikel) {
+		super();
+		this.artikel = artikel;
+		this.anzahl = 1;
+	}
+	
+	public Bestellposten(Artikel artikel, short anzahl) {
+		super();
+		this.artikel = artikel;
+		this.anzahl = anzahl;
+	}
 	
 	
 	public Long getPositionId() {
