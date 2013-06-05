@@ -21,6 +21,7 @@ import javax.persistence.UniqueConstraint;
 public class Privatkunde extends AbstractKunde {
 	private static final long serialVersionUID = 133152931415808605L;
 	
+	
 	@Column(name = "familienstand_fk")
 	private FamilienstandType familienstand = FamilienstandType.VERHEIRATET;
 	

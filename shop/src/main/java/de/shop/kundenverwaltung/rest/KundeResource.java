@@ -89,7 +89,7 @@ public class KundeResource {
 	@Produces(TEXT_PLAIN)
 	@Path("version")
 	public String getVersion() {
-		return "1.0";
+		return VERSION ;
 	}
 	
 	@GET
