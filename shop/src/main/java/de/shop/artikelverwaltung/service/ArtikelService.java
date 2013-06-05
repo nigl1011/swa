@@ -98,6 +98,11 @@ public class ArtikelService implements Serializable {
 	}
 	
 	
+	private void validateKategorie(KategorieType kategorie, Locale locale) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public List<Artikel> findArtikelByFarbe(String farbe) {
 		if (Strings.isNullOrEmpty(farbe)) {
 			final List<Artikel> artikel = findVerfuegbareArtikel();
