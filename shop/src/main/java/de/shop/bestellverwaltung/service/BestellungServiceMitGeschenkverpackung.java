@@ -1,4 +1,4 @@
-/*package de.shop.bestellverwaltung.service;
+package de.shop.bestellverwaltung.service;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
@@ -11,8 +11,9 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 
+import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.bestellverwaltung.domain.Bestellung;
-
+import de.shop.kundenverwaltung.domain.AbstractKunde;
 
 @Decorator
 public abstract class BestellungServiceMitGeschenkverpackung implements BestellungService {
@@ -24,20 +25,53 @@ public abstract class BestellungServiceMitGeschenkverpackung implements Bestellu
 	private BestellungService bs;
 
 	@Override
-	public Bestellung findBestellungById(Long id, Locale locale) {
+	public Bestellung findBestellungById(Long id,Locale locale) {
 		return bs.findBestellungById(id, locale);
 	}
 
 	@Override
-	public List<Bestellung> findBestellungenByKundeId(Long kundeId, Locale locale) {
-		return bs.findBestellungById(kundeId, locale);
+	public Bestellung findBestellungByIdMitLieferungen(Long id) {
+		return bs.findBestellungByIdMitLieferungen(id);
 	}
 
 	@Override
-	public Bestellung createBestellung(Bestellung bestellung, Locale locale) {
+	public AbstractKunde findKundeById(Long id,Locale locale) {
+		return bs.findKundeById(id, locale);
+	}
+
+	@Override
+	public List<Bestellung> findBestellungenByKunde(AbstractKunde kunde) {
+		return bs.findBestellungenByKunde(kunde);
+	}
+
+	@Override
+	public Bestellung createBestellung(Bestellung bestellung, Long kundeId, Locale locale) {
 		LOGGER.warn("Geschenkverpackung noch nicht implementiert");
 		
-		return bs.createBestellung(bestellung, locale);
+		return bs.createBestellung(bestellung, kundeId, locale);
 	}
+	
+	@Override
+	public Bestellung createBestellung(Bestellung bestellung, AbstractKunde kunde, Locale locale) {
+		LOGGER.warn("Geschenkverpackung noch nicht implementiert");
+		
+		return bs.createBestellung(bestellung, kunde, locale);
+	}
+
+	@Override
+	public List<Artikel> ladenhueter(int anzahl) {
+		return bs.ladenhueter(anzahl);
+	}
+
+	/*@Override
+	public List<Lieferung> findLieferungen(String nr) {
+		return bs.findLieferungen(nr);
+	}
+
+	@Override
+	public Lieferung createLieferung(Lieferung lieferung,
+			List<Bestellung> bestellungen) {
+		return bs.createLieferung(lieferung, bestellungen);
+	}*/
+
 }
-*/
