@@ -93,7 +93,7 @@ public class BestellungResource {
 		final AbstractKunde kunde = ks.findKundeById(Long.valueOf(kundeIdString), locale);
 		bestellung.setKunde(kunde);
 		
-		bestellung = bs.createBestellung(bestellung, locale);
+		bestellung = bs.createBestellung(bestellung, kunde, locale);
 		final URI bestellungUri = uriHelperBestellung.getUriBestellung(bestellung, uriInfo);
 		return Response.created(bestellungUri).build();
 		

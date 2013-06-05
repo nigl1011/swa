@@ -34,8 +34,12 @@ import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.bestellverwaltung.domain.Bestellposten;
 import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.kundenverwaltung.domain.AbstractKunde;
+import de.shop.kundenverwaltung.domain.PasswordGroup;
+import de.shop.kundenverwaltung.service.EmailExistsException;
 import de.shop.kundenverwaltung.service.KundeService;
+import de.shop.kundenverwaltung.service.KundeService.FetchType;
 import de.shop.lieferverwaltung.domain.Lieferung;
+import de.shop.util.IdGroup;
 import de.shop.util.Log;
 import de.shop.util.ValidatorProvider;
 
@@ -70,7 +74,7 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 	/**
 	 */
 	@Override
-	public Bestellung findBestellungById(Long id) {
+	public Bestellung findBestellungById(Long id, Locale locale) {
 		final Bestellung bestellung = em.find(Bestellung.class, id);
 		return bestellung;
 	}
@@ -94,7 +98,7 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 	/**
 	 */
 	@Override
-	public AbstractKunde findKundeById(Long id) {
+	public AbstractKunde findKundeById(Long id, Locale locale) {
 		try {
 			final AbstractKunde kunde = em.createNamedQuery(Bestellung.FIND_KUNDE_BY_ID, AbstractKunde.class)
                                           .setParameter(Bestellung.PARAM_ID, id)
@@ -121,11 +125,6 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 	}
 
 
-	/**
-	 * Zuordnung einer neuen, transienten Bestellung zu einem existierenden, persistenten Kunden.
-	 * Der Kunde ist fuer den EntityManager bekannt, die Bestellung dagegen nicht. Das Zusammenbauen
-	 * wird sowohl fuer einen Web Service aus auch fuer eine Webanwendung benoetigt.
-	 */
 	@Override
 	public Bestellung createBestellung(Bestellung bestellung,
 			                           Long kundeId,
@@ -139,11 +138,7 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 		return createBestellung(bestellung, kunde, locale);
 	}
 	
-	/**
-	 * Zuordnung einer neuen, transienten Bestellung zu einem existierenden, persistenten Kunden.
-	 * Der Kunde ist fuer den EntityManager bekannt, die Bestellung dagegen nicht. Das Zusammenbauen
-	 * wird sowohl fuer einen Web Service aus auch fuer eine Webanwendung benoetigt.
-	 */
+
 	@Override
 	public Bestellung createBestellung(Bestellung bestellung,
 			                           AbstractKunde kunde,
@@ -245,10 +240,36 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 		final List<Bestellung> bestellungen = query.getResultList();
 		return bestellungen;
 	}
+/*
+	public Bestellung updateBestellung(Bestellung bestellung, Locale locale) {
+		if (bestellung == null) {
+			return null;
+		}
+
+		// Werden alle Constraints beim Modifizieren gewahrt?
+		validateBestellung(Bestellung, locale, Default.class, PasswordGroup.class, IdGroup.class);
+		
+		// kunde vom EntityManager trennen, weil anschliessend z.B. nach Id und Email gesucht wird
+		em.detach(Bestellung);
+		
+		// Gibt es ein anderes Objekt mit gleicher Email-Adresse?
+		final Bestellung tmp = findBestellungByEmail(Bestellung.getEmail(), locale);
+		if (tmp != null) {
+			em.detach(tmp);
+			if (tmp.getId().longValue() != Bestellung.getId().longValue()) {
+				// anderes Objekt mit gleichem Attributwert fuer email
+				throw new EmailExistsException(Bestellung.getEmail());
+			}
+		}
+
+		em.merge(Bestellung);
+		return Bestellung;
+	}*/
 
 	@Override
 	public Bestellung findBestellungByIdMitLieferungen(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 }

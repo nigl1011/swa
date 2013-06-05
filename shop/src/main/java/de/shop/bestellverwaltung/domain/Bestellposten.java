@@ -27,12 +27,12 @@ import org.jboss.logging.Logger;
 import de.shop.artikelverwaltung.domain.Artikel;
 
 @Entity
-@Table(name = "bestellposition")
+@Table(name = "bestellposten")
 @NamedQueries({
     @NamedQuery(name  = Bestellposten.FIND_LADENHUETER,
    	            query = "SELECT a"
    	            	    + " FROM   Artikel a"
-   	            	    + " WHERE  a NOT IN (SELECT bp.artikel FROM Bestellposition bp)")
+   	            	    + " WHERE  a NOT IN (SELECT bp.artikel FROM Bestellposten bp)")
 })
 
 public class Bestellposten implements Serializable {
