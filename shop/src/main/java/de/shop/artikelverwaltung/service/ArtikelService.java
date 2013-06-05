@@ -85,7 +85,6 @@ public class ArtikelService implements Serializable {
 		return artikel;
 	}
 	public List<Artikel> findArtikelByKategorie(KategorieType kategorie, Locale locale) {
-		validateKategorie(kategorie, locale);
 		if (kategorie == null) {
 			final List<Artikel> artikel = findVerfuegbareArtikel();
 			return artikel;

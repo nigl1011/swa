@@ -36,17 +36,33 @@ import de.shop.util.IdGroup;
 @Entity
 @Table(name = "artikel")
 @NamedQueries({
+	@NamedQuery(name  = Artikel.FIND_ARTIKEL,
+            query = "SELECT a"
+			        + " FROM   Artikel a"),
 	@NamedQuery(name  = Artikel.FIND_VERFUEGBARE_ARTIKEL,
             	query = "SELECT      a"
             	        + " FROM     Artikel a"
-						+ " WHERE    a.ausgesondert = FALSE"
+						+ " WHERE    a.verfuegbar = TRUE"
                         + " ORDER BY a.id ASC"),
 	@NamedQuery(name  = Artikel.FIND_ARTIKEL_BY_BEZ,
             	query = "SELECT      a"
                         + " FROM     Artikel a"
 						+ " WHERE    a.bezeichnung LIKE :" + Artikel.PARAM_BEZEICHNUNG
-						+ "          AND a.ausgesondert = FALSE"
+						+ "          AND a.verfuegbar = TRUE"
 			 	        + " ORDER BY a.id ASC"),
+	@NamedQuery(name  = Artikel.FIND_ARTIKEL_BY_KAT,
+		        query = "SELECT      a"
+		                + " FROM     Artikel a"
+		                + " WHERE    a.kategorie LIKE :" + Artikel.PARAM_KATEGORIE
+		                + "          AND a.verfuegbar = TRUE"
+		                + " ORDER BY a.id ASC"),
+	@NamedQuery(name  = Artikel.FIND_ARTIKEL_BY_KAT_AND_FAR,
+				        query = "SELECT      a"
+				                + " FROM     Artikel a"
+				                + " WHERE    a.kategorie LIKE :" + Artikel.PARAM_KATEGORIE
+				                + "          AND a.farbe LIKE :" + Artikel.PARAM_FARBE
+				                + "          AND a.verfuegbar = TRUE"
+				                + " ORDER BY a.id ASC"),
    	@NamedQuery(name  = Artikel.FIND_ARTIKEL_MAX_PREIS,
             	query = "SELECT      a"
                         + " FROM     Artikel a"
@@ -64,10 +80,11 @@ private static final String NAME_PATTERN = "[A-Z\u00C4\u00D6\u00DC][a-z\u00E4\u0
 private static final String FARBEN_PATTERN = "[a-z\u00E4\u00F6\u00FC\u00DF]+";
 
 private static final String PREFIX = "Artikel.";
+public static final String FIND_ARTIKEL = PREFIX + "findArtikel";
 public static final String FIND_VERFUEGBARE_ARTIKEL = PREFIX + "findVerfuegbareArtikel";
 public static final String FIND_ARTIKEL_BY_BEZ = PREFIX + "findArtikelByBez";
 public static final String FIND_ARTIKEL_BY_KAT = PREFIX + "findArtikelByKat";
-public static final String FIND_ARTIKEL_BY_FAR = PREFIX + "findArtikelByFar";
+public static final String FIND_ARTIKEL_BY_KAT_AND_FAR = PREFIX + "findArtikelByKatAndFar";
 public static final String FIND_ARTIKEL_MAX_PREIS = PREFIX + "findArtikelByMaxPreis";
 public static final String PARAM_BEZEICHNUNG = "bezeichnung";
 public static final String PARAM_KATEGORIE = "kategorie";
@@ -94,7 +111,7 @@ message = "{artikelverwaltung.artikel.bezeichnung.length}")
 @Pattern(regexp = BEZEICHNUNG_PATTERN, message = "{artikelverwaltung.artikel.bezeichnung.pattern}")
 private String bezeichnung = "";
 
-// TODO ENUM ???
+@Column(nullable = false)
 @Enumerated
 private KategorieType kategorie;
 
@@ -105,9 +122,9 @@ message = "{artikelverwaltung.artikel.farbe.length}")
 @Pattern(regexp = FARBE_PATTERN, message = "{artikelverwaltung.artikel.farbe.pattern}")
 private String farbe;
 
-// TODO BigDecimal ??
 @NotNull
 @Nonnegative
+@Column(nullable = false, precision = 5, scale = 4)
 private BigDecimal preis;
 
 private boolean verfuegbar;
