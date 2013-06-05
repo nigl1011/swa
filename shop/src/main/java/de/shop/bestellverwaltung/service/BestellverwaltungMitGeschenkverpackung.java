@@ -1,4 +1,4 @@
-package de.shop.bestellverwaltung.service;
+/*package de.shop.bestellverwaltung.service;
 
 import java.util.List;
 import java.util.Locale;
@@ -42,4 +42,4 @@ public abstract class BestellverwaltungMitGeschenkverpackung implements
 		return bestellverwaltung.createBestellung(bestellung, locale);
 	}
 
-}
+}*/

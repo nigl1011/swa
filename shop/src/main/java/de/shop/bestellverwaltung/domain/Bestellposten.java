@@ -149,7 +149,13 @@ public class Bestellposten implements Serializable {
 	public void setAnzahl(short anzahl) {
 		this.anzahl = anzahl;
 	}
-	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	@Override
 	public int hashCode() {
@@ -164,53 +170,49 @@ public class Bestellposten implements Serializable {
 	}
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		final Bestellposten other = (Bestellposten) obj;
-		if (artikel == null) {
-			if (other.artikel != null)
-				return false;
-		}
-		else if (!artikel.equals(other.artikel))
-			return false;
-		if (artikelUri == null) {
-			if (other.artikelUri != null)
-				return false;
-		}
-		else if (!artikelUri.equals(other.artikelUri))
-			return false;
-		if (bestellungUri == null) {
-			if (other.bestellungUri != null)
-				return false;
-		} 
-		else if (!bestellungUri.equals(other.bestellungUri))
-			return false;
+		
+		// Bei persistenten Bestellpositionen koennen zu verschiedenen Bestellungen gehoeren
+		// und deshalb den gleichen Artikel (s.u.) referenzieren, deshalb wird Id hier beruecksichtigt
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} 
-		
-		
-		
-		else if (!version.equals(other.version))
+			}
+		}
+		else if (!id.equals(other.id)) {
 			return false;
-		if (zwischenpreis == null) {
-			if (other.zwischenpreis != null)
+		}
+
+		// Wenn eine neue Bestellung angelegt wird, dann wird jeder zu bestellende Artikel
+		// genau 1x referenziert (nicht zu verwechseln mit der "anzahl")
+		if (artikel == null) {
+			if (other.artikel != null) {
 				return false;
-		} 
-		else if (!zwischenpreis.equals(other.zwischenpreis))
+			}
+		}
+		else if (!artikel.equals(other.artikel)) {
 			return false;
+		}
+		
 		return true;
 	}
+
+
+	
 	@Override
 	public String toString() {
 		return "Bestellposten [id=" + id + ", version="
 				+ version + ", zwischenpreis=" + zwischenpreis
-				+ ", bestellung=" + bestellung + ", artikel=" + artikel
+			    + ", artikel=" + artikel
 				+  "]";
 	}
 

@@ -1,4 +1,4 @@
-package de.shop.bestellverwaltung.service;
+/*package de.shop.bestellverwaltung.service;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
@@ -30,7 +30,7 @@ public abstract class BestellungServiceMitGeschenkverpackung implements Bestellu
 
 	@Override
 	public List<Bestellung> findBestellungenByKundeId(Long kundeId, Locale locale) {
-		return bs.findBestellungenByKundeId(kundeId, locale);
+		return bs.findBestellungById(kundeId, locale);
 	}
 
 	@Override
@@ -40,3 +40,4 @@ public abstract class BestellungServiceMitGeschenkverpackung implements Bestellu
 		return bs.createBestellung(bestellung, locale);
 	}
 }
+*/
