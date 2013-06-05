@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
@@ -17,14 +18,23 @@ import javax.validation.constraints.Min;
 import static de.shop.util.Constants.KEINE_ID;
 
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import de.shop.kundenverwaltung.domain.AbstractKunde;
+import de.shop.lieferverwaltung.domain.Lieferung;
 import de.shop.util.IdGroup;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.FetchType.EAGER;
+
+
+
+
+
+
 
 
 
@@ -33,6 +43,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -115,6 +127,7 @@ public class Bestellung implements Serializable {
 		@NotNull(message = "{bestellverwaltung.bestellung.bestellposten.notNull}")
 		private List<Bestellposten> bestellposten;
 		
+		
 		@Column(nullable = false)
 		@Temporal(TIMESTAMP)
 		@JsonIgnore
@@ -125,7 +138,15 @@ public class Bestellung implements Serializable {
 		@JsonIgnore
 		private Date aktualisiert;
 		
+		@ManyToMany 
+		@JoinTable(name = "bestellung_lieferung", joinColumns = @JoinColumn(name ="bestellung_fk"),
+		inverseJoinColumns = @JoinColumn(name = "lieferung_fk"))
+		@XmlTransient
+		private Set<Lieferung> lieferungen;
+		
 		@Transient
+		@XmlElement(name = "kunde", required = true) 
+		@JsonProperty
 		private URI kundeUri;
 		private Date bestelldatum;
 		

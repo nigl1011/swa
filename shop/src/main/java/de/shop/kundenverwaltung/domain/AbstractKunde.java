@@ -511,7 +511,6 @@ public abstract class AbstractKunde implements Serializable {
 		int result = 1;
 		result = prime * result + ((aktualisiert == null) ? 0 : aktualisiert.hashCode());
 		result = prime * result + ((bestellungen == null) ? 0 : bestellungen.hashCode());
-		result = prime * result + ((bestellungenUri == null) ? 0 : bestellungenUri.hashCode());
 		result = prime * result + ((erzeugt == null) ? 0 : erzeugt.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((geburtsdatum == null) ? 0 : geburtsdatum.hashCode());
