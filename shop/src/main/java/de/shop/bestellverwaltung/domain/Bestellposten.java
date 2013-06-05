@@ -23,10 +23,7 @@ import javax.persistence.Transient;
 
 public class Bestellposten implements Serializable {
 	
-	/**
-	 * 
-	 */
-	//Gelb unterstrichen, da anscheinend kein "private static final long?"
+	
 	private static final long serialVersionUID = -1427065293027144676L;
 	private static final long MIN_MENGE = 1;
 	private static final int ANZAHL_MIN = 1;
@@ -37,9 +34,6 @@ public class Bestellposten implements Serializable {
 	@Column(nullable = false, updatable = false)
 	private Long id = KEINE_ID;
 	
-	@Column(name = "menge",nullable = false)
-	@Min(value = MIN_MENGE , message = "{bestellverwaltung.bestellung.menge.Min}")
-	private Long menge;
 	
 	@ManyToOne(optional = false)
     @JoinColumn(name = "artikel_fk", nullable = false)
@@ -88,12 +82,7 @@ public class Bestellposten implements Serializable {
 	}
 	public void setPositionId(Long positionId) {
 		id = positionId;
-	}
-	public Long getMenge() {
-		return menge;
-	}
-	public void setMenge(Long menge) {
-		this.menge = menge;
+	
 	}
 	public Long getVersion() {
 		return version;
@@ -141,7 +130,6 @@ public class Bestellposten implements Serializable {
 		int result = 1;
 		result = prime * result + ((artikel == null) ? 0 : artikel.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((menge == null) ? 0 : menge.hashCode());
 		result = prime * result + ((version == null) ? 0 : version.hashCode());
 		result = prime * result
 				+ ((zwischenpreis == null) ? 0 : zwischenpreis.hashCode());
@@ -178,18 +166,9 @@ public class Bestellposten implements Serializable {
 			if (other.id != null)
 				return false;
 		} 
-		else if (!id.equals(other.id))
-			return false;
-		if (menge == null) {
-			if (other.menge != null)
-				return false;
-		} 
-		else if (!menge.equals(other.menge))
-			return false;
-		if (version == null) {
-			if (other.version != null)
-				return false;
-		} 
+		
+		
+		
 		else if (!version.equals(other.version))
 			return false;
 		if (zwischenpreis == null) {
@@ -202,11 +181,12 @@ public class Bestellposten implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Bestellposten [id=" + id + ", menge=" + menge + ", version="
+		return "Bestellposten [id=" + id + ", version="
 				+ version + ", zwischenpreis=" + zwischenpreis
 				+ ", bestellung=" + bestellung + ", artikel=" + artikel
 				+  "]";
 	}
+
 
 }
 
