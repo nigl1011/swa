@@ -240,32 +240,18 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 		final List<Bestellung> bestellungen = query.getResultList();
 		return bestellungen;
 	}
-/*
+
 	public Bestellung updateBestellung(Bestellung bestellung, Locale locale) {
-		if (bestellung == null) {
-			return null;
+		if (bestellung == null || bestellung.getId() == null )  {
+		LOGGER.tracef("Bestellung ist null => Update nicht möglich");
+		return null; }
+		List<Bestellposten> bestellposten = bestellung.getBestellposten();
+		for (Bestellposten bp : bestellposten) { bp.setBestellung(bestellung); }
+		em.merge(bestellung);
+		LOGGER.tracef("update der Bestellung erfolgreich");
+		return bestellung;
 		}
-
-		// Werden alle Constraints beim Modifizieren gewahrt?
-		validateBestellung(Bestellung, locale, Default.class, PasswordGroup.class, IdGroup.class);
-		
-		// kunde vom EntityManager trennen, weil anschliessend z.B. nach Id und Email gesucht wird
-		em.detach(Bestellung);
-		
-		// Gibt es ein anderes Objekt mit gleicher Email-Adresse?
-		final Bestellung tmp = findBestellungByEmail(Bestellung.getEmail(), locale);
-		if (tmp != null) {
-			em.detach(tmp);
-			if (tmp.getId().longValue() != Bestellung.getId().longValue()) {
-				// anderes Objekt mit gleichem Attributwert fuer email
-				throw new EmailExistsException(Bestellung.getEmail());
-			}
-		}
-
-		em.merge(Bestellung);
-		return Bestellung;
-	}*/
-
+	
 	@Override
 	public Bestellung findBestellungByIdMitLieferungen(Long id) {
 		// TODO Auto-generated method stub

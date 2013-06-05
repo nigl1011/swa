@@ -105,7 +105,7 @@ public class BestellungResource {
 		final Locale locale = localeHelper.getLocale(headers);
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
-		bs.updateBestellung(bestellung, kunde, locale);
+		bs.updateBestellung(bestellung, locale);
 		return Response.noContent().build();
 	}
 	
