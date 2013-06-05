@@ -1,33 +1,49 @@
 package de.shop.bestellverwaltung.domain;
 
+import static de.shop.util.Constants.KEINE_ID;
+
 import java.io.Serializable;
+import java.lang.invoke.MethodHandles;
 import java.math.BigDecimal;
 import java.net.URI;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
-
-import de.shop.artikelverwaltung.domain.Artikel;
-import static de.shop.util.Constants.KEINE_ID;
-
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.PostPersist;
+import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.jboss.logging.Logger;
 
+import de.shop.artikelverwaltung.domain.Artikel;
+
+@Entity
+@Table(name = "bestellposition")
+@NamedQueries({
+    @NamedQuery(name  = Bestellposten.FIND_LADENHUETER,
+   	            query = "SELECT a"
+   	            	    + " FROM   Artikel a"
+   	            	    + " WHERE  a NOT IN (SELECT bp.artikel FROM Bestellposition bp)")
+})
 
 public class Bestellposten implements Serializable {
 	
 	
 	private static final long serialVersionUID = -1427065293027144676L;
-	private static final long MIN_MENGE = 1;
 	private static final int ANZAHL_MIN = 1;
-	//private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
+	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
+	private static final String PREFIX = "Bestellposten.";
+	public static final String FIND_LADENHUETER = PREFIX + "findLadenhueter";
+	
 	
 	@Id
 	@GeneratedValue
@@ -59,6 +75,12 @@ public class Bestellposten implements Serializable {
 	private URI bestellungUri;
 	@Transient
 	private URI artikelUri;
+	
+	
+	@PostPersist
+	private void postPersist() {
+		LOGGER.debugf("Neue Bestellposition mit ID=%d", id);
+	}
 	
 	public Bestellposten() {
 		super();
@@ -121,7 +143,12 @@ public class Bestellposten implements Serializable {
 	public void setArtikelUri(URI artikelUri) {
 		this.artikelUri = artikelUri;
 	}	
-
+	public short getAnzahl() {
+		return anzahl;
+	}
+	public void setAnzahl(short anzahl) {
+		this.anzahl = anzahl;
+	}
 	
 	
 	@Override

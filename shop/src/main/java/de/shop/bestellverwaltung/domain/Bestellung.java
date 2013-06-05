@@ -5,12 +5,10 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
-import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
@@ -30,14 +28,6 @@ import static javax.persistence.FetchType.EAGER;
 
 
 
-
-
-
-
-
-
-
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -49,8 +39,15 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.PostPersist;
+import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+
+
+import javax.persistence.Transient;
+
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.jboss.logging.Logger;
 
 
 
@@ -73,7 +70,7 @@ public class Bestellung implements Serializable {
 
 
 	private static final long serialVersionUID = -1900888975491172450L;
-	//private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
+	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 	
 	private static final String PREFIX = "Bestellung.";
 	public static final String FIND_BESTELLUNGEN_BY_KUNDE = PREFIX + "findBestellungenByKunde";
@@ -82,9 +79,7 @@ public class Bestellung implements Serializable {
 	public static final String PARAM_KUNDE = "kunde";
 	public static final String PARAM_ID = "id";
 	
-	
-	
-	
+
 	private static final long MIN_ID = 1;
 	private static final long MIN_VERSION = 1;
 	//private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
@@ -107,9 +102,6 @@ public class Bestellung implements Serializable {
 		@NotNull(message = "{bestellverwaltung.bestellung.gesamtpreis.notEmpty}")
 		private Double gesamtpreis;
 		
-		@Column(nullable = false)
-		@Temporal(TIMESTAMP)
-		private Timestamp aktualisiert;
 		
 		@ManyToOne(optional = false)
 		@JoinColumn(name = "kunde_fk", nullable = false, insertable = false, updatable = false)
@@ -123,7 +115,17 @@ public class Bestellung implements Serializable {
 		@NotNull(message = "{bestellverwaltung.bestellung.bestellposten.notNull}")
 		private List<Bestellposten> bestellposten;
 		
+		@Column(nullable = false)
+		@Temporal(TIMESTAMP)
+		@JsonIgnore
+		private Date erzeugt;
 		
+		@Column(nullable = false)
+		@Temporal(TIMESTAMP)
+		@JsonIgnore
+		private Date aktualisiert;
+		
+		@Transient
 		private URI kundeUri;
 		private Date bestelldatum;
 		
@@ -137,17 +139,21 @@ public class Bestellung implements Serializable {
 		}
 
 
+		@PrePersist
+		private void prePersist() {
+			erzeugt = new Date();
+			aktualisiert = new Date();
+		}
 		
-		
-		/*@PostPersist
+		@PostPersist
 		private void postPersist() {
 			LOGGER.debugf("Neue Bestellung mit ID=%d", id);
-		}*/
+		}
 		
-		/*@PreUpdate
+		@PreUpdate
 		private void preUpdate() {
 			aktualisiert = new Date();
-		}*/
+		}
 		
 		public Long getId() {
 			return id;
@@ -212,12 +218,7 @@ public class Bestellung implements Serializable {
 		}
 		public void setGesamtpreis(Double gesamtpreis) {
 			this.gesamtpreis = gesamtpreis;
-		}
-		public Timestamp getAktualisiert() {
-			return aktualisiert;
-		}
-		public void setAktualisiert(Timestamp aktualisiert) {
-			this.aktualisiert = aktualisiert;
+		
 		}
 		public AbstractKunde getKunde() {
 			return kunde;
@@ -232,7 +233,19 @@ public class Bestellung implements Serializable {
 			this.kundeUri = kundeUri;
 		}
 
-		
+		@JsonProperty("datum")
+		public Date getErzeugt() {
+			return erzeugt == null ? null : (Date) erzeugt.clone();
+		}
+		public void setErzeugt(Date erzeugt) {
+			this.erzeugt = erzeugt == null ? null : (Date) erzeugt.clone();
+		}
+		public Date getAktualisiert() {
+			return aktualisiert == null ? null : (Date) aktualisiert.clone();
+		}
+		public void setAktualisiert(Date aktualisiert) {
+			this.aktualisiert = aktualisiert == null ? null : (Date) aktualisiert.clone();
+		}
 		
 		@Override
 		public int hashCode() {
@@ -265,6 +278,7 @@ public class Bestellung implements Serializable {
 		public String toString() {
 			return "Bestellung [id=" + id + ", status=" + status + ", version="
 					+ version + ", gesamtpreis=" + gesamtpreis 
+					 + ", erzeugt=" + erzeugt 
 					+ ", bestelldatum=" + bestelldatum + "]";
 
 
