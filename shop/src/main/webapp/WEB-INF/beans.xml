@@ -10,9 +10,6 @@
  <alternatives>
   <stereotype>de.shop.util.MockService</stereotype>
  </alternatives>
- <decorators>
-  <class>de.shop.bestellverwaltung.service.BestellverwaltungMitGeschenkverpackung</class>
- </decorators>
  <weld:scan>
   <!-- Domain- und Exception-Klassen sind irrelevant fuer CDI -->
   <weld:exclude name="de.shop.*.domain.*"/>
