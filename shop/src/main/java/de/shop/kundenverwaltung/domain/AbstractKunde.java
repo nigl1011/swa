@@ -103,6 +103,9 @@ import de.shop.util.IdGroup;
    	            query = "SELECT DISTINCT k"
    			            + " FROM   AbstractKunde k"
    			            + " WHERE  k.email = :" + AbstractKunde.PARAM_KUNDE_EMAIL),
+   	@NamedQuery(name = AbstractKunde.FIND_ADRESSE_BY_KUNDE,
+   				query = "SELECT k.adresse"
+   						+ " FROM AbstractKunde k"),
     @NamedQuery(name  = AbstractKunde.FIND_KUNDEN_BY_PLZ,
 	            query = "SELECT k"
 				        + " FROM  AbstractKunde k"
@@ -165,6 +168,7 @@ public abstract class AbstractKunde implements Serializable {
 		                       PREFIX + "findKundeByIdFetchBestellungen";
 	public static final String FIND_KUNDE_BY_EMAIL = PREFIX + "findKundeByEmail";
 	public static final String FIND_KUNDEN_BY_PLZ = PREFIX + "findKundenByPlz";
+	public static final String FIND_ADRESSE_BY_KUNDE = PREFIX + "findAdresseByKunde";
 	public static final String FIND_KUNDEN_BY_DATE = PREFIX + "findKundenByDate";
 	public static final String FIND_PRIVATKUNDEN_FIRMENKUNDEN = PREFIX + "findPrivatkundenFirmenkunden";
 	

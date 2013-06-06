@@ -41,12 +41,13 @@ import de.shop.util.PreExistingGroup;
 
 @Entity
 @Table(name = "lieferung")
-@NamedQueries({
-	@NamedQuery(name  = Lieferung.FIND_LIEFERUNGEN_BY_ID_FETCH_LIEFERUNGEN,
-                query = "SELECT l"
-                	    + " FROM Lieferung l LEFT JOIN FETCH l.bestellungen"
-                	    + " WHERE l.lieferNr LIKE :" + Lieferung.PARAM_ID)
-})
+// FIXME Query mit Lieferungen
+//@NamedQueries({
+//	@NamedQuery(name  = Lieferung.FIND_LIEFERUNGEN_BY_ID_FETCH_BESTELLUNGEN,
+//                query = "SELECT l"
+//                	    + " FROM Lieferung l LEFT JOIN FETCH l.bestellungen"
+//                	    + " WHERE l.lieferNr LIKE :" + Lieferung.PARAM_ID)
+//})
 public class Lieferung implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -54,8 +55,8 @@ public class Lieferung implements Serializable {
 	private static final long MIN_ID = 1;
 	
 	private static final String PREFIX = "Lieferung.";
-	public static final String FIND_LIEFERUNGEN_BY_ID_FETCH_LIEFERUNGEN =
-		                       PREFIX + "findLieferungenByIdFetchLieferungen";
+	public static final String FIND_LIEFERUNGEN_BY_ID_FETCH_BESTELLUNGEN =
+		                       PREFIX + "findLieferungenByIdFetchBestellungen";
 	public static final String PARAM_ID = "id";
 	
 	@Id
@@ -74,7 +75,9 @@ public class Lieferung implements Serializable {
 	@JsonIgnore
 	private Date aktuell;
 
-	@ManyToMany(mappedBy = "lieferungen", cascade = { PERSIST, MERGE })
+	// FIXME @Transient
+	@Transient
+//	@ManyToMany(mappedBy = "lieferungen", cascade = { PERSIST, MERGE })
 	@NotEmpty(message = "{bestellverwaltung.lieferung.bestellungen.notEmpty}", groups = PreExistingGroup.class)
 	@Valid
 	@JsonIgnore

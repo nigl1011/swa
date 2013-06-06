@@ -19,12 +19,13 @@ public class UriHelperLieferung {
 	
 	public void updateUriLieferung(Lieferung lieferung, UriInfo uriInfo) {
 		// URL fuer Bestellung setzen
-		final Bestellung bestellung = lieferung.getBestellung();
-		if (bestellung != null) {
-			final URI bestellungUri = uriHelperBestellung.getUriBestellung(lieferung.getBestellung(), uriInfo);
-			lieferung.setBestellungUri(bestellungUri);
-						//lieferung.setBestellungUri(bestellungUri);
-		}
+		// FIXME lieferung.getBestellung()
+//		final Bestellung bestellung = lieferung.getBestellung();
+//		if (bestellung != null) {
+//			final URI bestellungUri = uriHelperBestellung.getUriBestellung(lieferung.getBestellung(), uriInfo);
+//			lieferung.setBestellungUri(bestellungUri);
+//						//lieferung.setBestellungUri(bestellungUri);
+//		}
 		
 	}
 
