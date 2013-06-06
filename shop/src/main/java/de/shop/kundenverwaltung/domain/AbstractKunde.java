@@ -105,7 +105,7 @@ import de.shop.util.IdGroup;
    			            + " WHERE  k.email = :" + AbstractKunde.PARAM_KUNDE_EMAIL),
    	@NamedQuery(name = AbstractKunde.FIND_ADRESSE_BY_KUNDE,
    				query = "SELECT k.adresse"
-   						+ "FROM AbstractKunde k"),
+   						+ " FROM AbstractKunde k"),
     @NamedQuery(name  = AbstractKunde.FIND_KUNDEN_BY_PLZ,
 	            query = "SELECT k"
 				        + " FROM  AbstractKunde k"

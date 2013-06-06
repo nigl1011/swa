@@ -90,7 +90,8 @@ public class BestellungResource {
 		final String kundeUri = bestellung.getKundeUri().toString();
 		final int pos = kundeUri.indexOf("/kunden/") + 8;
 		final String kundeIdString = kundeUri.substring(pos);
-		final AbstractKunde kunde = ks.findKundeById(Long.valueOf(kundeIdString), locale);
+		// FIXME findKundeById fehlt
+		final AbstractKunde kunde = null;//ks.findKundeById(Long.valueOf(kundeIdString), locale);
 		bestellung.setKunde(kunde);
 		
 		bestellung = bs.createBestellung(bestellung, kunde, locale);

@@ -18,7 +18,6 @@ import de.shop.lieferverwaltung.domain.Lieferung;
 //import de.shop.lieferverwaltung.service.InvalidLieferIdException;
 import de.shop.util.IdGroup;
 import de.shop.util.Log;
-import de.shop.util.Mock;
 import de.shop.util.ValidatorProvider;
 
 @Log
@@ -44,7 +43,9 @@ public class LieferService implements Serializable {
 		validateLieferungId(id, locale);
 		// TODO id pruefen
 		// TODO Datenbanzugriffsschicht statt Mock
-		return Mock.findLieferungById(id);
+//		return Mock.findLieferungById(id);
+		// FIXME Mock entfernen
+		return null;
 	}
 	private void validateLieferungId(Long lieferId, Locale locale) {
 		final Validator validator = validatorProvider.getValidator(locale);
@@ -64,9 +65,12 @@ public class LieferService implements Serializable {
 		// Werden alle Constraints beim Einfuegen gewahrt?
 		validateLieferung(lieferung, locale, Default.class);
 
-		lieferung = Mock.createLieferung(lieferung);
-
-		return lieferung;
+//		lieferung = Mock.createLieferung(lieferung);
+//
+//		return lieferung;
+		
+		// FIXME Mock entfernen
+		return null;
 	}
 
 	private void validateLieferung(Lieferung lieferung, Locale locale, Class<?>... groups) {
@@ -88,9 +92,12 @@ public class LieferService implements Serializable {
 		validateLieferung(lieferung, locale, Default.class, IdGroup.class);
 
 		// TODO Datenbanzugriffsschicht statt Mock
-		Mock.updateLieferung(lieferung);
+//		Mock.updateLieferung(lieferung);
+//		
+//		return lieferung;
 		
-		return lieferung;
+		// FIXME Mock entfernen
+		return null;
 	}
 
 }
