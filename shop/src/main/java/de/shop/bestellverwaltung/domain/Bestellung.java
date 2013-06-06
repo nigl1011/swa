@@ -138,11 +138,12 @@ public class Bestellung implements Serializable {
 		@JsonIgnore
 		private Date aktualisiert;
 		
-		@ManyToMany 
+		/*@ManyToMany 
 		@JoinTable(name = "bestellung_lieferung", joinColumns = @JoinColumn(name ="bestellung_fk"),
 		inverseJoinColumns = @JoinColumn(name = "lieferung_fk"))
 		@XmlTransient
 		private Set<Lieferung> lieferungen;
+		*/
 		
 		@Transient
 		@XmlElement(name = "kunde", required = true) 
