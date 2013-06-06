@@ -2,10 +2,15 @@ package de.shop.lieferverwaltung.rest;
 
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
+import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.util.Locale;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -19,17 +24,27 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.jboss.logging.Logger;
+
 import de.shop.bestellverwaltung.service.BestellungService;
 import de.shop.lieferverwaltung.domain.Lieferung;
 import de.shop.lieferverwaltung.service.LieferService;
 import de.shop.util.LocaleHelper;
+import de.shop.util.Log;
 //import de.shop.util.Mock;
 import de.shop.util.NotFoundException;
+import de.shop.util.Transactional;
 
 @Path("/lieferungen")
 @Produces(APPLICATION_JSON)
 @Consumes
+@RequestScoped
+@Transactional
+@Log
 public class LieferungResource {
+	
+	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
+		
 	@Context
 	private UriInfo uriInfo;
 	
@@ -48,13 +63,27 @@ public class LieferungResource {
 	@Inject
 	private LocaleHelper localeHelper;
 	
+	@PostConstruct
+	private void postConstruct() {
+		LOGGER.debugf("CDI-faehiges Bean %s wurde erzeugt", this);
+	}
+	
+	@PreDestroy
+	private void preDestroy() {
+		LOGGER.debugf("CDI-faehiges Bean %s wird geloescht", this);
+	}
+	
+	@GET
+	@Produces(TEXT_PLAIN)
+	@Path("version")
+	public String getVersion() {
+		return "1.0";
+	}
+	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
 	public Lieferung findLieferungById(@PathParam("id") Long id) {
-		//@SuppressWarnings("unused")
 		final Locale locale = localeHelper.getLocale(headers);
-		
-		// TODO Anwendungskern statt Mock, Verwendung von Locale
 		final Lieferung lieferung = ls.findLieferungById(id, locale);
 		if (lieferung == null) {
 			throw new NotFoundException("Keine Lieferung mit der ID " + id + " gefunden.");
@@ -69,7 +98,6 @@ public class LieferungResource {
 	@Consumes(APPLICATION_JSON)
 	@Produces
 	public Response createLieferung(Lieferung lieferung) {
-		//@SuppressWarnings("unused")
 		final Locale locale = localeHelper.getLocale(headers);
 		
 		// TODO Anwendungskern statt Mock, Verwendung von Locale
