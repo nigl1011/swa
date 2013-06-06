@@ -1,43 +1,108 @@
 package de.shop.lieferverwaltung.domain;
 
+import static de.shop.util.Constants.KEINE_ID;
 import static javax.persistence.TemporalType.TIMESTAMP;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
 
 import java.io.Serializable;
+import java.lang.invoke.MethodHandles;
 import java.net.URI;
-import java.security.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.PostPersist;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Past;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.jboss.logging.Logger;
 
 import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.util.IdGroup;
+import de.shop.util.PreExistingGroup;
 
+@Entity
+@Table(name = "lieferung")
+@NamedQueries({
+	@NamedQuery(name  = Lieferung.FIND_LIEFERUNGEN_BY_ID_FETCH_LIEFERUNGEN,
+                query = "SELECT l"
+                	    + " FROM Lieferung l LEFT JOIN FETCH l.bestellungen"
+                	    + " WHERE l.lieferNr LIKE :" + Lieferung.PARAM_ID)
+})
 public class Lieferung implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 	private static final long MIN_ID = 1;
 	
-	@Min(value = MIN_ID, message = "{lieferverwaltung.lieferung.id.min}", groups = IdGroup.class)
-	private Long id;
+	private static final String PREFIX = "Lieferung.";
+	public static final String FIND_LIEFERUNGEN_BY_ID_FETCH_LIEFERUNGEN =
+		                       PREFIX + "findLieferungenByIdFetchLieferungen";
+	public static final String PARAM_ID = "id";
 	
-	@Past(message = "{lieferverwaltung.lieferung.lieferdatum.past}")
+	@Id
+	@GeneratedValue
+	@Column(nullable = false, updatable = false)
+	@Min(value = MIN_ID, message = "{lieferverwaltung.lieferung.id.min}", groups = IdGroup.class)
+	private Long id = KEINE_ID;
+	
+	@Column(nullable = false)
+	@Temporal(TIMESTAMP)
+	@JsonIgnore
 	private Date lieferdatum;
 	
+	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
-	private Timestamp aktuell;
-
 	@JsonIgnore
-	private Bestellung bestellung;
+	private Date aktuell;
+
+	@ManyToMany(mappedBy = "lieferungen", cascade = { PERSIST, MERGE })
+	@NotEmpty(message = "{bestellverwaltung.lieferung.bestellungen.notEmpty}", groups = PreExistingGroup.class)
+	@Valid
+	@JsonIgnore
+	private Set<Bestellung> bestellungen;
+	
+	@Transient
 	private URI bestellungUri;
 
 	/*
 	 * public Lieferung(Long id, Date lieferdatum, Timestamp aktuell) { super();
 	 * this.id = id; this.lieferdatum = lieferdatum; this.aktuell = aktuell; }
 	 */
+	@PrePersist
+	private void prePersist() {
+		lieferdatum = new Date();
+		aktuell = new Date();
+	}
+	
+	@PostPersist
+	private void postPersist() {
+		LOGGER.debugf("Neue Lieferung mit ID=%d", id);
+	}
+	
+	@PreUpdate
+	private void preUpdate() {
+		aktuell = new Date();
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -45,6 +110,7 @@ public class Lieferung implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 
 	public Date getLieferdatum() {
 		return lieferdatum;
@@ -54,20 +120,44 @@ public class Lieferung implements Serializable {
 		this.lieferdatum = lieferdatum;
 	}
 
-	public Timestamp getAktuell() {
+	public Date getAktuell() {
 		return aktuell;
 	}
 
-	public void setAktuell(Timestamp aktuell) {
+	public void setAktuell(Date aktuell) {
 		this.aktuell = aktuell;
 	}
 
-	public Bestellung getBestellung() {
-		return bestellung;
+	public Set<Bestellung> getBestellungen() {
+		return bestellungen == null ? null : Collections.unmodifiableSet(bestellungen);
 	}
-
-	public void setBestellung(Bestellung bestellung) {
-		this.bestellung = bestellung;
+	
+	public void setBestellungen(Set<Bestellung> bestellungen) {
+		if (this.bestellungen == null) {
+			this.bestellungen = bestellungen;
+			return;
+		}
+		
+		// Wiederverwendung der vorhandenen Collection
+		this.bestellungen.clear();
+		if (bestellungen != null) {
+			this.bestellungen.addAll(bestellungen);
+		}
+	}
+	
+	public void addBestellung(Bestellung bestellung) {
+		if (bestellungen == null) {
+			bestellungen = new HashSet<>();
+		}
+		bestellungen.add(bestellung);
+	}
+	
+	public List<Bestellung> getBestellungenAsList() {
+		return bestellungen == null ? null : new ArrayList<>(bestellungen);
+	}
+	
+	public void setBestellungenAsList(List<Bestellung> bestellungen) {
+		this.bestellungen = bestellungen == null ? null : new HashSet<>(bestellungen);
 	}
 
 	public URI getBestellungUri() {
@@ -78,16 +168,12 @@ public class Lieferung implements Serializable {
 		this.bestellungUri = bestellungUri;
 	}
 
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((bestellung == null) ? 0 : bestellung.hashCode());
-		result = prime * result + ((aktuell == null) ? 0 : aktuell.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((lieferdatum == null) ? 0 : lieferdatum.hashCode());
 		return result;
 	}
 
@@ -99,34 +185,15 @@ public class Lieferung implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final Lieferung other = (Lieferung) obj;
-		if (bestellung == null) {
-			if (other.bestellung != null)
-				return false;
-		}
-		else if (!bestellung.equals(other.bestellung))
-			return false;
-		if (aktuell == null) {
-			if (other.aktuell != null)
-				return false;
-		}
-		else if (!aktuell.equals(other.aktuell))
-			return false;
+		Lieferung other = (Lieferung) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		}
-		else if (!id.equals(other.id))
-			return false;
-		if (lieferdatum == null) {
-			if (other.lieferdatum != null)
-				return false;
-		}
-		else if (!lieferdatum.equals(other.lieferdatum))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Lieferung [id=" + id + ", lieferdatum=" + lieferdatum
