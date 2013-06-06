@@ -32,6 +32,8 @@ import de.shop.util.IdGroup;
 
 @Entity
 @Table(name = "adresse")
+
+
 public class Adresse implements Serializable {
 	private static final long serialVersionUID = -3029272617931844501L;
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
