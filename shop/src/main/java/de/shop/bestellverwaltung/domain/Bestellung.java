@@ -8,18 +8,19 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
 import static de.shop.util.Constants.KEINE_ID;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -29,14 +30,6 @@ import de.shop.util.IdGroup;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.FetchType.EAGER;
-
-
-
-
-
-
-
-
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -63,8 +56,6 @@ import org.jboss.logging.Logger;
 
 
 
-
-
 @Entity
 @Table(name = "bestellung")
 @NamedQueries({
@@ -72,6 +63,10 @@ import org.jboss.logging.Logger;
                 query = "SELECT b"
 			            + " FROM   Bestellung b"
 						+ " WHERE  b.kunde = :" + Bestellung.PARAM_KUNDE),
+   	@NamedQuery(name  = Bestellung.FIND_BESTELLUNG_BY_ID_FETCH_LIEFERUNGEN,
+			    query = "SELECT DISTINCT b"
+                        + " FROM   Bestellung b LEFT JOIN FETCH b.lieferungen"
+   			            + " WHERE  b.id = :" + Bestellung.PARAM_ID),
 	@NamedQuery(name  = Bestellung.FIND_KUNDE_BY_ID,
  			    query = "SELECT b.kunde"
                         + " FROM   Bestellung b"
@@ -86,6 +81,8 @@ public class Bestellung implements Serializable {
 	
 	private static final String PREFIX = "Bestellung.";
 	public static final String FIND_BESTELLUNGEN_BY_KUNDE = PREFIX + "findBestellungenByKunde";
+	public static final String FIND_BESTELLUNG_BY_ID_FETCH_LIEFERUNGEN =
+		                       PREFIX + "findBestellungenByIdFetchLieferungen";
 	public static final String FIND_KUNDE_BY_ID = PREFIX + "findBestellungKundeById";
 	
 	public static final String PARAM_KUNDE = "kunde";
@@ -94,7 +91,7 @@ public class Bestellung implements Serializable {
 
 	private static final long MIN_ID = 1;
 	private static final long MIN_VERSION = 1;
-	//private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
+
 		@Id
 		@GeneratedValue
 		@Column(nullable = false, updatable = false)
@@ -125,6 +122,7 @@ public class Bestellung implements Serializable {
 		@JoinColumn(name = "bestellung_fk", nullable = false)
 		@OrderColumn(name = "idx", nullable = false)
 		@NotNull(message = "{bestellverwaltung.bestellung.bestellposten.notNull}")
+		@Valid
 		private List<Bestellposten> bestellposten;
 		
 		
@@ -138,13 +136,15 @@ public class Bestellung implements Serializable {
 		@JsonIgnore
 		private Date aktualisiert;
 		
-//		@ManyToMany 
-//		@JoinTable(name = "bestellung_lieferung", joinColumns = @JoinColumn(name ="bestellung_fk"),
-//		inverseJoinColumns = @JoinColumn(name = "lieferung_fk"))
-		// FIXME @Transient
-		@Transient
-		@XmlTransient
+		@ManyToMany
+		@JoinTable(name = "bestellung_lieferung",
+				   joinColumns = @JoinColumn(name = "bestellung_fk"),
+				                 inverseJoinColumns = @JoinColumn(name = "lieferung_fk"))
+		@JsonIgnore
 		private Set<Lieferung> lieferungen;
+		
+		@Transient
+		private URI lieferungenUri;
 		
 		
 		@Transient
@@ -256,6 +256,45 @@ public class Bestellung implements Serializable {
 		public void setKundeUri(URI kundeUri) {
 			this.kundeUri = kundeUri;
 		}
+		public Set<Lieferung> getLieferungen() {
+			return lieferungen == null ? null : Collections.unmodifiableSet(lieferungen);
+		}
+		
+		public void setLieferungen(Set<Lieferung> lieferungen) {
+			if (this.lieferungen == null) {
+				this.lieferungen = lieferungen;
+				return;
+			}
+			
+			// Wiederverwendung der vorhandenen Collection
+			this.lieferungen.clear();
+			if (lieferungen != null) {
+				this.lieferungen.addAll(lieferungen);
+			}
+		}
+		
+		public void addLieferung(Lieferung lieferung) {
+			if (lieferungen == null) {
+				lieferungen = new HashSet<>();
+			}
+			lieferungen.add(lieferung);
+		}
+		
+		@JsonIgnore
+		public List<Lieferung> getLieferungenAsList() {
+			return lieferungen == null ? null : new ArrayList<>(lieferungen);
+		}
+
+		public void setLieferungenAsList(List<Lieferung> lieferungen) {
+			this.lieferungen = lieferungen == null ? null : new HashSet<>(lieferungen);
+		}
+		
+		public URI getLieferungenUri() {
+			return lieferungenUri;
+		}
+		public void setLieferungenUri(URI lieferungenUri) {
+			this.lieferungenUri = lieferungenUri;
+		}
 
 		@JsonProperty("datum")
 		public Date getErzeugt() {
@@ -279,6 +318,7 @@ public class Bestellung implements Serializable {
 					* result
 					+ ((id == null) ? 0 : id.hashCode());
 			result = prime * result + ((kunde == null) ? 0 : kunde.hashCode());
+			result = prime * result + ((erzeugt == null) ? 0 : erzeugt.hashCode());
 			return result;
 		}
 		@Override

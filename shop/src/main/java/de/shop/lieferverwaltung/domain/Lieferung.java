@@ -15,8 +15,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
+
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -30,6 +34,7 @@ import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -39,31 +44,42 @@ import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.util.IdGroup;
 import de.shop.util.PreExistingGroup;
 
+
 @Entity
 @Table(name = "lieferung")
-// FIXME Query mit Lieferungen
-//@NamedQueries({
-//	@NamedQuery(name  = Lieferung.FIND_LIEFERUNGEN_BY_ID_FETCH_BESTELLUNGEN,
-//                query = "SELECT l"
-//                	    + " FROM Lieferung l LEFT JOIN FETCH l.bestellungen"
-//                	    + " WHERE l.lieferNr LIKE :" + Lieferung.PARAM_ID)
-//})
+@NamedQueries({
+	@NamedQuery(name  = Lieferung.FIND_LIEFERUNGEN_BY_LIEFERNR_FETCH_BESTELLUNGEN,
+                query = "SELECT l"
+                	    + " FROM Lieferung l LEFT JOIN FETCH l.bestellungen"
+			            + " WHERE l.lieferNr LIKE :" + Lieferung.PARAM_LIEFERNR)
+})
+
 public class Lieferung implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 	private static final long MIN_ID = 1;
 	
+	private static final int LIEFERNR_LENGTH = 12;
+	
 	private static final String PREFIX = "Lieferung.";
-	public static final String FIND_LIEFERUNGEN_BY_ID_FETCH_BESTELLUNGEN =
-		                       PREFIX + "findLieferungenByIdFetchBestellungen";
-	public static final String PARAM_ID = "id";
+	public static final String FIND_LIEFERUNGEN_BY_LIEFERNR_FETCH_BESTELLUNGEN =
+		                       PREFIX + "findLieferungenByLieferNrFetchBestellungen";
+	public static final String PARAM_LIEFERNR = "lieferNr";
 	
 	@Id
 	@GeneratedValue
 	@Column(nullable = false, updatable = false)
 	@Min(value = MIN_ID, message = "{lieferverwaltung.lieferung.id.min}", groups = IdGroup.class)
 	private Long id = KEINE_ID;
+	
+	@Column(length = LIEFERNR_LENGTH, unique = true)
+	@NotNull(message = "{bestellverwaltung.lieferung.lieferNr.notNull}")
+	private String lieferNr;
+	
+	@Column(name = "transport_art_fk")
+	@Enumerated
+	private TransportType transportArt;
 	
 	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
@@ -73,18 +89,26 @@ public class Lieferung implements Serializable {
 	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
 	@JsonIgnore
-	private Date aktuell;
+	private Date aktualisiert;
 
-	// FIXME @Transient
-	@Transient
-//	@ManyToMany(mappedBy = "lieferungen", cascade = { PERSIST, MERGE })
+	@ManyToMany(mappedBy = "lieferungen", cascade = { PERSIST, MERGE })
 	@NotEmpty(message = "{bestellverwaltung.lieferung.bestellungen.notEmpty}", groups = PreExistingGroup.class)
 	@Valid
 	@JsonIgnore
 	private Set<Bestellung> bestellungen;
+
+	public Lieferung() {
+		super();
+	}
+	
+	public Lieferung(String lieferNr, TransportType transportArt) {
+		super();
+		this.lieferNr = lieferNr;
+		this.transportArt = transportArt;
+	}
 	
 	@Transient
-	private URI bestellungUri;
+	private List<URI> bestellungUri;
 
 	/*
 	 * public Lieferung(Long id, Date lieferdatum, Timestamp aktuell) { super();
@@ -93,7 +117,7 @@ public class Lieferung implements Serializable {
 	@PrePersist
 	private void prePersist() {
 		lieferdatum = new Date();
-		aktuell = new Date();
+		aktualisiert = new Date();
 	}
 	
 	@PostPersist
@@ -103,7 +127,7 @@ public class Lieferung implements Serializable {
 	
 	@PreUpdate
 	private void preUpdate() {
-		aktuell = new Date();
+		aktualisiert = new Date();
 	}
 	
 	public Long getId() {
@@ -123,14 +147,28 @@ public class Lieferung implements Serializable {
 		this.lieferdatum = lieferdatum;
 	}
 
-	public Date getAktuell() {
-		return aktuell;
+	public Date getAktualisiert() {
+		return aktualisiert;
 	}
 
-	public void setAktuell(Date aktuell) {
-		this.aktuell = aktuell;
+	public void setAktualisiert(Date aktualisiert) {
+		this.aktualisiert = aktualisiert;
 	}
 
+	public String getLieferNr() {
+		return lieferNr;
+	}
+	public void setLieferNr(String lieferNr) {
+		this.lieferNr = lieferNr;
+	}
+
+	public TransportType getTransportArt() {
+		return transportArt;
+	}
+
+	public void setTransportArt(TransportType transportArt) {
+		this.transportArt = transportArt;
+	}
 	public Set<Bestellung> getBestellungen() {
 		return bestellungen == null ? null : Collections.unmodifiableSet(bestellungen);
 	}
@@ -163,11 +201,11 @@ public class Lieferung implements Serializable {
 		this.bestellungen = bestellungen == null ? null : new HashSet<>(bestellungen);
 	}
 
-	public URI getBestellungUri() {
+	public List<URI> getBestellungUri() {
 		return bestellungUri;
 	}
 
-	public void setBestellungUri(URI bestellungUri) {
+	public void setBestellungUri(List<URI> bestellungUri) {
 		this.bestellungUri = bestellungUri;
 	}
 
@@ -182,25 +220,34 @@ public class Lieferung implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		Lieferung other = (Lieferung) obj;
-		if (id == null) {
-			if (other.id != null)
+		}
+		final Lieferung other = (Lieferung) obj;
+		
+		if (lieferNr == null) {
+			if (other.lieferNr != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		}
+		else if (!lieferNr.equals(other.lieferNr)) {
 			return false;
+		}
+
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Lieferung [id=" + id + ", lieferdatum=" + lieferdatum
-				+ ", bestellungUri=" + bestellungUri + "]";
+		return "Lieferung [id=" + id + ", lieferNr=" 
+		       + ", lieferdatum=" + lieferdatum
+		       + ", aktualisiert=" + aktualisiert + ']';
 	}
 
 }

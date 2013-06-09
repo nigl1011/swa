@@ -85,7 +85,7 @@ public class ArtikelResource {
 	public Artikel findArtikelById(@PathParam("id") Long id, @Context UriInfo uirInfo) {
 		final Locale locale = localeHelper.getLocale(headers);
 		
-		// TODO Anwendungskern statt Mock, Verwendung von Locale
+
 		final Artikel artikel = as.findArtikelById(id, locale);
 		if (artikel == null) {
 			throw new NotFoundException("Kein Artikel mit der ID " + id + " gefunden.");
@@ -133,7 +133,7 @@ public class ArtikelResource {
 	public Response updateArtikel(Artikel artikel) {
 		final Locale locale = localeHelper.getLocale(headers);
 		
-		// TODO Anwendungskern statt Mock, Verwendung von Locale
+
 		as.updateArtikel(artikel, locale);
 		return Response.noContent().build();
 	}
