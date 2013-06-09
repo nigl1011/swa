@@ -8,12 +8,16 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.validation.groups.Default;
 
 import org.jboss.logging.Logger;
 
+import de.shop.artikelverwaltung.domain.Artikel;
+import de.shop.artikelverwaltung.service.InvalidArtikelIdException;
 import de.shop.lieferverwaltung.domain.Lieferung;
 //import de.shop.lieferverwaltung.service.InvalidLieferIdException;
 import de.shop.util.IdGroup;
@@ -25,6 +29,8 @@ public class LieferService implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = Logger.getLogger(MethodHandles.lookup().lookupClass());
 	
+	@PersistenceContext
+	private transient EntityManager em;
 	
 	@Inject
 	private ValidatorProvider validatorProvider;
@@ -41,43 +47,38 @@ public class LieferService implements Serializable {
 	
 	public Lieferung findLieferungById(Long id, Locale locale) {
 		validateLieferungId(id, locale);
-		// TODO id pruefen
-		// TODO Datenbanzugriffsschicht statt Mock
-//		return Mock.findLieferungById(id);
-		// FIXME Mock entfernen
-		return null;
+		final Lieferung lieferung = em.find(Lieferung.class, id);
+		return lieferung;
 	}
-	private void validateLieferungId(Long lieferId, Locale locale) {
+
+	//public List<Lieferung> FindLieferungByBestellung ()
+
+	private void validateLieferungId(Long Id, Locale locale) {
 		final Validator validator = validatorProvider.getValidator(locale);
-		final Set<ConstraintViolation<Lieferung>> violations = validator.validateValue(Lieferung.class,
-				                                                                           "id",
-				                                                                           lieferId,
-				                                                                           IdGroup.class);
+		final Set<ConstraintViolation<Artikel>> violations = validator
+				.validateValue(Artikel.class, "id", Id, IdGroup.class);
 		if (!violations.isEmpty())
-			throw new InvalidLieferIdException(lieferId, violations);
+			throw new InvalidArtikelIdException(Id, violations);
 	}
 	
 	public Lieferung createLieferung(Lieferung lieferung, Locale locale) {
 		if (lieferung == null) {
 			return lieferung;
 		}
-
 		// Werden alle Constraints beim Einfuegen gewahrt?
 		validateLieferung(lieferung, locale, Default.class);
 
-//		lieferung = Mock.createLieferung(lieferung);
-//
-//		return lieferung;
-		
-		// FIXME Mock entfernen
-		return null;
+		em.persist(lieferung);
+		return lieferung;
 	}
 
-	private void validateLieferung(Lieferung lieferung, Locale locale, Class<?>... groups) {
+	private void validateLieferung(Lieferung lieferung, Locale locale,
+			Class<?>... groups) {
 		// Werden alle Constraints beim Einfuegen gewahrt?
 		final Validator validator = validatorProvider.getValidator(locale);
-		
-		final Set<ConstraintViolation<Lieferung>> violations = validator.validate(lieferung, groups);
+
+		final Set<ConstraintViolation<Lieferung>> violations = validator
+				.validate(lieferung, groups);
 		if (!violations.isEmpty()) {
 			throw new InvalidLieferException(lieferung, violations);
 		}
@@ -87,17 +88,12 @@ public class LieferService implements Serializable {
 		if (lieferung == null) {
 			return null;
 		}
-
 		// Werden alle Constraints beim Modifizieren gewahrt?
 		validateLieferung(lieferung, locale, Default.class, IdGroup.class);
+		em.merge(lieferung);
 
-		// TODO Datenbanzugriffsschicht statt Mock
-//		Mock.updateLieferung(lieferung);
-//		
-//		return lieferung;
-		
-		// FIXME Mock entfernen
-		return null;
+		return lieferung;
 	}
-
 }
+
+

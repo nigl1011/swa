@@ -7,6 +7,7 @@ import java.lang.invoke.MethodHandles;
 import java.math.BigDecimal;
 import java.net.URI;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+
+import javax.persistence.OrderColumn;
 import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -25,6 +28,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import org.jboss.logging.Logger;
 
 import de.shop.artikelverwaltung.domain.Artikel;
+
+
 
 @Entity
 @Table(name = "bestellposten")
@@ -64,9 +69,6 @@ public class Bestellposten implements Serializable {
 	@NotNull(message = "{bestellverwaltung.bestellung.zwischenpreis.notEmpty}")
 	private BigDecimal zwischenpreis;
 	
-	@JsonIgnore
-	private Bestellung bestellung;
-	
 	@Column(name = "anzahl", nullable = false)
 	@Min(value = ANZAHL_MIN, message = "{bestellverwaltung.bestellposition.anzahl.min}")
 	private short anzahl;
@@ -76,6 +78,12 @@ public class Bestellposten implements Serializable {
 	@Transient
 	private URI artikelUri;
 	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "bestellung_fk", insertable = false, nullable = false, updatable = false)
+	@OrderColumn(name = "idx", nullable = false)
+	@NotNull(message = "{bestellverwaltung.bestellungposten.bestellung.notNull}")
+	@JsonIgnore
+	private Bestellung bestellung;
 	
 	@PostPersist
 	private void postPersist() {
@@ -99,12 +107,12 @@ public class Bestellposten implements Serializable {
 	}
 	
 	
-	public Long getPositionId() {
+	public Long getId() {
 		return id;
 	}
-	public void setPositionId(Long positionId) {
-		id = positionId;
-	
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public Long getVersion() {
 		return version;
@@ -117,12 +125,6 @@ public class Bestellposten implements Serializable {
 	}
 	public void setZwischenpreis(BigDecimal zwischenpreis) {
 		this.zwischenpreis = zwischenpreis;
-	}
-	public Bestellung getBestellung() {
-		return bestellung;
-	}
-	public void setBestellung(Bestellung bestellung) {
-		this.bestellung = bestellung;
 	}
 
 	public Artikel getArtikel() {
@@ -149,18 +151,21 @@ public class Bestellposten implements Serializable {
 	public void setAnzahl(short anzahl) {
 		this.anzahl = anzahl;
 	}
-	public Long getId() {
-		return id;
+	public Bestellung getBestellung() {
+		return bestellung;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setBestellung(Bestellung bestellung) {
+		this.bestellung = bestellung;
 	}
+
+
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + anzahl;
 		result = prime * result + ((artikel == null) ? 0 : artikel.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((version == null) ? 0 : version.hashCode());
@@ -215,6 +220,7 @@ public class Bestellposten implements Serializable {
 			    + ", artikel=" + artikel
 				+  "]";
 	}
+
 
 
 }

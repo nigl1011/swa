@@ -210,7 +210,7 @@ public abstract class AbstractKunde implements Serializable {
 	private GeschlechtType geschlecht;
 	
 
-	@Temporal(TIMESTAMP)
+	@Temporal(DATE)
 	@Past(message = "{kundenverwaltung.kunde.geburtsdatum.past}")
 	private Date geburtsdatum;
 	
@@ -433,10 +433,10 @@ public abstract class AbstractKunde implements Serializable {
 		this.erzeugt = erzeugt == null ? null : (Date) erzeugt.clone();
 	}
 	public Date getAktualisiert() {
-		return aktualisiert;
+		return aktualisiert == null ? null : (Date) aktualisiert.clone();
 	}
 	public void setAktualisiert(Date aktualisiert) {
-		this.aktualisiert = aktualisiert;
+		this.aktualisiert = aktualisiert == null ? null : (Date) aktualisiert.clone();
 	}
 	public Adresse getAdresse() {
 		return adresse;

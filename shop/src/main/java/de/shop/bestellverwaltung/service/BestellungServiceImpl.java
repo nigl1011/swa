@@ -33,13 +33,9 @@ import org.jboss.logging.Logger;
 import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.bestellverwaltung.domain.Bestellposten;
 import de.shop.bestellverwaltung.domain.Bestellung;
-import de.shop.kundenverwaltung.domain.AbstractKunde;
-import de.shop.kundenverwaltung.domain.PasswordGroup;
-import de.shop.kundenverwaltung.service.EmailExistsException;
-import de.shop.kundenverwaltung.service.KundeService;
-import de.shop.kundenverwaltung.service.KundeService.FetchType;
 import de.shop.lieferverwaltung.domain.Lieferung;
-import de.shop.util.IdGroup;
+import de.shop.kundenverwaltung.domain.AbstractKunde;
+import de.shop.kundenverwaltung.service.KundeService;
 import de.shop.util.Log;
 import de.shop.util.ValidatorProvider;
 
@@ -79,9 +75,8 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 		return bestellung;
 	}
 
-	/**
-	 */
-	/*@Override
+
+	@Override
 	public Bestellung findBestellungByIdMitLieferungen(Long id) {
 		try {
 			final Bestellung bestellung = em.createNamedQuery(Bestellung.FIND_BESTELLUNG_BY_ID_FETCH_LIEFERUNGEN,
@@ -93,10 +88,8 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 		catch (NoResultException e) {
 			return null;
 		}
-	}*/
-
-	/**
-	 */
+	}
+	
 	@Override
 	public AbstractKunde findKundeById(Long id, Locale locale) {
 		try {
@@ -178,10 +171,6 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 			throw new InvalidBestellungException(bestellung, violations);
 		}
 	}
-
-
-	/**
-	 */
 	@Override
 	public List<Artikel> ladenhueter(int anzahl) {
 		final List<Artikel> artikel = em.createNamedQuery(Bestellposten.FIND_LADENHUETER, Artikel.class)
@@ -189,28 +178,45 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 				                        .getResultList();
 		return artikel;
 	}
-	
-	
+
 	@Override
-	// TODO Methode anpassen
 	public List<Lieferung> findLieferungen(String nr) {
-		
-		return null;
+		final List<Lieferung> lieferungen =
+				              em.createNamedQuery(Lieferung.FIND_LIEFERUNGEN_BY_LIEFERNR_FETCH_BESTELLUNGEN,
+                                                  Lieferung.class)
+                                .setParameter(Lieferung.PARAM_LIEFERNR, nr)
+				                .getResultList();
+		return lieferungen;
 	}
 
-	
+
 	@Override
-	// TODO Methode anpassen
 	public Lieferung createLieferung(Lieferung lieferung, List<Bestellung> bestellungen) {
-		
+		if (lieferung == null || bestellungen == null || bestellungen.isEmpty()) {
 			return null;
 		}
 		
-		// TODO  Beziehungen zu existierenden Bestellungen aktualisieren
-			
+		// Beziehungen zu existierenden Bestellungen aktualisieren
+		
+		// Ids ermitteln
+		final List<Long> ids = new ArrayList<>();
+		for (Bestellung b : bestellungen) {
+			ids.add(b.getId());
+		}
+		
+		bestellungen = findBestellungenByIds(ids);
+		lieferung.setBestellungenAsList(bestellungen);
+		for (Bestellung bestellung : bestellungen) {
+			bestellung.addLieferung(lieferung);
+		}
+		
+		lieferung.setId(KEINE_ID);
+		em.persist(lieferung);		
+		return lieferung;
+	}	
 
 	
-	private List<Bestellung> findBestellungenByIds(List<Long> ids) {
+	public List<Bestellung> findBestellungenByIds(List<Long> ids) {
 		if (ids == null || ids.isEmpty()) {
 			return null;
 		}
@@ -252,10 +258,5 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 		return bestellung;
 		}
 	
-	@Override
-	public Bestellung findBestellungByIdMitLieferungen(Long id) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
-}
