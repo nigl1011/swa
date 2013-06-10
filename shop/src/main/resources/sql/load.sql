@@ -1,3 +1,6 @@
+DROP SEQUENCE hibernate_sequence;
+CREATE SEQUENCE hibernate_sequence START WITH 5000;
+
 INSERT INTO kunde (id, nachname, vorname, seit, art, familienstand_fk, newsletter, rabatt, umsatz, email, password, erzeugt, aktualisiert,geburtsdatum,geschlecht) VALUES (1,'Admin','Admin','01.01.2001','F',NULL,1,'0,1',0,'admin@hska.de','1','01.08.2006 00:00:00','01.08.2006 00:00:00','01.01.1990',1);
 INSERT INTO kunde (id, nachname, vorname, seit, art, familienstand_fk, newsletter, rabatt, umsatz, email, password, erzeugt, aktualisiert,geburtsdatum,geschlecht) VALUES (2,'Nine','Glas','01.01.2001','F',NULL,1,'0,1',100.00,'nine@hska.de','1','01.08.2006 00:00:00','01.08.2006 02:00:00','19.07.1990',0);
 INSERT INTO kunde (id, nachname, vorname, seit, art, familienstand_fk, newsletter, rabatt, umsatz, email, password, erzeugt, aktualisiert,geburtsdatum,geschlecht) VALUES (3,'Kadda','Blu','01.01.2002','F',NULL,1,'0,8',10.00,'kadda@hska.de','1','01.08.2006 00:00:00','01.08.2006 02:00:00','15.02.1997',0);
