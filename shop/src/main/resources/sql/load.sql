@@ -27,11 +27,11 @@ INSERT INTO wartungsvertrag (nr, datum, inhalt, kunde_fk, idx, erzeugt, aktualis
 INSERT INTO wartungsvertrag (nr, datum, inhalt, kunde_fk, idx, erzeugt, aktualisiert) VALUES (1,'30.06.2006','Wartungsvertrag_1_K102',3,0,'03.08.2006 00:00:00','03.08.2006 00:00:00');
 
 
-INSERT INTO bestellung (id, kunde_fk, idx, erzeugt, aktualisiert) VALUES (400,101,0,'01.08.2006 00:00:00','01.08.2006 00:00:00');
-INSERT INTO bestellung (id, kunde_fk, idx, erzeugt, aktualisiert) VALUES (401,101,1,'02.08.2006 00:00:00','02.08.2006 00:00:00');
-INSERT INTO bestellung (id, kunde_fk, idx, erzeugt, aktualisiert) VALUES (402,102,0,'03.08.2006 00:00:00','03.08.2006 00:00:00');
-INSERT INTO bestellung (id, kunde_fk, idx, erzeugt, aktualisiert) VALUES (403,102,1,'04.08.2006 00:00:00','04.08.2006 00:00:00');
-INSERT INTO bestellung (id, kunde_fk, idx, erzeugt, aktualisiert) VALUES (404,104,0,'05.08.2006 00:00:00','05.08.2006 00:00:00');
+INSERT INTO bestellung (id, kunde_fk, idx, status, gesamtpreis, erzeugt, aktualisiert) VALUES (400,1,0,1,300,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO bestellung (id, kunde_fk, idx, status, gesamtpreis, erzeugt, aktualisiert) VALUES (401,2,1,1,200,'02.08.2006 00:00:00','02.08.2006 00:00:00');
+INSERT INTO bestellung (id, kunde_fk, idx, status, gesamtpreis, erzeugt, aktualisiert) VALUES (402,3,0,1,100,'03.08.2006 00:00:00','03.08.2006 00:00:00');
+INSERT INTO bestellung (id, kunde_fk, idx, status, gesamtpreis, erzeugt, aktualisiert) VALUES (403,4,1,1,50,'04.08.2006 00:00:00','04.08.2006 00:00:00');
+INSERT INTO bestellung (id, kunde_fk, idx, status, gesamtpreis, erzeugt, aktualisiert) VALUES (404,5,0,1,10,'05.08.2006 00:00:00','05.08.2006 00:00:00');
 
 INSERT INTO lieferung (id, liefernr, transport_art_fk, erzeugt, aktualisiert) VALUES (600,'20051005-001',0,'01.08.2006 00:00:00','01.08.2006 00:00:00');
 INSERT INTO lieferung (id, liefernr, transport_art_fk, erzeugt, aktualisiert) VALUES (601,'20051005-002',1,'02.08.2006 00:00:00','02.08.2006 00:00:00');

@@ -62,8 +62,9 @@ public class Bestellposten implements Serializable {
 	@JsonIgnore
 	private Artikel artikel;
 	
-	@Column(nullable = false,updatable = true)
+	/**@Column(nullable = false,updatable = true)
 	private Long version;
+	**/
 	
 	@Column(nullable = false, precision = 5, scale = 4)
 	@NotNull(message = "{bestellverwaltung.bestellung.zwischenpreis.notEmpty}")
@@ -114,12 +115,13 @@ public class Bestellposten implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getVersion() {
+	/**public Long getVersion() {
 		return version;
 	}
 	public void setVersion(Long version) {
 		this.version = version;
 	}
+	**/
 	public BigDecimal getZwischenpreis() {
 		return zwischenpreis;
 	}
@@ -168,7 +170,7 @@ public class Bestellposten implements Serializable {
 		result = prime * result + anzahl;
 		result = prime * result + ((artikel == null) ? 0 : artikel.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		//result = prime * result + ((version == null) ? 0 : version.hashCode());
 		result = prime * result
 				+ ((zwischenpreis == null) ? 0 : zwischenpreis.hashCode());
 		return result;
@@ -215,8 +217,8 @@ public class Bestellposten implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Bestellposten [id=" + id + ", version="
-				+ version + ", zwischenpreis=" + zwischenpreis
+		return "Bestellposten [id=" + id 
+				+ ", zwischenpreis=" + zwischenpreis
 			    + ", artikel=" + artikel
 				+  "]";
 	}

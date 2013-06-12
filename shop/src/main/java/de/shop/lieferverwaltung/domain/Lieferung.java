@@ -84,7 +84,7 @@ public class Lieferung implements Serializable {
 	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
 	@JsonIgnore
-	private Date lieferdatum;
+	private Date erzeugt;
 	
 	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
@@ -116,7 +116,7 @@ public class Lieferung implements Serializable {
 	 */
 	@PrePersist
 	private void prePersist() {
-		lieferdatum = new Date();
+		erzeugt = new Date();
 		aktualisiert = new Date();
 	}
 	
@@ -138,21 +138,11 @@ public class Lieferung implements Serializable {
 		this.id = id;
 	}
 
-
-	public Date getLieferdatum() {
-		return lieferdatum;
-	}
-
-	public void setLieferdatum(Date lieferdatum) {
-		this.lieferdatum = lieferdatum;
-	}
-
 	public Date getAktualisiert() {
-		return aktualisiert;
+		return aktualisiert == null ? null : (Date) aktualisiert.clone();
 	}
-
 	public void setAktualisiert(Date aktualisiert) {
-		this.aktualisiert = aktualisiert;
+		this.aktualisiert = aktualisiert == null ? null : (Date) aktualisiert.clone();
 	}
 
 	public String getLieferNr() {
@@ -200,6 +190,12 @@ public class Lieferung implements Serializable {
 	public void setBestellungenAsList(List<Bestellung> bestellungen) {
 		this.bestellungen = bestellungen == null ? null : new HashSet<>(bestellungen);
 	}
+	public Date getErzeugt() {
+		return erzeugt == null ? null : (Date) erzeugt.clone();
+	}
+	public void setErzeugt(Date erzeugt) {
+		this.erzeugt = erzeugt == null ? null : (Date) erzeugt.clone();
+	}
 
 	public List<URI> getBestellungUri() {
 		return bestellungUri;
@@ -246,7 +242,7 @@ public class Lieferung implements Serializable {
 	@Override
 	public String toString() {
 		return "Lieferung [id=" + id + ", lieferNr=" 
-		       + ", lieferdatum=" + lieferdatum
+		       + ", erzeugt=" + erzeugt
 		       + ", aktualisiert=" + aktualisiert + ']';
 	}
 

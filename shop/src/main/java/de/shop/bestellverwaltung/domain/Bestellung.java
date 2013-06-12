@@ -90,7 +90,7 @@ public class Bestellung implements Serializable {
 	
 
 	private static final long MIN_ID = 1;
-	private static final long MIN_VERSION = 1;
+	//private static final long MIN_VERSION = 1;
 
 		@Id
 		@GeneratedValue
@@ -103,9 +103,10 @@ public class Bestellung implements Serializable {
 		@NotNull(message = "{bestellverwaltung.bestellung.status.notEmpty}")
 		private StatusType status;
 		
-		@Column(nullable = false,updatable = true)
+		/**@Column(nullable = false,updatable = true)
 		@Min(value = MIN_VERSION, message = "{bestellverwaltung.bestellung.version.min}", groups = IdGroup.class)
 		private Long version;
+		**/
 		
 		@Column(precision = 5, scale = 4,nullable = false)
 		@NotNull(message = "{bestellverwaltung.bestellung.gesamtpreis.notEmpty}")
@@ -231,12 +232,13 @@ public class Bestellung implements Serializable {
 		public void setStatus(StatusType status) {
 			this.status = status;
 		}
-		public Long getVersion() {
+		/**public Long getVersion() {
 			return version;
 		}
 		public void setVersion(Long version) {
 			this.version = version;
 		}
+		**/
 		public Double getGesamtpreis() {
 			return gesamtpreis;
 		}
@@ -340,9 +342,9 @@ public class Bestellung implements Serializable {
 		}
 		@Override
 		public String toString() {
-			return "Bestellung [id=" + id + ", status=" + status + ", version="
-					+ version + ", gesamtpreis=" + gesamtpreis 
-					 + ", erzeugt=" + erzeugt 
+			return "Bestellung [id=" + id + ", status=" + status 
+					+ ", gesamtpreis=" + gesamtpreis 
+					+ ", erzeugt=" + erzeugt 
 					+ ", bestelldatum=" + bestelldatum + "]";
 
 
