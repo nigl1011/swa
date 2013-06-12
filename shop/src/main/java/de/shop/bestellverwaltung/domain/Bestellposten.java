@@ -4,7 +4,6 @@ import static de.shop.util.Constants.KEINE_ID;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
-import java.math.BigDecimal;
 import java.net.URI;
 
 
@@ -66,9 +65,9 @@ public class Bestellposten implements Serializable {
 	private Long version;
 	**/
 	
-	@Column(nullable = false, precision = 5, scale = 4)
-	@NotNull(message = "{bestellverwaltung.bestellung.zwischenpreis.notEmpty}")
-	private BigDecimal zwischenpreis;
+	/**@Column(nullable = true, precision = 5, scale = 4)
+	@NotNull(message = "{bestellverwaltung.bestellung.zwischenpreis.notNull}")
+	private BigDecimal zwischenpreis;**/
 	
 	@Column(name = "anzahl", nullable = false)
 	@Min(value = ANZAHL_MIN, message = "{bestellverwaltung.bestellposition.anzahl.min}")
@@ -122,12 +121,6 @@ public class Bestellposten implements Serializable {
 		this.version = version;
 	}
 	**/
-	public BigDecimal getZwischenpreis() {
-		return zwischenpreis;
-	}
-	public void setZwischenpreis(BigDecimal zwischenpreis) {
-		this.zwischenpreis = zwischenpreis;
-	}
 
 	public Artikel getArtikel() {
 		return artikel;
@@ -171,8 +164,6 @@ public class Bestellposten implements Serializable {
 		result = prime * result + ((artikel == null) ? 0 : artikel.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		//result = prime * result + ((version == null) ? 0 : version.hashCode());
-		result = prime * result
-				+ ((zwischenpreis == null) ? 0 : zwischenpreis.hashCode());
 		return result;
 	}
 	@Override
@@ -218,7 +209,6 @@ public class Bestellposten implements Serializable {
 	@Override
 	public String toString() {
 		return "Bestellposten [id=" + id 
-				+ ", zwischenpreis=" + zwischenpreis
 			    + ", artikel=" + artikel
 				+  "]";
 	}
