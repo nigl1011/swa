@@ -209,7 +209,7 @@ public class Bestellposten implements Serializable {
 	@Override
 	public String toString() {
 		return "Bestellposten [id=" + id 
-			    + ", artikel=" + artikel
+			    + ", anzahl=" + anzahl
 				+  "]";
 	}
 

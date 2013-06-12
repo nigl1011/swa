@@ -100,7 +100,6 @@ public class LieferungResource {
 	public Response createLieferung(Lieferung lieferung) {
 		final Locale locale = localeHelper.getLocale(headers);
 		
-		// TODO Anwendungskern statt Mock, Verwendung von Locale
 		lieferung = ls.createLieferung(lieferung, locale);
 		final URI kundeUri = uriHelperLieferung.getUriLieferung(lieferung, uriInfo);
 		return Response.created(kundeUri).build();
@@ -113,7 +112,7 @@ public class LieferungResource {
 		//@SuppressWarnings("unused")
 		final Locale locale = localeHelper.getLocale(headers);
 		
-		// TODO Anwendungskern statt Mock, Verwendung von Locale
+
 		ls.updateLieferung(lieferung, locale);
 		
 		//Mock.updateLieferung(lieferung);
