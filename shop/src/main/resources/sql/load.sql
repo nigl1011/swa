@@ -58,13 +58,10 @@ INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (5
 INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (508,404,302,8,2);
 
 
-INSERT INTO artikel (id, bezeichnung, preis, ausgesondert, erzeugt, aktualisiert) VALUES (300,'Tisch ''Oval''',80,0,'01.08.2006 00:00:00','01.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, preis, ausgesondert, erzeugt, aktualisiert) VALUES (301,'Stuhl ''Sitz bequem''',10,0,'02.08.2006 00:00:00','02.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, preis, ausgesondert, erzeugt, aktualisiert) VALUES (302,'Tür ''Hoch und breit''',300,0,'03.08.2006 00:00:00','03.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, preis, ausgesondert, erzeugt, aktualisiert) VALUES (303,'Fenster ''Glasklar''',150,0,'04.08.2006 00:00:00','04.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, preis, ausgesondert, erzeugt, aktualisiert) VALUES (304,'Spiegel ''Mach mich schöner''',60,0,'05.08.2006 00:00:00','05.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, preis, ausgesondert, erzeugt, aktualisiert) VALUES (305,'Kleiderschrank ''Viel Platz''',500,0,'06.08.2006 00:00:00','06.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, preis, ausgesondert, erzeugt, aktualisiert) VALUES (306,'Bett ''Mit Holzwurm''',600,0,'07.08.2006 00:00:00','07.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (301,'Werkbank',7,'dunkelbraun',119.99,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (302,'Doppelbett',0,'dunkelbraun',299.50,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (303,'Bürostuhl',8,'schwarz',89.00,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (304,'Arbeitsplatte',1,'hellbraun',169.90,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
 
 
 CREATE INDEX adresse__kunde_index ON adresse(kunde_fk);
