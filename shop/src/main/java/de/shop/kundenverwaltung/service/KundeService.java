@@ -9,7 +9,6 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -23,9 +22,6 @@ import javax.persistence.criteria.Root;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.validation.groups.Default;
-import javax.ws.rs.Consumes;
-
-
 import org.jboss.logging.Logger;
 
 import de.shop.bestellverwaltung.domain.Bestellposten;
@@ -38,7 +34,7 @@ import de.shop.kundenverwaltung.domain.PasswordGroup;
 import de.shop.kundenverwaltung.domain.Wartungsvertrag;
 import de.shop.util.IdGroup;
 import de.shop.util.Log;
-import de.shop.util.Transactional;
+
 import de.shop.util.ValidatorProvider;
 
 /**
@@ -240,7 +236,8 @@ public class KundeService implements Serializable {
 		if (!violations.isEmpty())
 			throw new InvalidEmailException(email, violations);
 	}
-
+	
+	
 	/**
 	 */
 	public AbstractKunde createKunde(AbstractKunde kunde, Locale locale) {

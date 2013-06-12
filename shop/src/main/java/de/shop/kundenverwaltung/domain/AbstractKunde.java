@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -59,6 +60,7 @@ import de.shop.bestellverwaltung.domain.Bestellung;
 import de.shop.util.IdGroup;
 
 @Entity
+@Cacheable
 @Table(name = "kunde")
 @Inheritance
 @DiscriminatorColumn(name = "art", length = 1)
@@ -224,7 +226,7 @@ public abstract class AbstractKunde implements Serializable {
 	
 	@Column(nullable = false)
 	@Temporal(TIMESTAMP)
-	@Past(message = "{kundenverwaltung.kunde.erzeugt.past}")
+	//@Past(message = "{kundenverwaltung.kunde.erzeugt.past}")
 	@JsonIgnore
 	private Date erzeugt;
 	
