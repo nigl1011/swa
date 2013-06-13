@@ -46,10 +46,11 @@ INSERT INTO bestellung_lieferung (bestellung_fk, lieferung_fk) VALUES (402,602);
 INSERT INTO bestellung_lieferung (bestellung_fk, lieferung_fk) VALUES (403,602);
 INSERT INTO bestellung_lieferung (bestellung_fk, lieferung_fk) VALUES (404,603);
 
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (301,'Werkbank',7,'dunkelbraun',119,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (302,'Doppelbett',0,'dunkelbraun',299,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (303,'Buerostuhl',8,'schwarz',89,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (304,'Arbeitsplatte',1,'hellbraun',169,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (300,'Stuhl',1,'pink',119,1,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (301,'Werkbank',1,'braun',119,1,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (302,'Doppelbett',1,'schwarz',299,1,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (303,'Buerostuhl',2,'schwarz',890,1,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (304,'Arbeitsplatte',1,'hellbraun',169,1,'01.08.2006 00:00:00','01.08.2006 00:00:00');
 
 
 INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (500,400,301,1,0);
