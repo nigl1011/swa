@@ -194,6 +194,7 @@ public class ArtikelService implements Serializable {
 			return null;
 		}
 		// Werden alle Constraints beim Modifizieren gewahrt?
+		em.detach(artikel);
 		validateArtikel(artikel, locale, Default.class, IdGroup.class);
 		em.merge(artikel);
 

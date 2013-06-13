@@ -46,22 +46,21 @@ INSERT INTO bestellung_lieferung (bestellung_fk, lieferung_fk) VALUES (402,602);
 INSERT INTO bestellung_lieferung (bestellung_fk, lieferung_fk) VALUES (403,602);
 INSERT INTO bestellung_lieferung (bestellung_fk, lieferung_fk) VALUES (404,603);
 
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (301,'Werkbank',7,'dunkelbraun',119,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (302,'Doppelbett',0,'dunkelbraun',299,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (303,'Buerostuhl',8,'schwarz',89,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (304,'Arbeitsplatte',1,'hellbraun',169,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+
 
 INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (500,400,301,1,0);
 INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (501,400,301,4,1);
 INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (502,401,302,5,0);
 INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (503,402,303,3,0);
 INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (504,402,304,2,1);
-INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (505,403,305,1,0);
+INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (505,403,304,1,0);
 INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (506,404,303,5,0);
 INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (507,404,301,2,1);
-INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (508,404,302,8,2);
-
-
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (301,'Werkbank',7,'dunkelbraun',119.99,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (302,'Doppelbett',0,'dunkelbraun',299.50,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (303,'Bürostuhl',8,'schwarz',89.00,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (304,'Arbeitsplatte',1,'hellbraun',169.90,true,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (508,404,302,8,1);
 
 CREATE INDEX adresse__kunde_index ON adresse(kunde_fk);
 CREATE INDEX kunde_hobby__kunde_index ON kunde_hobby(kunde_fk);
@@ -70,12 +69,12 @@ CREATE INDEX bestellung__kunde_index ON bestellung(kunde_fk);
 CREATE INDEX bestpos__bestellung_index ON bestellposten(bestellung_fk);
 CREATE INDEX bestpos__artikel_index ON bestellposten(artikel_fk);
 
---DROP TABLE geschlecht;
+DROP TABLE geschlecht;
 CREATE TABLE geschlecht(id NUMBER(1) NOT NULL PRIMARY KEY, txt VARCHAR2(10) NOT NULL UNIQUE) CACHE;
 INSERT INTO geschlecht VALUES (0, 'MAENNLICH');
 INSERT INTO geschlecht VALUES (1, 'WEIBLICH');
 
---DROP TABLE familienstand;
+DROP TABLE familienstand;
 CREATE TABLE familienstand(id NUMBER(1) NOT NULL PRIMARY KEY, txt VARCHAR2(12) NOT NULL UNIQUE) CACHE;
 INSERT INTO familienstand VALUES(0, 'LEDIG');
 INSERT INTO familienstand VALUES(1, 'VERHEIRATET');
