@@ -8,13 +8,11 @@ import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Locale;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
@@ -40,7 +38,6 @@ import de.shop.util.Log;
 import de.shop.util.NotFoundException;
 import de.shop.util.Transactional;
 
-@Named
 @Path("/artikel")
 @Produces({APPLICATION_XML})
 @Consumes
@@ -95,14 +92,9 @@ public class ArtikelResource {
 		if (artikel == null) {
 			throw new NotFoundException("Kein Artikel mit der ID " + id + " gefunden.");
 		}
+		uriHelperArtikel.getUriArtikel(artikel, uirInfo);
 			
 		return artikel;
-	}
-		
-	@GET
-	public Collection<Artikel> findArtikelByBezeichnung(@QueryParam("bezeichnung") String bezeichnung) {
-		final Collection<Artikel> allArtikel = as.findArtikelByBezeichnung(bezeichnung);
-		return allArtikel;
 	}
 	
 	@GET
@@ -115,11 +107,6 @@ public class ArtikelResource {
 			if (allArtikel.isEmpty()) {
 				throw new NotFoundException("Kein Artikel mit der Kategorie " + kategorie + " gefunden.");
 			}
-		//}
-		
-		for (Artikel artikel : allArtikel) {
-			uriHelperArtikel.updateUriArtikel(artikel, uriInfo);
-		}
 		
 		return allArtikel;
 	}
@@ -128,12 +115,8 @@ public class ArtikelResource {
 	@Consumes(APPLICATION_JSON)
 	@Produces
 	public Response createArtikel(Artikel artikel) {
-		final List<Locale> locales = headers.getAcceptableLanguages();
-		final Locale locale = locales.isEmpty() ? Locale.getDefault() : locales.get(0);
+		final Locale locale = localeHelper.getLocale(headers);
 		artikel = as.createArtikel(artikel, locale);
-		LOGGER.tracef("Artikel: {0}", artikel);
-		// GAE speichert erst beim Schliessen des EntityManagers, d.h. erst jetzt ist die generierte ID verfuegbar 
-		em.close();
 		final URI artikelUri = uriHelperArtikel.getUriArtikel(artikel, uriInfo);
 		return Response.created(artikelUri).build();
 	}

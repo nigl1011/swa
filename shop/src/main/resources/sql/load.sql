@@ -98,14 +98,14 @@ INSERT INTO transport_art VALUES (3, 'WASSER');
 DROP TABLE kategorie;
 CREATE TABLE kategorie(id NUMBER(1) NOT NULL PRIMARY KEY, txt VARCHAR2(12) NOT NULL UNIQUE) CACHE;
 INSERT INTO familienstand VALUES(0, 'SCHLAFZIMMER');
-INSERT INTO familienstand VALUES(1, 'KÜCHE');
+INSERT INTO familienstand VALUES(1, 'KUECHE');
 INSERT INTO familienstand VALUES(2, 'WOHNZIMMER');
 INSERT INTO familienstand VALUES(3, 'BADEZIMMER');
 INSERT INTO familienstand VALUES(4, 'GARTEN');
 INSERT INTO familienstand VALUES(5, 'KINDERZIMMER');
 INSERT INTO familienstand VALUES(6, 'GARDEROBE');
 INSERT INTO familienstand VALUES(7, 'WERKSTATT');
-INSERT INTO familienstand VALUES(8, 'BÜRO');
+INSERT INTO familienstand VALUES(8, 'BUERO');
 
 -- ===============================================================================
 -- Fremdschluessel in den bereits *generierten* Tabellen auf die obigen "Enum-Tabellen" anlegen

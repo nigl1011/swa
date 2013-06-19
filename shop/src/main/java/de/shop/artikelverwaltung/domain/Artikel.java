@@ -2,17 +2,15 @@ package de.shop.artikelverwaltung.domain;
 
 import static de.shop.util.Constants.KEINE_ID;
 import static de.shop.util.Constants.MIN_ID;
-import static javax.persistence.EnumType.STRING;
-import static javax.persistence.GenerationType.IDENTITY;
-import static javax.persistence.TemporalType.DATE;
+import static javax.persistence.TemporalType.TIMESTAMP;
 
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.math.BigDecimal;
-import java.net.URI;
 import java.util.Date;
 
 import javax.annotation.Nonnegative;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -36,6 +34,7 @@ import org.jboss.logging.Logger;
 
 import de.shop.util.IdGroup;
 
+@Cacheable
 @Entity
 @Table(name = "artikel")
 @NamedQueries({
@@ -102,10 +101,9 @@ private static final int FARBE_LENGTH_MAX = 12;
 private static final String FARBE_PATTERN = FARBEN_PATTERN;
 
 @Id
-@GeneratedValue(strategy = IDENTITY)
+@GeneratedValue
 @Column(nullable = false, updatable = false)
 @Min(value = MIN_ID, message = "{artikelverwaltung.artikel.id.min}", groups = IdGroup.class)
-@NotNull(message = "{artikelverwaltung.artikel.id.notNull}", groups = IdGroup.class)
 private Long id = KEINE_ID;
 
 @Column(length = BEZEICHNUNG_LENGTH_MAX, nullable = false)
@@ -116,7 +114,7 @@ message = "{artikelverwaltung.artikel.bezeichnung.length}")
 private String bezeichnung = "";
 
 @Column(nullable = false)
-@Enumerated(STRING)
+@Enumerated
 private KategorieType kategorie;
 
 @Column(length = FARBE_LENGTH_MAX, nullable = false)
@@ -134,11 +132,13 @@ private BigDecimal preis;
 private boolean verfuegbar;
 
 @Column(nullable = false)
-@Temporal(DATE)
+@Temporal(TIMESTAMP)
 @JsonIgnore
 private Date erstellt;
 
-@Temporal(DATE)
+@Column(nullable = false)
+@Temporal(TIMESTAMP)
+@JsonIgnore
 private Date aktualisiert;
 
 public void setValues(Artikel a) {
@@ -146,7 +146,6 @@ public void setValues(Artikel a) {
 	farbe = a.farbe;
 	preis = a.preis;
 	kategorie = a.kategorie;
-	verfuegbar = a.verfuegbar;
 	
 }
 public Artikel() {
@@ -241,19 +240,12 @@ return "Artikel [id=" + id + ", bezeichnung=" + bezeichnung
 + ", aktualisiert=" + aktualisiert + "]";
 }
 
-public void setArtikelUri(URI artikelUri) {
-// TODO Auto-generated method stub
-}
-
 @Override
 public int hashCode() {
 	final int prime = 31;
 	int result = 1;
 	result = prime * result
-			+ ((aktualisiert == null) ? 0 : aktualisiert.hashCode());
-	result = prime * result
 			+ ((bezeichnung == null) ? 0 : bezeichnung.hashCode());
-	result = prime * result + ((erstellt == null) ? 0 : erstellt.hashCode());
 	result = prime * result + ((farbe == null) ? 0 : farbe.hashCode());
 	result = prime * result + ((id == null) ? 0 : id.hashCode());
 	result = prime * result + ((kategorie == null) ? 0 : kategorie.hashCode());
@@ -271,28 +263,12 @@ public boolean equals(Object obj) {
 	if (getClass() != obj.getClass())
 		return false;
 	final Artikel other = (Artikel) obj;
-	if (aktualisiert == null) {
-		if (other.aktualisiert != null)
-			return false;
-	}
-	else if (!aktualisiert.equals(other.aktualisiert))
-		return false;
 	if (bezeichnung == null) {
 		if (other.bezeichnung != null)
 			return false;
 	}
 	else if (!bezeichnung.equals(other.bezeichnung))
 		return false;
-	if (erstellt == null) {
-		if (other.erstellt != null)
-			return false;
-	}
-	else if (!erstellt.equals(other.erstellt))
-		return false;
-	if (farbe == null) {
-		if (other.farbe != null)
-			return false;
-	}
 	else if (!farbe.equals(other.farbe))
 		return false;
 	if (id == null) {

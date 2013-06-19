@@ -5,12 +5,12 @@ import javax.xml.bind.annotation.XmlEnum;
 @XmlEnum
 public enum KategorieType {
 	SCHLAFZIMMER,
-	KÜCHE,
+	KUECHE,
 	WOHNZIMMER,
 	BADEZIMMER,
 	GARTEN,
 	KINDERZIMMER,
 	GARDEROBE,
 	WERKSTATT,
-	BÜRO
+	BUERO
 }
