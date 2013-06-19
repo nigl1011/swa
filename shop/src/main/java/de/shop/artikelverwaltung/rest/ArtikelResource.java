@@ -2,19 +2,20 @@ package de.shop.artikelverwaltung.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
-import static javax.ws.rs.core.MediaType.TEXT_XML;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
 import java.lang.invoke.MethodHandles;
-
 import java.net.URI;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -39,8 +40,9 @@ import de.shop.util.Log;
 import de.shop.util.NotFoundException;
 import de.shop.util.Transactional;
 
+@Named
 @Path("/artikel")
-@Produces({APPLICATION_XML, TEXT_XML, APPLICATION_JSON })
+@Produces({APPLICATION_XML})
 @Consumes
 @RequestScoped
 @Transactional
@@ -59,6 +61,9 @@ public class ArtikelResource {
 	
 	@Inject
 	private ArtikelService as;
+	
+	@Inject
+	private EntityManager em;
 	
 	@PostConstruct
 	private void postConstruct() {
@@ -90,11 +95,16 @@ public class ArtikelResource {
 		if (artikel == null) {
 			throw new NotFoundException("Kein Artikel mit der ID " + id + " gefunden.");
 		}
-		// URLs innerhalb des gefundenen Artikels anpassen
-		uriHelperArtikel.updateUriArtikel(artikel, uriInfo);	
+			
 		return artikel;
 	}
 		
+	@GET
+	public Collection<Artikel> findArtikelByBezeichnung(@QueryParam("bezeichnung") String bezeichnung) {
+		final Collection<Artikel> allArtikel = as.findArtikelByBezeichnung(bezeichnung);
+		return allArtikel;
+	}
+	
 	@GET
 	public Collection<Artikel> findArtikelByKategorie(@QueryParam("kategorie") 
 	@DefaultValue("") KategorieType kategorie) {
@@ -118,11 +128,12 @@ public class ArtikelResource {
 	@Consumes(APPLICATION_JSON)
 	@Produces
 	public Response createArtikel(Artikel artikel) {
-		//@SuppressWarnings("unused")
-		//final Locale locale = localeHelper.getLocale(headers);
-
-		final Locale locale = localeHelper.getLocale(headers);
+		final List<Locale> locales = headers.getAcceptableLanguages();
+		final Locale locale = locales.isEmpty() ? Locale.getDefault() : locales.get(0);
 		artikel = as.createArtikel(artikel, locale);
+		LOGGER.tracef("Artikel: {0}", artikel);
+		// GAE speichert erst beim Schliessen des EntityManagers, d.h. erst jetzt ist die generierte ID verfuegbar 
+		em.close();
 		final URI artikelUri = uriHelperArtikel.getUriArtikel(artikel, uriInfo);
 		return Response.created(artikelUri).build();
 	}
@@ -130,12 +141,28 @@ public class ArtikelResource {
 	@PUT
 	@Consumes(APPLICATION_JSON)
 	@Produces
-	public Response updateArtikel(Artikel artikel) {
+	public void updateArtikel(Artikel artikel) {
+		// Vorhandenen Artikel ermitteln
 		final Locale locale = localeHelper.getLocale(headers);
+		final Artikel origArtikel = as.findArtikelById(artikel.getId(), locale);
+		if (origArtikel == null) {
+			// TODO msg passend zu locale
+			final String msg = "Kein Artikel gefunden mit der ID " + artikel.getId();
+			throw new NotFoundException(msg);
+		}
+		LOGGER.tracef("Artikel vorher: %s", origArtikel);
+	
+		// Daten des vorhandenen Artikel ueberschreiben
+		origArtikel.setValues(artikel);
+		LOGGER.tracef("Artikel nachher: %s", origArtikel);
 		
-
-		as.updateArtikel(artikel, locale);
-		return Response.noContent().build();
+		// Update durchfuehren
+		artikel = as.updateArtikel(origArtikel, locale);
+		if (artikel == null) {
+			// TODO msg passend zu locale
+			final String msg = "Kein Artikel gefunden mit der ID " + origArtikel.getId();
+			throw new NotFoundException(msg);
+		}
 	}
 	
 }

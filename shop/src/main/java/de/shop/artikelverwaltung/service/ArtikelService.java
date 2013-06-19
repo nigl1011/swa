@@ -32,7 +32,6 @@ import de.shop.util.IdGroup;
 import de.shop.util.Log;
 import de.shop.util.ValidatorProvider;
 
-
 @Log
 public class ArtikelService implements Serializable {
 	private static final long serialVersionUID = -5105686816948437276L;
@@ -41,7 +40,7 @@ public class ArtikelService implements Serializable {
 
 	@PersistenceContext
 	private transient EntityManager em;
-
+	
 	@Inject
 	private ValidatorProvider validatorProvider;
 

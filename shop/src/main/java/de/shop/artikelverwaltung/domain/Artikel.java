@@ -2,16 +2,20 @@ package de.shop.artikelverwaltung.domain;
 
 import static de.shop.util.Constants.KEINE_ID;
 import static de.shop.util.Constants.MIN_ID;
-import static javax.persistence.TemporalType.TIMESTAMP;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.TemporalType.DATE;
 
 import java.io.Serializable;
+import java.lang.invoke.MethodHandles;
 import java.math.BigDecimal;
 import java.net.URI;
-import java.lang.invoke.MethodHandles;
 import java.util.Date;
 
-import javax.persistence.Entity;
+import javax.annotation.Nonnegative;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -21,14 +25,13 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.annotation.Nonnegative;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.jboss.logging.Logger;
 
 import de.shop.util.IdGroup;
@@ -99,20 +102,21 @@ private static final int FARBE_LENGTH_MAX = 12;
 private static final String FARBE_PATTERN = FARBEN_PATTERN;
 
 @Id
-@GeneratedValue
+@GeneratedValue(strategy = IDENTITY)
 @Column(nullable = false, updatable = false)
 @Min(value = MIN_ID, message = "{artikelverwaltung.artikel.id.min}", groups = IdGroup.class)
+@NotNull(message = "{artikelverwaltung.artikel.id.notNull}", groups = IdGroup.class)
 private Long id = KEINE_ID;
 
 @Column(length = BEZEICHNUNG_LENGTH_MAX, nullable = false)
-@NotNull(message = "{artikelverwaltung.artikel.bezeichnung.notNull}")
+@NotEmpty(message = "{artikelverwaltung.artikel.bezeichnung.notEmpty}")
 @Size(min = BEZEICHNUNG_LENGTH_MIN, max = BEZEICHNUNG_LENGTH_MAX,
 message = "{artikelverwaltung.artikel.bezeichnung.length}")
 @Pattern(regexp = BEZEICHNUNG_PATTERN, message = "{artikelverwaltung.artikel.bezeichnung.pattern}")
 private String bezeichnung = "";
 
 @Column(nullable = false)
-@Enumerated
+@Enumerated(STRING)
 private KategorieType kategorie;
 
 @Column(length = FARBE_LENGTH_MAX, nullable = false)
@@ -130,24 +134,38 @@ private BigDecimal preis;
 private boolean verfuegbar;
 
 @Column(nullable = false)
-@Temporal(TIMESTAMP)
+@Temporal(DATE)
 @JsonIgnore
 private Date erstellt;
 
-@Temporal(TIMESTAMP)
+@Temporal(DATE)
 private Date aktualisiert;
 
-
+public void setValues(Artikel a) {
+	bezeichnung = a.bezeichnung;
+	farbe = a.farbe;
+	preis = a.preis;
+	kategorie = a.kategorie;
+	verfuegbar = a.verfuegbar;
+	
+}
 public Artikel() {
 	super();
 }
 
-public Artikel(String bezeichnung, KategorieType kategorie, String farbe, BigDecimal preis) {
+public Artikel(Long id, String bezeichnung, KategorieType kategorie, String farbe, BigDecimal preis) {
 	super();
+	this.id = id;
 	this.bezeichnung = bezeichnung;
 	this.kategorie = kategorie;
 	this.farbe = farbe;
 	this.preis = preis;
+}
+
+public Artikel(Artikel artikel) {
+	super();
+	this.id = artikel.id;
+	this.bezeichnung = artikel.bezeichnung;
 }
 
 @PrePersist

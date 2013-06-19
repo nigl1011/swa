@@ -1,6 +1,5 @@
 package de.shop.artikelverwaltung.rest;
 
-
 import java.net.URI;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -22,7 +21,6 @@ public class UriHelperArtikel {
 	}
 		
 	public void updateUriArtikel(Artikel artikel, UriInfo uriInfo) {
-		// URL fuer Bestellungen setzen
 		final UriBuilder ub = uriInfo.getBaseUriBuilder()
 	                                    .path(ArtikelResource.class)
 	                                    .path(ArtikelResource.class, "findArtikelById");
