@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -28,6 +29,7 @@ import com.google.common.base.Strings;
 
 import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.artikelverwaltung.domain.KategorieType;
+import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.util.IdGroup;
 import de.shop.util.Log;
 import de.shop.util.ValidatorProvider;
@@ -69,8 +71,10 @@ public class ArtikelService implements Serializable {
 
 	private void validateArtikelId(Long artikelId, Locale locale) {
 		final Validator validator = validatorProvider.getValidator(locale);
-		final Set<ConstraintViolation<Artikel>> violations = validator
-				.validateValue(Artikel.class, "id", artikelId, IdGroup.class);
+		final Set<ConstraintViolation<Artikel>> violations = validator.validateValue(Artikel.class, 
+																					"id", 
+																					artikelId, 
+																					IdGroup.class);
 		if (!violations.isEmpty())
 			throw new InvalidArtikelIdException(artikelId, violations);
 	}

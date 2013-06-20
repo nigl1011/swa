@@ -13,7 +13,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -60,7 +59,7 @@ public class ArtikelResource {
 	private ArtikelService as;
 	
 	@Inject
-	private EntityManager em;
+	private LocaleHelper localeHelper;
 	
 	@PostConstruct
 	private void postConstruct() {
@@ -72,9 +71,6 @@ public class ArtikelResource {
 		LOGGER.debugf("CDI-faehiges Bean %s wird geloescht", this);
 	}
 	
-	@Inject
-	private LocaleHelper localeHelper;
-	
 	@GET
 	@Produces(TEXT_PLAIN)
 	@Path("version")
@@ -84,15 +80,13 @@ public class ArtikelResource {
 	
 	@GET
 	@Path("{id:[1-9][0-9]*}")
-	public Artikel findArtikelById(@PathParam("id") Long id, @Context UriInfo uirInfo) {
+	public Artikel findArtikelById(@PathParam("id") Long id) {
 		final Locale locale = localeHelper.getLocale(headers);
-		
-
 		final Artikel artikel = as.findArtikelById(id, locale);
 		if (artikel == null) {
 			throw new NotFoundException("Kein Artikel mit der ID " + id + " gefunden.");
 		}
-		uriHelperArtikel.getUriArtikel(artikel, uirInfo);
+		//uriHelperArtikel.getUriArtikel(artikel, uriInfo);
 			
 		return artikel;
 	}
@@ -116,7 +110,9 @@ public class ArtikelResource {
 	@Produces
 	public Response createArtikel(Artikel artikel) {
 		final Locale locale = localeHelper.getLocale(headers);
+		artikel.setId(null);
 		artikel = as.createArtikel(artikel, locale);
+		LOGGER.tracef("Artikel: %s", artikel);
 		final URI artikelUri = uriHelperArtikel.getUriArtikel(artikel, uriInfo);
 		return Response.created(artikelUri).build();
 	}
@@ -129,7 +125,6 @@ public class ArtikelResource {
 		final Locale locale = localeHelper.getLocale(headers);
 		final Artikel origArtikel = as.findArtikelById(artikel.getId(), locale);
 		if (origArtikel == null) {
-			// TODO msg passend zu locale
 			final String msg = "Kein Artikel gefunden mit der ID " + artikel.getId();
 			throw new NotFoundException(msg);
 		}
@@ -142,7 +137,6 @@ public class ArtikelResource {
 		// Update durchfuehren
 		artikel = as.updateArtikel(origArtikel, locale);
 		if (artikel == null) {
-			// TODO msg passend zu locale
 			final String msg = "Kein Artikel gefunden mit der ID " + origArtikel.getId();
 			throw new NotFoundException(msg);
 		}
