@@ -247,7 +247,7 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 		return bestellungen;
 	}
 
-	public Bestellung updateBestellung(Bestellung bestellung, Locale locale) {
+	/*public Bestellung updateBestellung(Bestellung bestellung, Locale locale) {
 		if (bestellung == null || bestellung.getId() == null )  {
 		LOGGER.tracef("Bestellung ist null => Update nicht möglich");
 		return null; }
@@ -256,7 +256,7 @@ public class BestellungServiceImpl implements Serializable, BestellungService {
 		em.merge(bestellung);
 		LOGGER.tracef("update der Bestellung erfolgreich");
 		return bestellung;
-		}
+		}*/
 	
 	}
 	

@@ -345,6 +345,7 @@ public class Bestellung implements Serializable {
 			return "Bestellung [id=" + id + ", status=" + status 
 					+ ", gesamtpreis=" + gesamtpreis 
 					+ ", erzeugt=" + erzeugt 
+					+ ", aktualisiert=" + aktualisiert
 					+ ", bestelldatum=" + bestelldatum + "]";
 
 
