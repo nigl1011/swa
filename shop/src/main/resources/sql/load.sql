@@ -95,7 +95,7 @@ INSERT INTO transport_art VALUES (1, 'SCHIENE');
 INSERT INTO transport_art VALUES (2, 'LUFT');
 INSERT INTO transport_art VALUES (3, 'WASSER');
 
-DROP TABLE kategorie;
+--DROP TABLE kategorie;
 CREATE TABLE kategorie(id NUMBER(1) NOT NULL PRIMARY KEY, txt VARCHAR2(12) NOT NULL UNIQUE) CACHE;
 INSERT INTO familienstand VALUES(0, 'SCHLAFZIMMER');
 INSERT INTO familienstand VALUES(1, 'KUECHE');
@@ -114,5 +114,5 @@ ALTER TABLE kunde ADD CONSTRAINT kunde__geschlecht_fk FOREIGN KEY (geschlecht_fk
 ALTER TABLE kunde ADD CONSTRAINT kunde__familienstand_fk FOREIGN KEY (familienstand_fk) REFERENCES familienstand;
 ALTER TABLE kunde_hobby ADD CONSTRAINT kunde_hobby__hobby_fk FOREIGN KEY (hobby_fk) REFERENCES hobby;
 ALTER TABLE lieferung ADD CONSTRAINT lieferung__transport_art_fk FOREIGN KEY (transport_art_fk) REFERENCES transport_art;
-
+ALTER TABLE artikel ADD CONSTRAINT artikel__kategorie_fk FOREIGN KEY (kategorie_fk) REFERENCES kategorie;
 
