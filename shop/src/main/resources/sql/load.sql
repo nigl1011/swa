@@ -46,11 +46,11 @@ INSERT INTO bestellung_lieferung (bestellung_fk, lieferung_fk) VALUES (402,602);
 INSERT INTO bestellung_lieferung (bestellung_fk, lieferung_fk) VALUES (403,602);
 INSERT INTO bestellung_lieferung (bestellung_fk, lieferung_fk) VALUES (404,603);
 
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (300,'Stuhl',1,'pink',119,1,'01.08.2006 00:00:00','01.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (301,'Werkbank',1,'braun',119,1,'01.08.2006 00:00:00','01.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (302,'Doppelbett',1,'schwarz',299,1,'01.08.2006 00:00:00','01.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (303,'Buerostuhl',2,'schwarz',890,1,'01.08.2006 00:00:00','01.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (304,'Arbeitsplatte',1,'hellbraun',169,1,'01.08.2006 00:00:00','01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (300, 'Tisch', 1, 'weiss', 119.3, 1, '01.08.2006 00:00:00', '01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (301, 'Werkbank', 7, 'braun', 119, 1, '01.08.2006 00:00:00', '01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (302, 'Doppelbett', 0, 'schwarz', 299, 1, '01.08.2006 00:00:00', '01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (303, 'Buerostuhl', 8, 'schwarz', 890, 1, '01.08.2006 00:00:00', '01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (304, 'Arbeitsplatte', 1, 'hellbraun', 169, 1, '01.08.2006 00:00:00', '01.08.2006 00:00:00');
 
 
 INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (500,400,301,1,0);
@@ -96,7 +96,7 @@ INSERT INTO transport_art VALUES (2, 'LUFT');
 INSERT INTO transport_art VALUES (3, 'WASSER');
 
 --DROP TABLE kategorie;
-CREATE TABLE kategorie(id NUMBER(1) NOT NULL PRIMARY KEY, txt VARCHAR2(12) NOT NULL UNIQUE) CACHE;
+CREATE TABLE kategorie(id NUMBER(1) NOT NULL PRIMARY KEY, txt VARCHAR2(16) NOT NULL UNIQUE) CACHE;
 INSERT INTO kategorie VALUES(0, 'SCHLAFZIMMER');
 INSERT INTO kategorie VALUES(1, 'KUECHE');
 INSERT INTO kategorie VALUES(2, 'WOHNZIMMER');
@@ -107,10 +107,6 @@ INSERT INTO kategorie VALUES(6, 'GARDEROBE');
 INSERT INTO kategorie VALUES(7, 'WERKSTATT');
 INSERT INTO kategorie VALUES(8, 'BUERO');
 
---DROP TABLE verfuegbar;
-CREATE TABLE verfuegbar(id NUMBER(1) NOT NULL PRIMARY KEY, txt VARCHAR2(12) NOT NULL UNIQUE) CACHE;
-INSERT INTO verfuegbar VALUES(0, 'NICHT VERFUEGBAR');
-INSERT INTO verfuegbar VALUES(1, 'VERFUEGBAR');
 
 -- ===============================================================================
 -- Fremdschluessel in den bereits *generierten* Tabellen auf die obigen "Enum-Tabellen" anlegen
@@ -120,4 +116,3 @@ ALTER TABLE kunde ADD CONSTRAINT kunde__familienstand_fk FOREIGN KEY (familienst
 ALTER TABLE kunde_hobby ADD CONSTRAINT kunde_hobby__hobby_fk FOREIGN KEY (hobby_fk) REFERENCES hobby;
 ALTER TABLE lieferung ADD CONSTRAINT lieferung__transport_art_fk FOREIGN KEY (transport_art_fk) REFERENCES transport_art;
 ALTER TABLE artikel ADD CONSTRAINT artikel__kategorie_fk FOREIGN KEY (kategorie_fk) REFERENCES kategorie;
-

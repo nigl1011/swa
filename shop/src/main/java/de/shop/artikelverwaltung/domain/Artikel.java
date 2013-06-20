@@ -1,6 +1,5 @@
 package de.shop.artikelverwaltung.domain;
 
-import static de.shop.util.Constants.KEINE_ID;
 import static de.shop.util.Constants.MIN_ID;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
@@ -104,7 +103,7 @@ private static final String FARBE_PATTERN = FARBEN_PATTERN;
 @GeneratedValue
 @Column(nullable = false, updatable = false)
 @Min(value = MIN_ID, message = "{artikelverwaltung.artikel.id.min}", groups = IdGroup.class)
-private Long id = KEINE_ID;
+private Long id;
 
 @Column(length = BEZEICHNUNG_LENGTH_MAX, nullable = false)
 @NotEmpty(message = "{artikelverwaltung.artikel.bezeichnung.notEmpty}")
@@ -156,7 +155,6 @@ public Artikel(Long id, String bezeichnung, KategorieType kategorie, String farb
 	super();
 	this.id = id;
 	this.bezeichnung = bezeichnung;
-	this.kategorie = kategorie;
 	this.farbe = farbe;
 	this.preis = preis;
 }
