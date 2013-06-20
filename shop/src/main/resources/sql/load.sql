@@ -97,15 +97,20 @@ INSERT INTO transport_art VALUES (3, 'WASSER');
 
 --DROP TABLE kategorie;
 CREATE TABLE kategorie(id NUMBER(1) NOT NULL PRIMARY KEY, txt VARCHAR2(12) NOT NULL UNIQUE) CACHE;
-INSERT INTO familienstand VALUES(0, 'SCHLAFZIMMER');
-INSERT INTO familienstand VALUES(1, 'KUECHE');
-INSERT INTO familienstand VALUES(2, 'WOHNZIMMER');
-INSERT INTO familienstand VALUES(3, 'BADEZIMMER');
-INSERT INTO familienstand VALUES(4, 'GARTEN');
-INSERT INTO familienstand VALUES(5, 'KINDERZIMMER');
-INSERT INTO familienstand VALUES(6, 'GARDEROBE');
-INSERT INTO familienstand VALUES(7, 'WERKSTATT');
-INSERT INTO familienstand VALUES(8, 'BUERO');
+INSERT INTO kategorie VALUES(0, 'SCHLAFZIMMER');
+INSERT INTO kategorie VALUES(1, 'KUECHE');
+INSERT INTO kategorie VALUES(2, 'WOHNZIMMER');
+INSERT INTO kategorie VALUES(3, 'BADEZIMMER');
+INSERT INTO kategorie VALUES(4, 'GARTEN');
+INSERT INTO kategorie VALUES(5, 'KINDERZIMMER');
+INSERT INTO kategorie VALUES(6, 'GARDEROBE');
+INSERT INTO kategorie VALUES(7, 'WERKSTATT');
+INSERT INTO kategorie VALUES(8, 'BUERO');
+
+--DROP TABLE verfuegbar;
+CREATE TABLE verfuegbar(id NUMBER(1) NOT NULL PRIMARY KEY, txt VARCHAR2(12) NOT NULL UNIQUE) CACHE;
+INSERT INTO verfuegbar VALUES(0, 'NICHT VERFUEGBAR');
+INSERT INTO verfuegbar VALUES(1, 'VERFUEGBAR');
 
 -- ===============================================================================
 -- Fremdschluessel in den bereits *generierten* Tabellen auf die obigen "Enum-Tabellen" anlegen
