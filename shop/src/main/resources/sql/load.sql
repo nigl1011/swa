@@ -1,6 +1,19 @@
 DROP SEQUENCE hibernate_sequence;
 CREATE SEQUENCE hibernate_sequence START WITH 5000;
 
+
+DROP TABLE kategorie;
+CREATE TABLE kategorie(id NUMBER(1) NOT NULL PRIMARY KEY, txt VARCHAR2(16) NOT NULL UNIQUE) CACHE;
+INSERT INTO kategorie VALUES(0, 'SCHLAFZIMMER');
+INSERT INTO kategorie VALUES(1, 'KUECHE');
+INSERT INTO kategorie VALUES(2, 'WOHNZIMMER');
+INSERT INTO kategorie VALUES(3, 'BADEZIMMER');
+INSERT INTO kategorie VALUES(4, 'GARTEN');
+INSERT INTO kategorie VALUES(5, 'KINDERZIMMER');
+INSERT INTO kategorie VALUES(6, 'GARDEROBE');
+INSERT INTO kategorie VALUES(7, 'WERKSTATT');
+INSERT INTO kategorie VALUES(8, 'BUERO');
+
 INSERT INTO kunde (id, nachname, vorname, seit, art, familienstand_fk, newsletter, rabatt, umsatz, email, password, erzeugt, aktualisiert,geburtsdatum,geschlecht) VALUES (1,'Admin','Admin','01.01.2001','F',NULL,1,'0,1',0,'admin@hska.de','1','01.08.2006 00:00:00','01.08.2006 00:00:00','01.01.1990',1);
 INSERT INTO kunde (id, nachname, vorname, seit, art, familienstand_fk, newsletter, rabatt, umsatz, email, password, erzeugt, aktualisiert,geburtsdatum,geschlecht) VALUES (2,'Nine','Glas','01.01.2001','F',NULL,1,'0,1',100.00,'nine@hska.de','1','01.08.2006 00:00:00','01.08.2006 02:00:00','19.07.1990',0);
 INSERT INTO kunde (id, nachname, vorname, seit, art, familienstand_fk, newsletter, rabatt, umsatz, email, password, erzeugt, aktualisiert,geburtsdatum,geschlecht) VALUES (3,'Kadda','Blu','01.01.2002','F',NULL,1,'0,8',10.00,'kadda@hska.de','1','01.08.2006 00:00:00','01.08.2006 02:00:00','15.02.1997',0);
@@ -46,11 +59,11 @@ INSERT INTO bestellung_lieferung (bestellung_fk, lieferung_fk) VALUES (402,602);
 INSERT INTO bestellung_lieferung (bestellung_fk, lieferung_fk) VALUES (403,602);
 INSERT INTO bestellung_lieferung (bestellung_fk, lieferung_fk) VALUES (404,603);
 
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (300, 'Tisch', 1, 'weiss', 119.3, 1, '01.08.2006 00:00:00', '01.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (301, 'Werkbank', 7, 'braun', 119, 1, '01.08.2006 00:00:00', '01.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (302, 'Doppelbett', 0, 'schwarz', 299, 1, '01.08.2006 00:00:00', '01.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (303, 'Buerostuhl', 8, 'schwarz', 890, 1, '01.08.2006 00:00:00', '01.08.2006 00:00:00');
-INSERT INTO artikel (id, bezeichnung, kategorie, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (304, 'Arbeitsplatte', 1, 'hellbraun', 169, 1, '01.08.2006 00:00:00', '01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie_fk, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (300, 'Tisch', 1, 'weiss', 119.3, 1, '01.08.2006 00:00:00', '01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie_fk, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (301, 'Werkbank', 7, 'braun', 119, 1, '01.08.2006 00:00:00', '01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie_fk, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (302, 'Doppelbett', 0, 'schwarz', 299, 1, '01.08.2006 00:00:00', '01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie_fk, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (303, 'Buerostuhl', 8, 'schwarz', 890, 1, '01.08.2006 00:00:00', '01.08.2006 00:00:00');
+INSERT INTO artikel (id, bezeichnung, kategorie_fk, farbe, preis, verfuegbar, erstellt, aktualisiert) VALUES (304, 'Arbeitsplatte', 1, 'hellbraun', 169, 1, '01.08.2006 00:00:00', '01.08.2006 00:00:00');
 
 
 INSERT INTO bestellposten (id, bestellung_fk, artikel_fk, anzahl, idx) VALUES (500,400,301,1,0);
@@ -82,30 +95,18 @@ INSERT INTO familienstand VALUES(1, 'VERHEIRATET');
 INSERT INTO familienstand VALUES(2, 'GESCHIEDEN');
 INSERT INTO familienstand VALUES(3, 'VERWITWET');
 
---DROP TABLE hobby;
+DROP TABLE hobby;
 CREATE TABLE hobby(id NUMBER(1) NOT NULL PRIMARY KEY, txt VARCHAR2(16) NOT NULL UNIQUE) CACHE;
 INSERT INTO hobby VALUES (0, 'SPORT');
 INSERT INTO hobby VALUES (1, 'LESEN');
 INSERT INTO hobby VALUES (2, 'REISEN');
 
---DROP TABLE transport_art;
+DROP TABLE transport_art;
 CREATE TABLE transport_art(id NUMBER(1) NOT NULL PRIMARY KEY, txt VARCHAR2(8) NOT NULL UNIQUE) CACHE;
 INSERT INTO transport_art VALUES (0, 'STRASSE');
 INSERT INTO transport_art VALUES (1, 'SCHIENE');
 INSERT INTO transport_art VALUES (2, 'LUFT');
 INSERT INTO transport_art VALUES (3, 'WASSER');
-
---DROP TABLE kategorie;
-CREATE TABLE kategorie(id NUMBER(1) NOT NULL PRIMARY KEY, txt VARCHAR2(16) NOT NULL UNIQUE) CACHE;
-INSERT INTO kategorie VALUES(0, 'SCHLAFZIMMER');
-INSERT INTO kategorie VALUES(1, 'KUECHE');
-INSERT INTO kategorie VALUES(2, 'WOHNZIMMER');
-INSERT INTO kategorie VALUES(3, 'BADEZIMMER');
-INSERT INTO kategorie VALUES(4, 'GARTEN');
-INSERT INTO kategorie VALUES(5, 'KINDERZIMMER');
-INSERT INTO kategorie VALUES(6, 'GARDEROBE');
-INSERT INTO kategorie VALUES(7, 'WERKSTATT');
-INSERT INTO kategorie VALUES(8, 'BUERO');
 
 
 -- ===============================================================================

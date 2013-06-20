@@ -112,7 +112,7 @@ message = "{artikelverwaltung.artikel.bezeichnung.length}")
 @Pattern(regexp = BEZEICHNUNG_PATTERN, message = "{artikelverwaltung.artikel.bezeichnung.pattern}")
 private String bezeichnung = "";
 
-@Column(nullable = false)
+@Column(name = "kategorie_fk", nullable = false)
 @Enumerated
 private KategorieType kategorie;
 
@@ -125,7 +125,7 @@ private String farbe;
 
 @NotNull
 @Nonnegative
-@Column(nullable = false, precision = 5, scale = 4)
+@Column(nullable = false, precision = 7, scale = 2)
 private BigDecimal preis;
 
 private boolean verfuegbar;
