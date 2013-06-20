@@ -23,6 +23,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response;
+
 //import com.jayway.restassured.response.Response;
 import org.jboss.logging.Logger;
 
@@ -78,9 +79,10 @@ public class BestellungResource {
 	@Path("{id:[1-9][0-9]*}")
 	public Bestellung findBestellungById(@PathParam("id") Long id) {
 		final Locale locale = localeHelper.getLocale(headers);
-		final Bestellung bestellung = bs.findBestellungById(id, locale);
+		final Bestellung bestellung = bs.findBestellungById(id,locale);
 		if (bestellung == null) {
-			throw new NotFoundException("Keine Bestellung mit der ID " + id + " gefunden.");
+			final String msg = "Kein Kunde gefunden mit der ID " + id;
+			throw new NotFoundException(msg);
 		}
 		
 		// URLs innerhalb der gefundenen Bestellung anpassen
@@ -175,7 +177,7 @@ public class BestellungResource {
 		return response;
 	}
 	
-	@PUT
+	/*@PUT
 	@Consumes(APPLICATION_JSON)
 	@Produces
 	public Response updateBestellung(Bestellung bestellung, AbstractKunde kunde) {
@@ -183,6 +185,6 @@ public class BestellungResource {
 		
 		bs.updateBestellung(bestellung, locale);
 		return Response.noContent().build();
-	}
+	}*/
 	
 }

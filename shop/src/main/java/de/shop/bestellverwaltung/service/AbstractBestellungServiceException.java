@@ -9,7 +9,4 @@ public abstract class AbstractBestellungServiceException extends AbstractShopExc
 		super(msg);
 	}
 	
-	public AbstractBestellungServiceException(String msg, Throwable t) {
-		super(msg, t);
-	}
 }
