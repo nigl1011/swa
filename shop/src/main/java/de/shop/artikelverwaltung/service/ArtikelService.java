@@ -10,8 +10,8 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -29,11 +29,11 @@ import com.google.common.base.Strings;
 
 import de.shop.artikelverwaltung.domain.Artikel;
 import de.shop.artikelverwaltung.domain.KategorieType;
-import de.shop.kundenverwaltung.domain.AbstractKunde;
 import de.shop.util.IdGroup;
 import de.shop.util.Log;
 import de.shop.util.ValidatorProvider;
 
+@Named
 @Log
 public class ArtikelService implements Serializable {
 	private static final long serialVersionUID = -5105686816948437276L;
@@ -126,29 +126,6 @@ public class ArtikelService implements Serializable {
 				.getResultList();
 		return artikel;
 	}
-
-	public Artikel createArtikel(Artikel artikel, Locale locale) {
-		if (artikel == null) {
-			return artikel;
-		}
-		// Werden alle Constraints beim Einfuegen gewahrt?
-		validateArtikel(artikel, locale, Default.class);
-
-		em.persist(artikel);
-		return artikel;
-	}
-
-	private void validateArtikel(Artikel artikel, Locale locale,
-			Class<?>... groups) {
-		// Werden alle Constraints beim Einfuegen gewahrt?
-		final Validator validator = validatorProvider.getValidator(locale);
-
-		final Set<ConstraintViolation<Artikel>> violations = validator
-				.validate(artikel, groups);
-		if (!violations.isEmpty()) {
-			throw new InvalidArtikelException(artikel, violations);
-		}
-	}
 	
 	public List<Artikel> findArtikelByIds(List<Long> ids) {
 		if (ids == null || ids.isEmpty()) {
@@ -191,17 +168,41 @@ public class ArtikelService implements Serializable {
 		return artikel;
 	}
 
+	public Artikel createArtikel(Artikel artikel, Locale locale) {
+		if (artikel == null) {
+			return artikel;
+		}
+		// Werden alle Constraints beim Einfuegen gewahrt?
+		validateArtikel(artikel, locale, Default.class);
+		artikel.setId(null);
+		
+		em.persist(artikel);
+		return artikel;
+	}
+
+	private void validateArtikel(Artikel artikel, Locale locale,
+			Class<?>... groups) {
+		// Werden alle Constraints beim Einfuegen gewahrt?
+		final Validator validator = validatorProvider.getValidator(locale);
+
+		final Set<ConstraintViolation<Artikel>> violations = validator
+				.validate(artikel, groups);
+		if (!violations.isEmpty()) {
+			throw new InvalidArtikelException(artikel, violations);
+		}
+	}
 
 	public Artikel updateArtikel(Artikel artikel, Locale locale) {
 		if (artikel == null) {
 			return null;
 		}
+		validateArtikel(artikel, locale, Default.class, IdGroup.class);
 		// Werden alle Constraints beim Modifizieren gewahrt?
 		em.detach(artikel);
+		
 		validateArtikel(artikel, locale, Default.class, IdGroup.class);
 		em.merge(artikel);
 
 		return artikel;
 	}
-
 }

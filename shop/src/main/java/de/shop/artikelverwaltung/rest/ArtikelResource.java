@@ -1,18 +1,20 @@
 package de.shop.artikelverwaltung.rest;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -37,8 +39,9 @@ import de.shop.util.Log;
 import de.shop.util.NotFoundException;
 import de.shop.util.Transactional;
 
+@Named
 @Path("/artikel")
-@Produces({APPLICATION_XML})
+@Produces({APPLICATION_JSON})
 @Consumes
 @RequestScoped
 @Transactional
@@ -54,6 +57,9 @@ public class ArtikelResource {
 	
 	@Inject
 	private UriHelperArtikel uriHelperArtikel;
+	
+	@Inject
+	private EntityManager em;
 	
 	@Inject
 	private ArtikelService as;
@@ -86,7 +92,7 @@ public class ArtikelResource {
 		if (artikel == null) {
 			throw new NotFoundException("Kein Artikel mit der ID " + id + " gefunden.");
 		}
-		//uriHelperArtikel.getUriArtikel(artikel, uriInfo);
+		// uriHelperArtikel.getUriArtikel(artikel, uriInfo);
 			
 		return artikel;
 	}
@@ -109,7 +115,8 @@ public class ArtikelResource {
 	@Consumes(APPLICATION_JSON)
 	@Produces
 	public Response createArtikel(Artikel artikel) {
-		final Locale locale = localeHelper.getLocale(headers);
+		final List<Locale> locales = headers.getAcceptableLanguages();
+		final Locale locale = locales.isEmpty() ? Locale.getDefault() : locales.get(0);
 		artikel.setId(null);
 		artikel = as.createArtikel(artikel, locale);
 		LOGGER.tracef("Artikel: %s", artikel);
