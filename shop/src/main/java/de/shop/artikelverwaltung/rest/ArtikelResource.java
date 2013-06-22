@@ -14,7 +14,6 @@ import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -41,7 +40,7 @@ import de.shop.util.Transactional;
 
 @Named
 @Path("/artikel")
-@Produces({APPLICATION_JSON})
+@Produces({ APPLICATION_JSON })
 @Consumes
 @RequestScoped
 @Transactional
@@ -57,9 +56,6 @@ public class ArtikelResource {
 	
 	@Inject
 	private UriHelperArtikel uriHelperArtikel;
-	
-	@Inject
-	private EntityManager em;
 	
 	@Inject
 	private ArtikelService as;

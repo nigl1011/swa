@@ -155,6 +155,7 @@ public Artikel(Long id, String bezeichnung, KategorieType kategorie, String farb
 	super();
 	this.id = id;
 	this.bezeichnung = bezeichnung;
+	this.kategorie = kategorie;
 	this.farbe = farbe;
 	this.preis = preis;
 }

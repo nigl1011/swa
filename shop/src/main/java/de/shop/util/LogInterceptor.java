@@ -44,10 +44,12 @@ public class LogInterceptor implements Serializable {
 			&& Character.isUpperCase(methodName.charAt(CHAR_POST_AFTER_GET_SET))) {
 			return ctx.proceed();
 		}
-		if ((methodName.startsWith("is")) && Character.isUpperCase(methodName.charAt(CHAR_POST_AFTER_IS))) {
+		if ((methodName.startsWith("is")) && 
+				Character.isUpperCase(methodName.charAt(CHAR_POST_AFTER_IS))) {
 			return ctx.proceed();
 		}
-		if (("toString".equals(methodName)) && Character.isUpperCase(methodName.charAt(CHAR_POST_AFTER_IS))) {
+		if (("toString".equals(methodName)) && 
+				Character.isUpperCase(methodName.charAt(CHAR_POST_AFTER_IS))) {
 			return ctx.proceed();
 		}
 		
